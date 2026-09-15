@@ -12,9 +12,7 @@
   I will absolutely break your app. Then I'll hand you the detection rule and a fix. You're welcome.
 </h3>
 
-<p align="center">
-  <b>Purple team</b> · web · cloud · AD attack paths · ATT&CK-mapped
-</p>
+<p align="center"> <b>Purple Team</b> · Web · CyberSecurity · Pentesting</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
@@ -23,18 +21,6 @@
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
   <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux">
 </p>
-
----
-
-### How I work
-
-1. **Scope & authorize** — boring, non-negotiable
-2. **Attack**, reproducibly
-3. **Snitch on myself** in Sigma
-4. **Report & remediate**
-5. **Break it again** to make sure the fix stuck
-
-> A finding without a detection is just a scary story.
 
 ---
 
