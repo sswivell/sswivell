@@ -46,14 +46,6 @@
 | [`waf-probe`](https://github.com/fevberr/waf-probe) | Fingerprints Cloudflare / Akamai / AWS WAF / Imperva / F5 / ModSecurity and suggests bypasses |
 | [`recon-diff`](https://github.com/fevberr/recon-diff) | Watches a target's attack surface over time and tells you what changed — passive, no wordlists |
 
----
-
-### Stats
-
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=fevberr&show_icons=true&theme=midnight-purple&hide_border=true" alt="Stats" height="165">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=fevberr&layout=compact&theme=midnight-purple&hide_border=true" alt="Top Languages" height="165">
-</p>
 
 ---
 <p align="center">
