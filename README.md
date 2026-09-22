@@ -1,45 +1,18 @@
-<h1 align="center">fevberr</h1>
+<h1 align="center">Hello</h1>
 
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?username=fevberr&style=for-the-badge&color=blueviolet" alt="Views">
+  <img src="https://c.tenor.com/7yuu-j3pn5wAAAAd/tenor.gif" alt="why the fuck are u reading this fucking retard" width="220">
 </p>
 
 <p align="center">
-  <img src="https://p16-tiktok-dm-sticker-sign-sg.ibyteimg.com/tos-alisg-i-dhq7zx4c1p-sg/d179a29e560642bba3707aa2ec9babd8~tplv-dhq7zx4c1p-full.awebp?rk3s=00edd399&x-expires=1792029789&x-signature=qrJJe26DGlzonOoaKdczYDcF0BE%3D" alt="RAHHHH" width="220">
-</p>
-
-<h3 align="center">
-  I will absolutely break your app. Then I'll hand you the detection rule and a fix. You're welcome.
-</h3>
-
-<p align="center"> <b>Purple Team</b> · Web · CyberSecurity · Pentesting</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white" alt="Rust">
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
-  <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux">
-</p>
-
----
-
-### Pinned work
-
-| Repo | What it does |
-|---|---|
-| [`ad-attack-path`](https://github.com/fevberr/ad-attack-path) | BloodHound JSON in, shortest path to Domain Admin out — plus runnable PowerShell remediation |
-| [`waf-probe`](https://github.com/fevberr/waf-probe) | Fingerprints Cloudflare / Akamai / AWS WAF / Imperva / F5 / ModSecurity and suggests bypasses |
-| [`recon-diff`](https://github.com/fevberr/recon-diff) | Watches a target's attack surface over time and tells you what changed — passive, no wordlists |
-
-
----
-<p align="center">
-  <a href="https://guns.lol/fevberr">
-    <img src="https://img.shields.io/badge/guns.lol-fevberr-000000?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iOSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+PHBhdGggc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNMTIgM3Y2TTEyIDE1djZNMwgyMGg2TTE1IDEyaDZNMyAxMmg2Ii8+PC9zdmc+&logoColor=white" alt="guns.lol">
-  </a>
+  <img src="https://proicons.com/icon/553510.svg" alt="Metasploit" width="60" height="60">
+  <img src="https://proicons.com/icon/105478.svg" alt="Wireshark" width="60" height="60">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux" width="60" height="60">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" width="60" height="60">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" alt="Bash" width="60" height="60">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" width="60" height="60">
 </p>
 
 <p align="center">
-  <i>PGP in every repo · I log everything, including this sentence</i>
+  <em>s.swivel on discord</em>
 </p>
