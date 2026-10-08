@@ -1,6 +1,8 @@
 {
-  "games": [
-    { "name": "Game One", "exe": "D:/Games/One/game.exe", "args": [], "cwd": null, "env": {}, "pre_hook": null },
-    { "name": "Game Two", "exe": "D:/Games/Two/game.exe", "args": ["-windowed"], "cwd": null, "env": {}, "pre_hook": null }
+  "entries": [
+    { "name": "notepad", "exe": "notepad.exe", "args": [], "cwd": null, "env": {}, "shell": false },
+    { "name": "paint", "exe": "mspaint.exe", "args": [], "cwd": null, "env": {}, "shell": false },
+    { "name": "cmd here", "exe": "cmd.exe", "args": ["/k", "cd /d C:\\"], "cwd": null, "env": {}, "shell": false },
+    { "name": "custom script", "exe": "C:/tools/run.bat", "args": [], "cwd": "C:/tools", "env": {}, "shell": true }
   ]
 }
