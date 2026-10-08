@@ -1,1 +1,6 @@
-
+{
+  "games": [
+    { "name": "Game One", "exe": "D:/Games/One/game.exe", "args": [], "cwd": null, "env": {}, "pre_hook": null },
+    { "name": "Game Two", "exe": "D:/Games/Two/game.exe", "args": ["-windowed"], "cwd": null, "env": {}, "pre_hook": null }
+  ]
+}
