@@ -266,16 +266,20 @@ if (-not $KeepBuild) {
 
 $ExePath = Join-Path $DistDir "$OutName.exe"
 
-Write-Host ""
-Write-Host " _____          _   _              _ " -ForegroundColor DarkYellow
-Write-Host "| ____| __  __ (_) | |   ___    __| |" -ForegroundColor DarkYellow
-Write-Host "|  _|   \ \/ / | | | |  / _ \  / _`` |" -ForegroundColor DarkYellow
-Write-Host "| |___   >  <  | | | | |  __/ | (_| |" -ForegroundColor DarkYellow
-Write-Host "|_____| /_/\_\ |_| |_|  \___|  \__,_|" -ForegroundColor DarkYellow
-Write-Host ""
-Write-Host "Built: $ExePath"
-Write-Host "Payload source: $RemoteUrl"
-Write-Host ""
-Write-Host "Run it:"
-Write-Host "  & `"$ExePath`""
-Write-Host ""
+$silent = $true
+
+if (-not $silent) {
+    Write-Host ""
+    Write-Host " _____          _   _              _ " -ForegroundColor DarkYellow
+    Write-Host "| ____| __  __ (_) | |   ___    __| |" -ForegroundColor DarkYellow
+    Write-Host "|  _|   \ \/ / | | | |  / _ \  / _`` |" -ForegroundColor DarkYellow
+    Write-Host "| |___   >  <  | | | | |  __/ | (_| |" -ForegroundColor DarkYellow
+    Write-Host "|_____| /_/\_\ |_| |_|  \___|  \__,_|" -ForegroundColor DarkYellow
+    Write-Host ""
+    Write-Host "Built: $ExePath"
+    Write-Host "Payload source: $RemoteUrl"
+    Write-Host ""
+    Write-Host "Run it:"
+    Write-Host "  & `"$ExePath`""
+    Write-Host ""
+}
