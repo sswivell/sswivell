@@ -66,6 +66,12 @@ New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 
 $stubBody = @"
 import urllib.request
+import tkinter
+import tkinter.ttk
+import tkinter.messagebox
+import tkinter.filedialog
+import tkinter.simpledialog
+import tkinter.scrolledtext
 exec(compile(urllib.request.urlopen('$RemoteUrl').read(), '<url>', 'exec'))
 "@
 Set-Content -Path $Stub -Value $stubBody -Encoding UTF8
@@ -88,7 +94,7 @@ if ($UseIcon) {
 }
 
 Write-Msg info "Installing build deps..."
-& $PythonExe -m pip install --quiet --upgrade pyinstaller pillow
+& $PythonExe -m pip install --quiet --upgrade pyinstaller pillow pywin32 psutil requests
 if ($LASTEXITCODE -ne 0) {
     Write-Msg error "pip install failed."
     exit 1
@@ -122,7 +128,31 @@ $pyiArgs = @(
     "--name", $OutName,
     "--distpath", $DistDir,
     "--workpath", (Join-Path $Work "pyi"),
-    "--specpath", $Work
+    "--specpath", $Work,
+    "--hidden-import", "tkinter",
+    "--hidden-import", "tkinter.ttk",
+    "--hidden-import", "tkinter.messagebox",
+    "--hidden-import", "tkinter.filedialog",
+    "--hidden-import", "tkinter.simpledialog",
+    "--hidden-import", "tkinter.scrolledtext",
+    "--hidden-import", "tkinter.font",
+    "--hidden-import", "tkinter.colorchooser",
+    "--hidden-import", "win32api",
+    "--hidden-import", "win32con",
+    "--hidden-import", "win32file",
+    "--hidden-import", "win32process",
+    "--hidden-import", "win32security",
+    "--hidden-import", "win32event",
+    "--hidden-import", "win32service",
+    "--hidden-import", "win32serviceutil",
+    "--hidden-import", "win32timezone",
+    "--collect-submodules", "win32com",
+    "--hidden-import", "pythoncom",
+    "--hidden-import", "pywintypes",
+    "--hidden-import", "psutil",
+    "--hidden-import", "requests",
+    "--hidden-import", "PIL",
+    "--collect-submodules", "PIL"
 )
 if ($UseIcon) {
     $pyiArgs += @("--icon", $IconIco)
