@@ -4,6 +4,7 @@ param(
     [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/external.py",
     [string]$Icon = "https://cdn.discordapp.com/icons/1517380157533589564/f7c80ce7a2811d4976775b7e5ffe0133.webp?size=600",
     [string]$Dir,
+    [string]$PythonExe,
     [switch]$NoIcon,
     [switch]$KeepBuild
 )
@@ -27,13 +28,20 @@ function Write-Msg {
 
 $Arch = if ([Environment]::Is64BitOperatingSystem) { "x64" } else { "x86" }
 
-$PythonExe = $null
-foreach ($cand in @("python", "py", "python3")) {
-    $cmd = Get-Command $cand -ErrorAction SilentlyContinue
-    if ($cmd) { $PythonExe = $cmd.Source; break }
-}
 if (-not $PythonExe) {
-    Write-Msg error "Error: python not found on PATH. Install Python 3.8+ first."
+    foreach ($cand in @("python", "py", "python3")) {
+        $cmd = Get-Command $cand -ErrorAction SilentlyContinue
+        if ($cmd) { $PythonExe = $cmd.Source; break }
+    }
+}
+if (-not $PythonExe -or -not (Test-Path -LiteralPath $PythonExe)) {
+    Write-Msg error "Error: python not found. Pass -PythonExe C:\Path\to\python.exe"
+    exit 1
+}
+
+& $PythonExe -c "import tkinter" 2>$null
+if ($LASTEXITCODE -ne 0) {
+    Write-Msg error "Error: $PythonExe has no tkinter. Install tcl/tk or pass -PythonExe with a Python that has it."
     exit 1
 }
 
@@ -59,6 +67,7 @@ $DistDir  = Join-Path $Here "dist"
 
 Write-Msg info ""
 Write-Msg info "Building $AppName for windows-$Arch"
+Write-Msg info "Python: $PythonExe"
 Write-Msg info "Output dir: $Here"
 
 New-Item -ItemType Directory -Force -Path $Work | Out-Null
@@ -72,6 +81,8 @@ import tkinter.messagebox
 import tkinter.filedialog
 import tkinter.simpledialog
 import tkinter.scrolledtext
+import tkinter.font
+import tkinter.colorchooser
 exec(compile(urllib.request.urlopen('$RemoteUrl').read(), '<url>', 'exec'))
 "@
 Set-Content -Path $Stub -Value $stubBody -Encoding UTF8
