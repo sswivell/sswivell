@@ -11,11 +11,13 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$AppName  = "exiled"
+$AppName   = "exiled"
 $RemoteUrl = $Url
 $IconSrc   = $Icon
 $OutName   = $Out
 $UseIcon   = -not $NoIcon
+
+$Packages = @("pyinstaller", "pillow", "pywin32", "psutil", "requests")
 
 function Write-Msg {
     param([string]$Level, [string]$Message)
@@ -28,22 +30,119 @@ function Write-Msg {
 
 $Arch = if ([Environment]::Is64BitOperatingSystem) { "x64" } else { "x86" }
 
-if (-not $PythonExe) {
+function Test-Python {
+    param([string]$Exe)
+    if (-not $Exe) { return $false }
+    if (-not (Test-Path -LiteralPath $Exe)) { return $false }
+    & $Exe -c "import sys; sys.exit(0)" 2>$null
+    return ($LASTEXITCODE -eq 0)
+}
+
+function Find-Python {
+    $candidates = @()
+    if ($PythonExe) { $candidates += $PythonExe }
     foreach ($cand in @("python", "py", "python3")) {
         $cmd = Get-Command $cand -ErrorAction SilentlyContinue
-        if ($cmd) { $PythonExe = $cmd.Source; break }
+        if ($cmd) { $candidates += $cmd.Source }
+    }
+    foreach ($root in @(
+        "$env:LocalAppData\Programs\Python",
+        "$env:ProgramFiles\Python*",
+        "${env:ProgramFiles(x86)}\Python*"
+    )) {
+        Get-ChildItem -Path $root -Filter "python.exe" -Recurse -ErrorAction SilentlyContinue |
+            ForEach-Object { $candidates += $_.FullName }
+    }
+    foreach ($c in $candidates) {
+        if (Test-Python -Exe $c) { return $c }
+    }
+    return $null
+}
+
+function Install-Python {
+    Write-Msg warning "Python not found — attempting install..."
+
+    $winget = Get-Command winget -ErrorAction SilentlyContinue
+    if ($winget) {
+        Write-Msg info "Trying winget install Python.Python.3.12..."
+        & winget install --id Python.Python.3.12 --scope user --silent `
+            --accept-package-agreements --accept-source-agreements 2>$null
+        if ($LASTEXITCODE -eq 0) {
+            Write-Msg info "winget install finished."
+        } else {
+            Write-Msg warning "winget install returned $LASTEXITCODE — falling back."
+        }
+    } else {
+        Write-Msg warning "winget not available — falling back to direct download."
+    }
+
+    $pyVer  = "3.12.7"
+    $pyArch = if ([Environment]::Is64BitOperatingSystem) { "amd64" } else { "win32" }
+    $pyUrl  = "https://www.python.org/ftp/python/$pyVer/python-$pyVer-$pyArch.exe"
+    $pyInst = Join-Path $env:TEMP "python-$pyVer-$pyArch.exe"
+
+    if (-not (Test-Path -LiteralPath $pyInst)) {
+        Write-Msg info "Downloading $pyUrl..."
+        try {
+            Invoke-WebRequest -Uri $pyUrl -OutFile $pyInst -UseBasicParsing
+        } catch {
+            Write-Msg error "Error: python download failed — $($_.Exception.Message)"
+            return $null
+        }
+    }
+
+    Write-Msg info "Running silent install (user scope, no PATH prompt)..."
+    $installArgs = @(
+        "/quiet",
+        "InstallAllUsers=0",
+        "PrependPath=1",
+        "Include_test=0",
+        "Include_launcher=1",
+        "SimpleInstall=1"
+    )
+    $proc = Start-Process -FilePath $pyInst -ArgumentList $installArgs -Wait -PassThru
+    if ($proc.ExitCode -ne 0) {
+        Write-Msg error "Error: python installer exited $($proc.ExitCode)"
+        return $null
+    }
+
+    $machinePath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+    $userPath    = [Environment]::GetEnvironmentVariable("Path", "User")
+    $env:Path    = "$machinePath;$userPath"
+
+    return $null
+}
+
+function Install-Packages {
+    param([string]$Exe, [string[]]$Pkgs)
+    Write-Msg info "Installing packages: $($Pkgs -join ', ')"
+    & $Exe -m pip install --quiet --upgrade pip
+    & $Exe -m pip install --quiet --upgrade @Pkgs
+    if ($LASTEXITCODE -ne 0) {
+        Write-Msg error "pip install failed."
+        exit 1
     }
 }
-if (-not $PythonExe -or -not (Test-Path -LiteralPath $PythonExe)) {
-    Write-Msg error "Error: python not found. Pass -PythonExe C:\Path\to\python.exe"
+
+$PythonExe = Find-Python
+if (-not $PythonExe) {
+    Install-Python | Out-Null
+    $PythonExe = Find-Python
+}
+if (-not $PythonExe) {
+    Write-Msg error "Error: python unavailable after install attempt. Pass -PythonExe C:\Path\to\python.exe"
     exit 1
 }
+
+Write-Msg info "Using python: $PythonExe"
 
 & $PythonExe -c "import tkinter" 2>$null
 if ($LASTEXITCODE -ne 0) {
     Write-Msg error "Error: $PythonExe has no tkinter. Install tcl/tk or pass -PythonExe with a Python that has it."
     exit 1
 }
+
+Install-Packages -Exe $PythonExe -Pkgs $Packages
 
 $UseCurl = $null -ne (Get-Command curl.exe -ErrorAction SilentlyContinue)
 if (-not $UseCurl) {
@@ -59,18 +158,18 @@ if ($Dir) {
 } else {
     $Here = (Get-Location).Path
 }
-$Work     = Join-Path $Here "_build"
-$Stub     = Join-Path $Work "payload.py"
-$IconRaw  = Join-Path $Work "icon.raw"
-$IconIco  = Join-Path $Work "icon.ico"
-$DistDir  = Join-Path $Here "dist"
+$Work    = Join-Path $Here "_build"
+$Stub    = Join-Path $Work "payload.py"
+$IconRaw = Join-Path $Work "icon.raw"
+$IconIco = Join-Path $Work "icon.ico"
+$DistDir = Join-Path $Here "dist"
 
 Write-Msg info ""
 Write-Msg info "Building $AppName for windows-$Arch"
 Write-Msg info "Python: $PythonExe"
 Write-Msg info "Output dir: $Here"
 
-New-Item -ItemType Directory -Force -Path $Work | Out-Null
+New-Item -ItemType Directory -Force -Path $Work    | Out-Null
 New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 
 $stubBody = @"
@@ -102,13 +201,6 @@ if ($UseIcon) {
         }
         Copy-Item -LiteralPath $IconSrc -Destination $IconRaw -Force
     }
-}
-
-Write-Msg info "Installing build deps..."
-& $PythonExe -m pip install --quiet --upgrade pyinstaller pillow pywin32 psutil requests
-if ($LASTEXITCODE -ne 0) {
-    Write-Msg error "pip install failed."
-    exit 1
 }
 
 if ($UseIcon) {
