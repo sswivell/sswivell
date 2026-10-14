@@ -140,14 +140,9 @@ $pyiArgs = @(
     "--distpath", $DistDir,
     "--workpath", (Join-Path $Work "pyi"),
     "--specpath", $Work,
-    "--hidden-import", "tkinter",
-    "--hidden-import", "tkinter.ttk",
-    "--hidden-import", "tkinter.messagebox",
-    "--hidden-import", "tkinter.filedialog",
-    "--hidden-import", "tkinter.simpledialog",
-    "--hidden-import", "tkinter.scrolledtext",
-    "--hidden-import", "tkinter.font",
-    "--hidden-import", "tkinter.colorchooser",
+    "--collect-all", "tkinter",
+    "--collect-all", "PIL",
+    "--collect-submodules", "win32com",
     "--hidden-import", "win32api",
     "--hidden-import", "win32con",
     "--hidden-import", "win32file",
@@ -157,13 +152,10 @@ $pyiArgs = @(
     "--hidden-import", "win32service",
     "--hidden-import", "win32serviceutil",
     "--hidden-import", "win32timezone",
-    "--collect-submodules", "win32com",
     "--hidden-import", "pythoncom",
     "--hidden-import", "pywintypes",
     "--hidden-import", "psutil",
-    "--hidden-import", "requests",
-    "--hidden-import", "PIL",
-    "--collect-submodules", "PIL"
+    "--hidden-import", "requests"
 )
 if ($UseIcon) {
     $pyiArgs += @("--icon", $IconIco)
