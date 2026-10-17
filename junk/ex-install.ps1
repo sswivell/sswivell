@@ -2,7 +2,7 @@
 param(
     [string]$Out = "exiled",
     [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/external.py",
-    [string]$Icon = "https://cdn.discordapp.com/icons/1517380157533589564/f7c80ce7a2811d4976775b7e5ffe0133.webp?size=600",
+    [string]$Icon = "https://cdn.discordapp.com/attachments/1518813807562985523/1561087177830568117/97hf98h.png?ex=6ad5133a&is=6ad3c1ba&hm=b13f7b1e0005510bba4cbb354a6186d8f2569324cbc2e8666211ea6dfa84fe03&animated=true",
     [string]$Dir,
     [string]$PythonExe,
     [switch]$NoIcon,
