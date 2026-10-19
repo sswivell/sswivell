@@ -6,7 +6,8 @@ param(
     [switch]$Local,
     [switch]$NoIcon,
     [switch]$KeepBuild,
-    [switch]$NoDeps
+    [switch]$NoDeps,
+    [switch]$Console
 )
 
 $ErrorActionPreference = "Stop"
@@ -146,49 +147,66 @@ img.save(r'$IconIco', format='ICO', sizes=[(256,256),(128,128),(64,64),(48,48),(
 Pause-Brief
 
 $bootstrap = @"
-import os, sys, ctypes
-from ctypes import wintypes
+import os, sys, traceback
 
-def _exiled_taskbar():
-    try:
-        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
-            "Exiled.External.$AppVersion")
+def _safe(fn):
+    try: fn()
     except Exception:
-        pass
+        try:
+            p = os.path.join(os.path.dirname(sys.executable) if getattr(sys,'frozen',False) else '.', 'exiled_error.log')
+            with open(p, 'a') as f:
+                f.write(traceback.format_exc() + '\n---\n')
+        except Exception: pass
+
+def _taskbar_id():
     try:
+        import ctypes
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('Exiled.External.$AppVersion')
+    except Exception: pass
+
+def _taskbar_ico():
+    try:
+        import ctypes
+        from ctypes import wintypes
         ico = None
-        if getattr(sys, "frozen", False):
-            base = getattr(sys, "_MEIPASS", os.path.dirname(sys.executable))
-            for c in (os.path.join(base, "icon.ico"),
-                      os.path.join(os.path.dirname(sys.executable), "icon.ico")):
-                if os.path.exists(c):
-                    ico = c; break
+        if getattr(sys, 'frozen', False):
+            base = getattr(sys, '_MEIPASS', os.path.dirname(sys.executable))
+            for c in (os.path.join(base,'icon.ico'),
+                      os.path.join(os.path.dirname(sys.executable),'icon.ico')):
+                if os.path.exists(c): ico = c; break
         else:
-            c = os.path.join(os.path.dirname(os.path.abspath(__file__)), "icon.ico")
+            c = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'icon.ico')
             if os.path.exists(c): ico = c
         if not ico: return
-        hb = ctypes.windll.user32.LoadImageW(None, ico, 1, 0, 0, 0x10 | 0x8000)
-        hs = ctypes.windll.user32.LoadImageW(None, ico, 1, 16, 16, 0x10 | 0x8000)
+        user32 = ctypes.windll.user32
+        kernel32 = ctypes.windll.kernel32
+        hb = user32.LoadImageW(None, ico, 1, 0, 0, 0x10 | 0x8000)
+        hs = user32.LoadImageW(None, ico, 1, 16, 16, 0x10 | 0x8000)
+        if not hb: return
         WNDPROC = ctypes.WINFUNCTYPE(ctypes.c_ssize_t, wintypes.HWND,
                                      wintypes.UINT, wintypes.WPARAM, wintypes.LPARAM)
         class WC(ctypes.Structure):
-            _fields_ = [("cbSize", wintypes.UINT), ("style", wintypes.UINT),
-                        ("lpfnWndProc", WNDPROC), ("cbClsExtra", ctypes.c_int),
-                        ("cbWndExtra", ctypes.c_int), ("hInstance", wintypes.HINSTANCE),
-                        ("hIcon", wintypes.HICON), ("hCursor", wintypes.HANDLE),
-                        ("hbrBackground", wintypes.HBRUSH), ("lpszMenuName", wintypes.LPCWSTR),
-                        ("lpszClassName", wintypes.LPCWSTR), ("hIconSm", wintypes.HICON)]
+            _fields_ = [
+                ('cbSize', wintypes.UINT), ('style', wintypes.UINT),
+                ('lpfnWndProc', WNDPROC), ('cbClsExtra', ctypes.c_int),
+                ('cbWndExtra', ctypes.c_int), ('hInstance', wintypes.HINSTANCE),
+                ('hIcon', wintypes.HICON), ('hCursor', wintypes.HANDLE),
+                ('hbrBackground', wintypes.HBRUSH),
+                ('lpszMenuName', wintypes.LPCWSTR),
+                ('lpszClassName', wintypes.LPCWSTR),
+                ('hIconSm', wintypes.HICON)]
         wc = WC()
         wc.cbSize = ctypes.sizeof(WC)
-        wc.lpfnWndProc = WNDPROC(lambda h,m,w,l: ctypes.windll.user32.DefWindowProcW(h,m,w,l))
-        wc.hInstance = ctypes.windll.kernel32.GetModuleHandleW(None)
-        wc.hIcon = hb; wc.hIconSm = hs
-        wc.lpszClassName = "ExiledExternalWindow"
-        ctypes.windll.user32.RegisterClassExW(ctypes.byref(wc))
-    except Exception:
-        pass
+        wc.lpfnWndProc = WNDPROC(lambda h,m,w,l: user32.DefWindowProcW(h,m,w,l))
+        wc.hInstance = kernel32.GetModuleHandleW(None)
+        wc.hIcon = hb
+        wc.hIconSm = hs
+        wc.lpszClassName = 'ExiledExternalWindow'
+        user32.RegisterClassExW(ctypes.byref(wc))
+    except Exception: pass
 
-_exiled_taskbar()
+_safe(_taskbar_id)
+_safe(_taskbar_ico)
 "@
 
 if ($Local) {
@@ -276,7 +294,6 @@ Log "freeze  →  $OutName.exe"
 $pyi = @(
     "-m","PyInstaller",
     "--onefile",
-    "--windowed",
     "--noconfirm","--clean",
     "--name", $OutName,
     "--distpath", $DistDir,
@@ -287,6 +304,10 @@ $pyi = @(
     "--collect-all","tkinter",
     "--collect-all","PIL",
     "--collect-submodules","win32com",
+    "--collect-binaries","pywin32",
+    "--collect-binaries","win32",
+    "--collect-binaries","win32com",
+    "--collect-data","tkinter",
     "--hidden-import","win32api",
     "--hidden-import","win32con",
     "--hidden-import","win32file",
@@ -301,6 +322,9 @@ $pyi = @(
     "--hidden-import","psutil",
     "--hidden-import","requests"
 )
+if (-not $Console) {
+    $pyi += "--windowed"
+}
 if ($useIco) {
     $pyi += @("--icon", $IconIco)
     $pyi += @("--add-data", "$IconIco;.")
