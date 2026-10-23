@@ -6,24 +6,23 @@ param(
     [switch]$Local,
     [switch]$NoIcon,
     [switch]$KeepBuild,
-    [switch]$NoDeps,
-    [switch]$Verbose
+    [switch]$NoDeps
 )
 
 $ErrorActionPreference = "Stop"
 $ProgressPreference    = "SilentlyContinue"
 
-$AppName  = "exiled"
-$OutName  = $Out
-$WorkDir  = Join-Path $PWD "_build"
-$DistDir  = Join-Path $PWD "dist"
-$StubPy   = Join-Path $WorkDir "payload.py"
-$IconRaw  = Join-Path $WorkDir "icon.raw"
-$IconIco  = Join-Path $WorkDir "icon.ico"
-$ExePath  = Join-Path $DistDir "$OutName.exe"
-$IconDst  = Join-Path $DistDir "icon.ico"
-$LogFile  = Join-Path $WorkDir "build.log"
+$AppName = "exiled"
+$OutName = $Out
+$WorkDir = Join-Path $PWD "_build"
+$DistDir = Join-Path $PWD "dist"
+$StubPy  = Join-Path $WorkDir "payload.py"
+$IconRaw = Join-Path $WorkDir "icon.raw"
+$IconIco = Join-Path $WorkDir "icon.ico"
+$ExePath = Join-Path $DistDir "$OutName.exe"
+$IconDst = Join-Path $DistDir "icon.ico"
 
+# renamed dependency map (display -> real pip name)
 $DepMap = @{
     "libinstaller" = "pyinstaller"
     "libpil"       = "pillow"
@@ -32,51 +31,9 @@ $DepMap = @{
     "libhttp"      = "requests"
 }
 
-# PyInstaller vocabulary -> bench vocabulary
-$StageMap = [ordered]@{
-    "Analyzing"          = "scanning"
-    "Processing"         = "hooking"
-    "Caching"            = "indexing"
-    "Building"           = "packing"
-    "Checking"           = "verifying"
-    "Appending"          = "stitching"
-    "Including"          = "linking"
-    "Copying"            = "staging"
-    "Embedding"          = "stamping"
-    "Fixing"             = "polishing"
-    "Looking"            = "seeking"
-    "Removing"           = "sweeping"
-    "Writing"            = "recording"
-    "Graph"              = "graph"
-    "Creating"           = "weaving"
-    "Reclassifying"      = "sorting"
-    "Extra DLL"          = "dll"
-    "Target bytecode"    = "bytecode"
-    "Initializing"       = "warming"
-    "Running"            = "walking"
-    "Using Python"       = "python"
-    "Platform"           = "host"
-    "Python environment" = "env"
-}
-
 function Log  { param([string]$M, [string]$C = "Cyan"); Write-Host "[$AppName] $M" -ForegroundColor $C }
 function Fail { param([string]$M); Write-Host "[$AppName] ERROR: $M" -ForegroundColor Red; exit 1 }
 function Get-Arch { if ([Environment]::Is64BitOperatingSystem) { "x64" } else { "x86" } }
-
-function Translate-Line {
-    param([string]$Line)
-    if ($Line -match '^\s*(\d+)\s+(\w+):\s*(.*)$') {
-        $msg = $matches[3]
-        foreach ($k in $StageMap.Keys) {
-            if ($msg -like "$k*") {
-                $rest = $msg.Substring($k.Length).TrimStart()
-                return "[$AppName] $($StageMap[$k])  ->  $rest"
-            }
-        }
-        return "[$AppName] $($msg.ToLower())"
-    }
-    return $null
-}
 
 function Test-Python {
     param([string]$Exe)
@@ -139,76 +96,11 @@ function Fetch-File {
 
 function Pause-Brief { param([int]$Ms = 90); Start-Sleep -Milliseconds $Ms }
 
-# Async-drained process runner — both pipes read on separate threads so
-# neither buffer can fill and deadlock the child (the classic PyInstaller hang).
-function Invoke-Quiet {
-    param([string]$Exe, [string[]]$Args)
-
-    $psi = New-Object System.Diagnostics.ProcessStartInfo
-    $psi.FileName               = $Exe
-    $psi.Arguments              = ($Args | ForEach-Object { if ($_ -match '\s') { '"' + $_ + '"' } else { $_ } }) -join ' '
-    $psi.RedirectStandardOutput = $true
-    $psi.RedirectStandardError  = $true
-    $psi.UseShellExecute        = $false
-    $psi.CreateNoWindow         = $true
-    $psi.StandardOutputEncoding = [System.Text.Encoding]::UTF8
-    $psi.StandardErrorEncoding  = [System.Text.Encoding]::UTF8
-
-    $p = New-Object System.Diagnostics.Process
-    $p.StartInfo = $psi
-    $p.EnableRaisingEvents = $true
-
-    $outAction = {
-        $line = $Event.SourceEventArgs.Data
-        if ($null -ne $line -and $line -ne '') {
-            if ($Verbose) {
-                Add-Content -LiteralPath $LogFile -Value $line -Encoding UTF8
-                Write-Host $line -ForegroundColor DarkGray
-            } else {
-                $t = Translate-Line -Line $line
-                if ($t) { Write-Host $t -ForegroundColor DarkCyan }
-            }
-        }
-    }.GetNewClosure()
-
-    $errAction = {
-        $line = $Event.SourceEventArgs.Data
-        if ($null -ne $line -and $line -ne '') {
-            if ($Verbose) {
-                Add-Content -LiteralPath $LogFile -Value $line -Encoding UTF8
-                Write-Host $line -ForegroundColor DarkYellow
-            }
-        }
-    }.GetNewClosure()
-
-    $subs = @()
-    $subs += Register-ObjectEvent -InputObject $p -EventName OutputDataReceived -Action $outAction
-    $subs += Register-ObjectEvent -InputObject $p -EventName ErrorDataReceived  -Action $errAction
-
-    try {
-        $p.Start() | Out-Null
-        $p.BeginOutputReadLine()
-        $p.BeginErrorReadLine()
-        $p.WaitForExit()
-        Start-Sleep -Milliseconds 250
-    } finally {
-        foreach ($s in $subs) {
-            Unregister-Event -SubscriptionId $s.Id -ErrorAction SilentlyContinue
-            Remove-Job -Id $s.Id -Force -ErrorAction SilentlyContinue
-        }
-    }
-    return $p.ExitCode
-}
-
 Write-Host ""
 Write-Host "  +----------------------------------------+" -ForegroundColor DarkCyan
 Write-Host "  |   exiled  .  build  .  $(Get-Arch)         |" -ForegroundColor DarkCyan
 Write-Host "  +----------------------------------------+" -ForegroundColor DarkCyan
 Write-Host ""
-
-New-Item -ItemType Directory -Force -Path $WorkDir | Out-Null
-New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
-Set-Content -Path $LogFile -Value "" -Encoding UTF8
 
 Log "python  ->  locating..."
 $PythonExe = Find-Python
@@ -227,6 +119,9 @@ if (-not $NoDeps) {
     Log "modules ->  ready" "Green"
     Pause-Brief
 }
+
+New-Item -ItemType Directory -Force -Path $WorkDir | Out-Null
+New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 
 $useIco = $false
 if (-not $NoIcon -and $Icon) {
@@ -247,7 +142,7 @@ img.save(r'$IconIco', format='ICO', sizes=[(256,256),(128,128),(64,64),(48,48),(
 "@
         $convPy = Join-Path $WorkDir "_icon.py"
         Set-Content -Path $convPy -Value $conv -Encoding UTF8
-        & $PythonExe $convPy | Out-Null
+        & $PythonExe $convPy
         if ($LASTEXITCODE -eq 0) {
             $useIco = $true
             Log "icon    ->  ready" "Green"
@@ -364,8 +259,8 @@ if ($useIco) {
 }
 $pyi += $StubPy
 
-$rc = Invoke-Quiet -Exe $PythonExe -Args $pyi
-if ($rc -ne 0) { Fail "freeze failed (exit $rc) — see $LogFile" }
+& $PythonExe @pyi
+if ($LASTEXITCODE -ne 0) { Fail "freeze failed" }
 
 if ($useIco -and (Test-Path $IconIco)) {
     Copy-Item -LiteralPath $IconIco -Destination $IconDst -Force
