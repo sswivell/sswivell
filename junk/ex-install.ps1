@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$Out = "exiled",
-    [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/external.py",
+    [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/junk.py",
     [string]$Icon = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/junk.png",
     [switch]$Local,
     [switch]$NoIcon,
