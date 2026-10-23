@@ -19,7 +19,6 @@ $IconSrc   = $Icon
 $OutName   = $Out
 $UseIcon   = -not $NoIcon
 
-# display name -> real pip package
 $DepMap = @{
     "libinstaller" = "pyinstaller"
     "libpil"       = "pillow"
@@ -29,7 +28,6 @@ $DepMap = @{
 }
 $Packages = @("libinstaller", "libpil", "win32api", "sysmon", "libhttp")
 
-# PyInstaller vocabulary -> bench vocabulary
 $StageMap = [ordered]@{
     "Analyzing"          = "scanning"
     "Processing"         = "hooking"
@@ -389,13 +387,28 @@ if (-not $KeepBuild) {
 
 $ExePath = Join-Path $DistDir "$OutName.exe"
 
-if (Test-Path -LiteralPath $ExePath) {
-    $sz = [math]::Round((Get-Item $ExePath).Length / 1MB, 2)
-    Write-Msg green ""
-    Write-Msg green "  exiled.exe  ready  ($sz MB)"
-    Write-Msg green "  $ExePath"
-    Write-Msg green ""
+$silent = $false
+
+if (-not $silent) {
+    Write-Host ""
+    Write-Host " _____          _   _              _ " -ForegroundColor DarkYellow
+    Write-Host "| ____| __  __ (_) | |   ___    __| |" -ForegroundColor DarkYellow
+    Write-Host "|  _|   \ \/ / | | | |  / _ \  / _`` |" -ForegroundColor DarkYellow
+    Write-Host "| |___   >  <  | | | | |  __/ | (_| |" -ForegroundColor DarkYellow
+    Write-Host "|_____| /_/\_\ |_| |_|  \___|  \__,_|" -ForegroundColor DarkYellow
+    Write-Host ""
+    Write-Host "Built: $ExePath"
+    Write-Host "Payload source: $RemoteUrl"
+    Write-Host ""
+    Write-Host "Run it:"
+    Write-Host "  & `"$ExePath`""
+    Write-Host ""
 } else {
-    Write-Msg error "exe not produced"
-    exit 1
+    if (Test-Path -LiteralPath $ExePath) {
+        $sz = [math]::Round((Get-Item $ExePath).Length / 1MB, 2)
+        Write-Msg green "exiled.exe ready ($sz MB) — $ExePath"
+    } else {
+        Write-Msg error "exe not produced"
+        exit 1
+    }
 }
