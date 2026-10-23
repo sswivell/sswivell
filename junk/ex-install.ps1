@@ -32,30 +32,30 @@ $DepMap = @{
     "libhttp"      = "requests"
 }
 
-# PyInstaller stage-name relabels (display in our log)
+# PyInstaller vocabulary -> bench vocabulary
 $StageMap = [ordered]@{
-    "Analyzing"        = "scanning"
-    "Processing"       = "hooking"
-    "Caching"          = "indexing"
-    "Building"         = "packing"
-    "Checking"         = "verifying"
-    "Appending"        = "stitching"
-    "Including"        = "linking"
-    "Copying"          = "staging"
-    "Embedding"        = "stamping"
-    "Fixing"           = "polishing"
-    "Looking"          = "seeking"
-    "Removing"         = "sweeping"
-    "Writing"          = "recording"
-    "Graph"            = "graph"
-    "Creating"         = "weaving"
-    "Reclassifying"    = "sorting"
-    "Extra DLL"        = "dll"
-    "Target bytecode"  = "bytecode"
-    "Initializing"     = "warming"
-    "Running"          = "walking"
-    "Using Python"     = "python"
-    "Platform"         = "host"
+    "Analyzing"          = "scanning"
+    "Processing"         = "hooking"
+    "Caching"            = "indexing"
+    "Building"           = "packing"
+    "Checking"           = "verifying"
+    "Appending"          = "stitching"
+    "Including"          = "linking"
+    "Copying"            = "staging"
+    "Embedding"          = "stamping"
+    "Fixing"             = "polishing"
+    "Looking"            = "seeking"
+    "Removing"           = "sweeping"
+    "Writing"            = "recording"
+    "Graph"              = "graph"
+    "Creating"           = "weaving"
+    "Reclassifying"      = "sorting"
+    "Extra DLL"          = "dll"
+    "Target bytecode"    = "bytecode"
+    "Initializing"       = "warming"
+    "Running"            = "walking"
+    "Using Python"       = "python"
+    "Platform"           = "host"
     "Python environment" = "env"
 }
 
@@ -65,10 +65,7 @@ function Get-Arch { if ([Environment]::Is64BitOperatingSystem) { "x64" } else { 
 
 function Translate-Line {
     param([string]$Line)
-    # PyInstaller line: "<ms> INFO: <Message>"
     if ($Line -match '^\s*(\d+)\s+(\w+):\s*(.*)$') {
-        $ms  = $matches[1]
-        $sev = $matches[2]
         $msg = $matches[3]
         foreach ($k in $StageMap.Keys) {
             if ($msg -like "$k*") {
@@ -142,9 +139,11 @@ function Fetch-File {
 
 function Pause-Brief { param([int]$Ms = 90); Start-Sleep -Milliseconds $Ms }
 
-# Runs a command, streams stdout/stderr, rewrites each line through Translate-Line.
+# Async-drained process runner — both pipes read on separate threads so
+# neither buffer can fill and deadlock the child (the classic PyInstaller hang).
 function Invoke-Quiet {
     param([string]$Exe, [string[]]$Args)
+
     $psi = New-Object System.Diagnostics.ProcessStartInfo
     $psi.FileName               = $Exe
     $psi.Arguments              = ($Args | ForEach-Object { if ($_ -match '\s') { '"' + $_ + '"' } else { $_ } }) -join ' '
@@ -155,9 +154,12 @@ function Invoke-Quiet {
     $psi.StandardOutputEncoding = [System.Text.Encoding]::UTF8
     $psi.StandardErrorEncoding  = [System.Text.Encoding]::UTF8
 
-    $p = [System.Diagnostics.Process]::Start($psi)
-    while (-not $p.HasExited -or -not $p.StandardOutput.EndOfStream) {
-        $line = $p.StandardOutput.ReadLine()
+    $p = New-Object System.Diagnostics.Process
+    $p.StartInfo = $psi
+    $p.EnableRaisingEvents = $true
+
+    $outAction = {
+        $line = $Event.SourceEventArgs.Data
         if ($null -ne $line -and $line -ne '') {
             if ($Verbose) {
                 Add-Content -LiteralPath $LogFile -Value $line -Encoding UTF8
@@ -167,12 +169,34 @@ function Invoke-Quiet {
                 if ($t) { Write-Host $t -ForegroundColor DarkCyan }
             }
         }
+    }.GetNewClosure()
+
+    $errAction = {
+        $line = $Event.SourceEventArgs.Data
+        if ($null -ne $line -and $line -ne '') {
+            if ($Verbose) {
+                Add-Content -LiteralPath $LogFile -Value $line -Encoding UTF8
+                Write-Host $line -ForegroundColor DarkYellow
+            }
+        }
+    }.GetNewClosure()
+
+    $subs = @()
+    $subs += Register-ObjectEvent -InputObject $p -EventName OutputDataReceived -Action $outAction
+    $subs += Register-ObjectEvent -InputObject $p -EventName ErrorDataReceived  -Action $errAction
+
+    try {
+        $p.Start() | Out-Null
+        $p.BeginOutputReadLine()
+        $p.BeginErrorReadLine()
+        $p.WaitForExit()
+        Start-Sleep -Milliseconds 250
+    } finally {
+        foreach ($s in $subs) {
+            Unregister-Event -SubscriptionId $s.Id -ErrorAction SilentlyContinue
+            Remove-Job -Id $s.Id -Force -ErrorAction SilentlyContinue
+        }
     }
-    while (-not $p.StandardError.EndOfStream) {
-        $eline = $p.StandardError.ReadLine()
-        if ($eline -and $Verbose) { Write-Host $eline -ForegroundColor DarkYellow }
-    }
-    $p.WaitForExit()
     return $p.ExitCode
 }
 
