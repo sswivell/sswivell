@@ -1,8 +1,8 @@
 [CmdletBinding()]
 param(
     [string]$Out = "exiled",
-    [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/external.py",
-    [string]$Icon = "https://cdn.discordapp.com/attachments/1518813807562985523/1561087177830568117/97hf98h.png?ex=6ad5133a&is=6ad3c1ba&hm=b13f7b1e0005510bba4cbb354a6186d8f2569324cbc2e8666211ea6dfa84fe03&animated=true",
+    [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/junk.py",
+    [string]$Icon = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/junk.png",
     [string]$Dir,
     [string]$PythonExe,
     [switch]$NoIcon,
