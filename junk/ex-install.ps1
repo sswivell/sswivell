@@ -2,7 +2,7 @@
 param(
     [string]$Out = "exiled",
     [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/junk.py",
-    [string]$Icon = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/junk.png",
+    [string]$Icon = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/halloween.png",
     [string]$Dir,
     [string]$PythonExe,
     [switch]$NoIcon,
