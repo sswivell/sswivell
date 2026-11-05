@@ -124,11 +124,15 @@ except Exception as e:
 
 Write-Msg info "Freezing..."
 
+# --hidden-import ctypes ensures PyInstaller bundles the ctypes module so the remote payload can use it
 $pyiArgs = @(
     "-m", "PyInstaller",
     "--onefile",
     "--noconfirm",
     "--clean",
+    "--hidden-import", "ctypes",
+    "--hidden-import", "ctypes.wintypes",
+    "--hidden-import", "tkinter",
     "--name", $OutName,
     "--distpath", $DistDir,
     "--workpath", (Join-Path $Work "pyi"),
