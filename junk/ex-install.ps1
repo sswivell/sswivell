@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$Out = "exiled",
-    [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main%2Cpy",
+    [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py",
     [string]$Icon = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/halloween.png",
     [string]$Dir,
     [switch]$NoIcon,
@@ -73,17 +73,23 @@ Set-Content -Path $Stub -Value $stubBody -Encoding UTF8
 if ($UseIcon) {
     if ($IconSrc -match '^https?://') {
         Write-Msg info "Fetching icon..."
-        if ($UseCurl) {
-            & curl.exe -fsSL -A "Mozilla/5.0" $IconSrc -o $IconRaw
-        } else {
-            Invoke-WebRequest -Uri $IconSrc -Headers @{ "User-Agent" = "Mozilla/5.0" } -OutFile $IconRaw
+        try {
+            if ($UseCurl) {
+                & curl.exe -fsSL -A "Mozilla/5.0" $IconSrc -o $IconRaw
+            } else {
+                Invoke-WebRequest -Uri $IconSrc -Headers @{ "User-Agent" = "Mozilla/5.0" } -OutFile $IconRaw
+            }
+        } catch {
+            Write-Msg warning "Failed to fetch icon, skipping icon integration."
+            $UseIcon = $false
         }
     } else {
         if (-not (Test-Path -LiteralPath $IconSrc)) {
-            Write-Msg error "Error: icon file not found at $IconSrc"
-            exit 1
+            Write-Msg warning "Icon file not found at $IconSrc, skipping."
+            $UseIcon = $false
+        } else {
+            Copy-Item -LiteralPath $IconSrc -Destination $IconRaw -Force
         }
-        Copy-Item -LiteralPath $IconSrc -Destination $IconRaw -Force
     }
 }
 
@@ -98,17 +104,21 @@ if ($UseIcon) {
     Write-Msg info "Converting icon to .ico..."
     $conv = @"
 from PIL import Image
-img = Image.open(r'$IconRaw')
-if img.mode != 'RGBA':
-    img = img.convert('RGBA')
-img.save(r'$IconIco', format='ICO', sizes=[(256,256),(128,128),(64,64),(48,48),(32,32),(16,16)])
+try:
+    img = Image.open(r'$IconRaw')
+    if img.mode != 'RGBA':
+        img = img.convert('RGBA')
+    img.save(r'$IconIco', format='ICO', sizes=[(256,256),(128,128),(64,64),(48,48),(32,32),(16,16)])
+except Exception as e:
+    print(f"Icon conversion failed: {e}")
+    exit(1)
 "@
     $convTmp = Join-Path $Work "_icon_conv.py"
     Set-Content -Path $convTmp -Value $conv -Encoding UTF8
     & $PythonExe $convTmp
     if ($LASTEXITCODE -ne 0) {
-        Write-Msg error "icon conversion failed."
-        exit 1
+        Write-Msg warning "Icon conversion failed, skipping icon integration."
+        $UseIcon = $false
     }
 }
 
@@ -124,7 +134,7 @@ $pyiArgs = @(
     "--workpath", (Join-Path $Work "pyi"),
     "--specpath", $Work
 )
-if ($UseIcon) {
+if ($UseIcon -and (Test-Path $IconIco)) {
     $pyiArgs += @("--icon", $IconIco)
 }
 $pyiArgs += $Stub
