@@ -171,7 +171,7 @@ if ($UseIcon) {
 }
 
 Log info "Installing build dependencies..."
-cmd /c "`"$PythonExe`" -m pip install --quiet --upgrade pyinstaller pillow 2>&1" | Out-Null
+cmd /c "`"$PythonExe`" -m pip install --quiet --upgrade pyinstaller pillow >nul 2>&1"
 
 if ($UseIcon) {
     Log info "Converting icon to .ico..."
@@ -189,7 +189,7 @@ except Exception as e:
     $conv = $conv -replace '__ICON_RAW__', $IconRaw -replace '__ICON_ICO__', $IconIco
     $convTmp = Join-Path $Work "_icon_conv.py"
     Set-Content -Path $convTmp -Value $conv -Encoding UTF8
-    & $PythonExe $convTmp *>&1 | Out-Null
+    cmd /c "`"$PythonExe`" `"$convTmp`" >nul 2>&1"
     if ($LASTEXITCODE -ne 0) {
         Log warning "Icon conversion failed, skipping."
         $UseIcon = $false
@@ -218,8 +218,8 @@ if ($UseIcon -and (Test-Path $IconIco)) {
 }
 $pyiArgs += $Stub
 
-$pyiCmd = "`"$PythonExe`" " + ($pyiArgs -join " ") + " 2>&1"
-cmd /c $pyiCmd | Out-Null
+$pyiCmd = "`"$PythonExe`" " + ($pyiArgs -join " ") + " >nul 2>&1"
+cmd /c $pyiCmd
 
 if ($LASTEXITCODE -ne 0) {
     Log error "PyInstaller failed."
