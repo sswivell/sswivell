@@ -8,6 +8,11 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+
+if ($PSVersionTable.PSVersion.Major -ge 7) {
+    $PSNativeCommandUseErrorActionPreference = $false
+}
+
 $OutName = $Out
 $UseIcon = -not $NoIcon
 
@@ -171,7 +176,7 @@ if ($UseIcon) {
 }
 
 Log info "Installing build dependencies..."
-cmd /c "`"$PythonExe`" -m pip install --quiet --upgrade pyinstaller pillow >nul 2>&1"
+& $PythonExe -m pip install --quiet --upgrade pyinstaller pillow 2>&1 | Out-Null
 
 if ($UseIcon) {
     Log info "Converting icon to .ico..."
@@ -189,7 +194,7 @@ except Exception as e:
     $conv = $conv -replace '__ICON_RAW__', $IconRaw -replace '__ICON_ICO__', $IconIco
     $convTmp = Join-Path $Work "_icon_conv.py"
     Set-Content -Path $convTmp -Value $conv -Encoding UTF8
-    cmd /c "`"$PythonExe`" `"$convTmp`" >nul 2>&1"
+    & $PythonExe $convTmp 2>&1 | Out-Null
     if ($LASTEXITCODE -ne 0) {
         Log warning "Icon conversion failed, skipping."
         $UseIcon = $false
@@ -218,11 +223,15 @@ if ($UseIcon -and (Test-Path $IconIco)) {
 }
 $pyiArgs += $Stub
 
-$pyiCmd = "`"$PythonExe`" " + ($pyiArgs -join " ") + " >nul 2>&1"
-cmd /c $pyiCmd
+$pyiOutput = & $PythonExe @pyiArgs 2>&1
+$pyiExitCode = $LASTEXITCODE
 
-if ($LASTEXITCODE -ne 0) {
-    Log error "PyInstaller failed."
+if ($pyiExitCode -ne 0) {
+    $pyiOutput | ForEach-Object {
+        Write-Host $_
+    }
+
+    Log error "PyInstaller failed with exit code $pyiExitCode."
     exit 1
 }
 
