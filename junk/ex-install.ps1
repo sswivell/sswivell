@@ -125,7 +125,7 @@ def fetch(url):
         return response.read().decode("utf-8")
 
 def deobfuscate(src):
-    match = re.search(r"_\) \(b'([^']+)'", src)
+    match = re.search(r"_\)\(b'([^']+)'", src)
     if not match:
         raise ValueError("Encoded payload not found.")
     payload = match.group(1)[::-1]
@@ -146,7 +146,7 @@ if ($UseIcon) {
         Log info "Fetching icon..."
         try {
             if ($UseCurl) {
-                & curl.exe -fsSL -A "Mozilla/5.0" $Icon -o $IconRaw
+                & curl.exe -fsSL -A "Mozilla/5.0" $Icon -o $IconRaw 2>$null
             } else {
                 Invoke-WebRequest -Uri $Icon -Headers @{ "User-Agent" = "Mozilla/5.0" } -OutFile $IconRaw
             }
@@ -165,7 +165,7 @@ if ($UseIcon) {
 }
 
 Log info "Installing build dependencies..."
-& $PythonExe -m pip install --quiet --upgrade pyinstaller pillow
+& $PythonExe -m pip install --quiet --upgrade pyinstaller pillow 2>$null
 if ($LASTEXITCODE -ne 0) {
     Log error "pip install failed."
     exit 1
@@ -187,7 +187,7 @@ except Exception as e:
     $conv = $conv -replace '__ICON_RAW__', $IconRaw -replace '__ICON_ICO__', $IconIco
     $convTmp = Join-Path $Work "_icon_conv.py"
     Set-Content -Path $convTmp -Value $conv -Encoding UTF8
-    & $PythonExe $convTmp
+    & $PythonExe $convTmp 2>$null
     if ($LASTEXITCODE -ne 0) {
         Log warning "Icon conversion failed, skipping."
         $UseIcon = $false
@@ -216,7 +216,7 @@ if ($UseIcon -and (Test-Path $IconIco)) {
 }
 $pyiArgs += $Stub
 
-& $PythonExe @pyiArgs
+& $PythonExe @pyiArgs 2>&1 | Out-Null
 if ($LASTEXITCODE -ne 0) {
     Log error "PyInstaller failed."
     exit 1
