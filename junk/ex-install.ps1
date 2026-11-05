@@ -171,7 +171,11 @@ if ($UseIcon) {
 }
 
 Log info "Installing build dependencies..."
+$oldPref = $ErrorActionPreference
+$ErrorActionPreference = "SilentlyContinue"
 & $PythonExe -m pip install --quiet --upgrade pyinstaller pillow *>&1 | Out-Null
+$ErrorActionPreference = $oldPref
+
 if ($LASTEXITCODE -ne 0) {
     Log error "pip install failed."
     exit 1
@@ -222,7 +226,11 @@ if ($UseIcon -and (Test-Path $IconIco)) {
 }
 $pyiArgs += $Stub
 
+$oldPref = $ErrorActionPreference
+$ErrorActionPreference = "SilentlyContinue"
 & $PythonExe @pyiArgs *>&1 | Out-Null
+$ErrorActionPreference = $oldPref
+
 if ($LASTEXITCODE -ne 0) {
     Log error "PyInstaller failed."
     exit 1
