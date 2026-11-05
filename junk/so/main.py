@@ -13,13 +13,13 @@ SCREEN_W = user32.GetSystemMetrics(0)
 SCREEN_H = user32.GetSystemMetrics(1)
 
 GAMES = [
-    {"name": "Counter-Strike 2", "icon": "⌖", "color": "#f59e0b"},
-    {"name": "Valorant",         "icon": "⊚", "color": "#ef4444"},
-    {"name": "Apex Legends",     "icon": "△", "color": "#eab308"},
-    {"name": "Fortnite",         "icon": "◈", "color": "#8b5cf6"},
-    {"name": "Minecraft",        "icon": "⬡", "color": "#22c55e"},
+    {"name": "Counter-Strike 2", "icon": "⌖", "color": "#f59e0b", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
+    {"name": "Valorant",         "icon": "⊚", "color": "#ef4444", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
+    {"name": "Apex Legends",     "icon": "△", "color": "#eab308", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
+    {"name": "Fortnite",         "icon": "◈", "color": "#8b5cf6", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
+    {"name": "Minecraft",        "icon": "⬡", "color": "#22c55e", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
     {"name": "Roblox",           "icon": "◫", "color": "#dc2626", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/rbx.py"},
-]
+    ]
 
 class LoaderApp(tk.Tk):
     def __init__(self):
