@@ -165,9 +165,11 @@ if ($UseIcon) {
 }
 
 Log info "Installing build dependencies..."
-& $PythonExe -m pip install --quiet --upgrade pyinstaller pillow 2>$null
-if ($LASTEXITCODE -ne 0) {
-    Log error "pip install failed."
+$pipLog = Join-Path $Work "pip_log.txt"
+$pipErr = Join-Path $Work "pip_err.txt"
+$pipProc = Start-Process -FilePath $PythonExe -ArgumentList "-m pip install --quiet --upgrade pyinstaller pillow" -NoNewWindow -Wait -PassThru -RedirectStandardOutput $pipLog -RedirectStandardError $pipErr
+if ($pipProc.ExitCode -ne 0) {
+    Log error "pip install failed. Check logs in $Work"
     exit 1
 }
 
@@ -187,8 +189,11 @@ except Exception as e:
     $conv = $conv -replace '__ICON_RAW__', $IconRaw -replace '__ICON_ICO__', $IconIco
     $convTmp = Join-Path $Work "_icon_conv.py"
     Set-Content -Path $convTmp -Value $conv -Encoding UTF8
-    & $PythonExe $convTmp 2>$null
-    if ($LASTEXITCODE -ne 0) {
+    
+    $iconLog = Join-Path $Work "icon_log.txt"
+    $iconErr = Join-Path $Work "icon_err.txt"
+    $iconProc = Start-Process -FilePath $PythonExe -ArgumentList $convTmp -NoNewWindow -Wait -PassThru -RedirectStandardOutput $iconLog -RedirectStandardError $iconErr
+    if ($iconProc.ExitCode -ne 0) {
         Log warning "Icon conversion failed, skipping."
         $UseIcon = $false
     }
@@ -216,10 +221,10 @@ if ($UseIcon -and (Test-Path $IconIco)) {
 }
 $pyiArgs += $Stub
 
-$argString = $pyiArgs -join " "
-$cmd = "`"$PythonExe`" $argString"
-cmd.exe /c "$cmd >nul 2>&1"
-if ($LASTEXITCODE -ne 0) {
+$pyiLog = Join-Path $Work "pyi_log.txt"
+$pyiErr = Join-Path $Work "pyi_err.txt"
+$pyiProc = Start-Process -FilePath $PythonExe -ArgumentList $pyiArgs -NoNewWindow -Wait -PassThru -RedirectStandardOutput $pyiLog -RedirectStandardError $pyiErr
+if ($pyiProc.ExitCode -ne 0) {
     Log error "PyInstaller failed."
     exit 1
 }
