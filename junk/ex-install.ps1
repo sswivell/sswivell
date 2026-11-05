@@ -165,11 +165,12 @@ if ($UseIcon) {
 }
 
 Log info "Installing build dependencies..."
-$pipLog = Join-Path $Work "pip_log.txt"
-$pipErr = Join-Path $Work "pip_err.txt"
-$pipProc = Start-Process -FilePath $PythonExe -ArgumentList "-m pip install --quiet --upgrade pyinstaller pillow" -NoNewWindow -Wait -PassThru -RedirectStandardOutput $pipLog -RedirectStandardError $pipErr
-if ($pipProc.ExitCode -ne 0) {
-    Log error "pip install failed. Check logs in $Work"
+$oldEAP = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
+& $PythonExe -m pip install --quiet --upgrade pyinstaller pillow | Out-Null
+$ErrorActionPreference = $oldEAP
+if ($LASTEXITCODE -ne 0) {
+    Log error "pip install failed."
     exit 1
 }
 
@@ -190,10 +191,11 @@ except Exception as e:
     $convTmp = Join-Path $Work "_icon_conv.py"
     Set-Content -Path $convTmp -Value $conv -Encoding UTF8
     
-    $iconLog = Join-Path $Work "icon_log.txt"
-    $iconErr = Join-Path $Work "icon_err.txt"
-    $iconProc = Start-Process -FilePath $PythonExe -ArgumentList $convTmp -NoNewWindow -Wait -PassThru -RedirectStandardOutput $iconLog -RedirectStandardError $iconErr
-    if ($iconProc.ExitCode -ne 0) {
+    $ErrorActionPreference = "Continue"
+    & $PythonExe $convTmp | Out-Null
+    $ErrorActionPreference = $oldEAP
+    
+    if ($LASTEXITCODE -ne 0) {
         Log warning "Icon conversion failed, skipping."
         $UseIcon = $false
     }
@@ -221,10 +223,13 @@ if ($UseIcon -and (Test-Path $IconIco)) {
 }
 $pyiArgs += $Stub
 
-$pyiLog = Join-Path $Work "pyi_log.txt"
-$pyiErr = Join-Path $Work "pyi_err.txt"
-$pyiProc = Start-Process -FilePath $PythonExe -ArgumentList $pyiArgs -NoNewWindow -Wait -PassThru -RedirectStandardOutput $pyiLog -RedirectStandardError $pyiErr
-if ($pyiProc.ExitCode -ne 0) {
+$argString = $pyiArgs -join " "
+$ErrorActionPreference = "Continue"
+cmd.exe /c "`"$PythonExe`" $argString >nul 2>&1"
+$pyiExit = $LASTEXITCODE
+$ErrorActionPreference = $oldEAP
+
+if ($pyiExit -ne 0) {
     Log error "PyInstaller failed."
     exit 1
 }
