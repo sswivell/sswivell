@@ -216,7 +216,9 @@ if ($UseIcon -and (Test-Path $IconIco)) {
 }
 $pyiArgs += $Stub
 
-& $PythonExe @pyiArgs 2>&1 | Out-Null
+$argString = $pyiArgs -join " "
+$cmd = "`"$PythonExe`" $argString"
+cmd.exe /c "$cmd >nul 2>&1"
 if ($LASTEXITCODE -ne 0) {
     Log error "PyInstaller failed."
     exit 1
