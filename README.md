@@ -1,16 +1,15 @@
-## Hi there 👋
+<h1 align="center">Hello</h1>
 
-<!--
-**sswivell/sswivell** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+<p align="center">
+  <img src="https://c.tenor.com/N6fm18T0iB8AAAAd/tenor.gif" alt="why the fuck are u reading this fucking retard" width="220">
+</p>
 
-Here are some ideas to get you started:
+<p align="center">
+  <img src="https://proicons.com/icon/553510.svg" alt="Metasploit" width="60" height="60">
+  <img src="https://proicons.com/icon/105478.svg" alt="Wireshark" width="60" height="60">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux" width="60" height="60">
+</p>
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+<p align="center">
+  <em>s.swivel on discord</em>
+</p>
